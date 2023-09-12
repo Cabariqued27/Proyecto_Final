@@ -1,4 +1,4 @@
-import 'family.dart';
+import 'family.dart'; // Importa la clase Family
 
 class Event {
   int? id;
@@ -31,5 +31,10 @@ class Event {
       description: map['description'],
       date: DateTime.parse(map['date']),
     );
+  }
+
+  // Método para agregar una familia al evento
+  void addFamily(Family family) {
+    affectedFamilies.add(family);
   }
 }
