@@ -1,14 +1,14 @@
 import 'family.dart'; // Importa la clase Family
 
 class Event {
-  int? id;
+  final int id;
   String name;
   String description;
   DateTime date;
   List<Family> affectedFamilies;
 
   Event({
-    this.id,
+    required this.id,
     required this.name,
     required this.description,
     required this.date,

@@ -1,39 +1,44 @@
+import 'package:sirdad/models/event.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import '../models/event.dart';
-import '../models/family.dart';
-import '../models/member.dart';
 
-class DataBaseHelper {
-  static const int _version = 1;
-  static const String _dbname = "Sirdad.db";
+class SirdadDatabase {
+  static final SirdadDatabase instance = SirdadDatabase._init();
 
-  static Future<Database> _getDB() async {
-    return openDatabase(
-      join(await getDatabasesPath(), _dbname),
-      onCreate: (db, version) async {
-        // Crear la tabla 'family'
-        await db.execute('''
+  static Database? _database;
+
+  SirdadDatabase._init();
+  final String tableEvent = 'event';
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+
+    _database = await _initDB('sirdad.db');
+    return _database!;
+  }
+
+  Future<Database> _initDB(String filePath) async{
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, filePath);
+    return await openDatabase (path, version: 1, onCreate: _onCreateDB);
+  }
+
+  Future  _onCreateDB(Database db, int version) async {
+    db.execute('''
           CREATE TABLE family (
             id INTEGER PRIMARY KEY,
             name TEXT,
             address TEXT
           )
-        ''');
-
-        // Crear la tabla 'event'
-        await db.execute('''
-          CREATE TABLE event (
+        ''');db.execute('''
+          CREATE TABLE $tableEvent (
             id INTEGER PRIMARY KEY,
             name TEXT,
             description TEXT,
             date TEXT
           )
-        ''');
-
-        // Crear la tabla 'member'
-        await db.execute('''
+        ''');db.execute('''
           CREATE TABLE member (
             id INTEGER PRIMARY KEY,
             name TEXT,
@@ -43,50 +48,13 @@ class DataBaseHelper {
             FOREIGN KEY (familyId) REFERENCES family(id)
           )
         ''');
-      },
-      version: _version,
-    );
   }
+
+  Future <void> insert(Event event) async{
+    final db = await instance.database;
+    await db.insert(tableEvent,event.toMap());
+  }
+
   
-  // Método para insertar una familia en la tabla 'family'
-  Future<int> insertFamily(Family family) async {
-    final db = await _getDB();
-    return await db.insert('family', family.toMap());
-  }
-
-  // Método para insertar un evento en la tabla 'event'
-  Future<int> insertEvent(Event event) async {
-    final db = await _getDB();
-    return await db.insert('event', event.toMap());
-  }
-
-  // Método para insertar un miembro en la tabla 'member'
-  Future<int> insertMember(Member member) async {
-    final db = await _getDB();
-    return await db.insert('member', member.toMap());
-  }
-
-   // Método para obtener una familia por su ID
-  Future<Family?> getFamilyById(int id) async {
-    final db = await _getDB();
-    final List<Map<String, dynamic>> maps = await db.query(
-      'family',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
-    if (maps.isNotEmpty) {
-      return Family.fromMap(maps.first);
-    } else {
-      return null; // Devuelve null si no se encuentra la familia
-    }
-  }
-
-  Future<List<Event>> getAllEvents() async {
-  final db = await _getDB();
-  final List<Map<String, dynamic>> maps = await db.query('event');
-  return List.generate(maps.length, (i) {
-    return Event.fromMap(maps[i]);
-  });
-}
+        
 }
