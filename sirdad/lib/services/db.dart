@@ -1,7 +1,7 @@
 import 'package:sirdad/services/tables.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-class DatabaseS {
+class db {
   String name = 'Sirdad';
   int version = 1;
 
@@ -15,13 +15,13 @@ class DatabaseS {
     );
   }
 
-  onConfigure(Database DatabaseS) async{
-    await DatabaseS.execute('PRAGMA foreing_keys = ON');
+  onConfigure(Database db) async{
+    await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  onCreate(Database DatabaseS, int version) async {
+  onCreate(Database db, int version) async {
     for(var scrip in tables){
-      await DatabaseS.execute(scrip);
+      await db.execute(scrip);
     }
   }
 }
