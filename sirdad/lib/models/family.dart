@@ -1,3 +1,4 @@
+
 import 'member.dart';
 
 class Family {
@@ -10,10 +11,9 @@ class Family {
     this.id,
     required this.name,
     required this.address,
-    this.members = const [], // Inicialmente, la lista de miembros está vacía
+    this.members = const [],
   });
 
-  // Método para convertir entre Map y objeto Family
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -22,13 +22,17 @@ class Family {
     };
   }
 
-  // Factory method para crear una Family desde un Map
   factory Family.fromMap(Map<String, dynamic> map) {
     return Family(
       id: map['id'],
       name: map['name'],
       address: map['address'],
     );
+  }
+
+  // Método para agregar un miembro a la familia
+  void addMember(Member member) {
+    members.add(member);
   }
 }
 

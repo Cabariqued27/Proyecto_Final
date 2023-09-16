@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'models/event.dart';
+
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -55,19 +59,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+ String events='';
 
-  void _incrementCounter() {
+  @override
+  void initState(){
+    getEvents();
+    super.initState();
+  }
+
+  getEvents()async{
+    List events = await Event().getEvents();
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      this.events=events.toString();
     });
   }
 
+
+
+  void _incrementCounter() async {
+    Event event = Event( name: 'davidcabarique', description: 'prueba', date: 'hoy');
+    int id = event.save();
+    print('id event $id');
+    setState(() {
+      events;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -109,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '$_counter',
+              events,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
