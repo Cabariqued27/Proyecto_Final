@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sirdad/models/family.dart';
 
 import 'models/event.dart';
 
@@ -60,12 +61,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
  String events='';
+ String familys='';
 
   @override
   void initState(){
     getEvents();
+    getFamilys();
     super.initState();
   }
+
+  getFamilys()async{
+    List familys = await Family().getFamilys();
+    setState(() {
+      this.familys=familys.toString();
+    });
+  }
+
 
   getEvents()async{
     List events = await Event().getEvents();
@@ -80,8 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
     Event event = Event( name: 'davidcabarique', description: 'prueba', date: 'hoy');
     int id = event.save();
     print('id event $id');
+    Family family = Family(barrio: 'salamanca', address: 'asdasd', phone: 5465465465, date: 'asdasddd', eventId: 1);
+    int f = family.save();
+    print('id de la familia $f');
     setState(() {
       events;
+      familys;
     });
   }
   @override

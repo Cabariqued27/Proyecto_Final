@@ -12,8 +12,10 @@ List get tables => [
       _createTable(
           familyTable,
           'id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
-          'name TEXT,'
+          'barrio TEXT,'
           'address TEXT,'
+          'phone INTEGER,'
+          'date TEXT,'
           'eventId INTEGER,'
           'FOREIGN KEY (eventId) REFERENCES $eventTable(id)'),
       _createTable(
