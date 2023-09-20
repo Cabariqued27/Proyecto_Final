@@ -3,10 +3,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 class db {
   String name = 'Sirdad';
-  int version = 2;
+  int version = 1;
 
   Future<Database> open()async{
     String path = join(await getDatabasesPath(),name);
+    await deleteDatabase(path);
     return openDatabase(path, 
     version: version,
     onConfigure: onConfigure,
