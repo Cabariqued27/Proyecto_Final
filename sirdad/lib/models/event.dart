@@ -1,26 +1,23 @@
 import 'package:sirdad/services/crud.dart';
 import 'package:sirdad/services/tables.dart';
-
-import 'family.dart'; // Importa la clase Family
+// Importa la clase Family
 
 class Event extends Crud{
   int id;
   String name;
   String description;
   String date;
-  List<Family> affectedFamilies;
-
+  
   Event({
     this.id=0,
     this.name='',
     this.description='',
     this.date='',
-    this.affectedFamilies = const [],
   }):super(eventTable);
 
   @override
   String toString(){
-    return 'Id: $id name: $name';
+    return '\n Id: $id name: $name \n';
   }
 
 
