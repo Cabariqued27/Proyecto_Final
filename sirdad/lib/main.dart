@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sirdad/models/family.dart';
-
+import 'package:sirdad/models/member.dart';
 import 'models/event.dart';
 
 
@@ -62,11 +62,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
  String events='';
  String familys='';
+ String members='';
 
   @override
   void initState(){
     getEvents();
     getFamilys();
+    getMembers();
     super.initState();
   }
 
@@ -77,9 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
     this.familys = familys.toString();
   });
 }
-
-
-
   getEvents()async{
     List events = await Event().getEvents();
     print('Eventos obtenidas: $events');
@@ -87,6 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
       this.events=events.toString();
     });
   }
+  getMembers()async{
+    List members = await Member().getMembers();
+    print('Miembros obtenidos: $members');
+    setState(() {
+      this.members=members.toString();
+    });
+  }
+  
 
 
 
@@ -96,10 +103,15 @@ class _MyHomePageState extends State<MyHomePage> {
     
     Family family = Family(barrio: 'salamanca', address: 'asdasd', phone: 5465465465, date: 'asdasddd', eventId: 1);
     family.save();
+
+    Member member = Member(name: 'David', surname: 'Cabarique',kid: 1,nid: 1,rela: 2,gen: 'm',age: 22,
+    et: 1,heal: 2,aheal: 3);
+    member.save();
     
     setState(() {
       events;
       familys;
+      members;
     });
   }
   @override
@@ -148,6 +160,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               familys,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),Text(
+              members,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],

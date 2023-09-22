@@ -45,7 +45,7 @@ class Family extends Crud {
   }
 
   save()async{
-    print("mama"); 
+    print("Family"); 
     await((idf>0)?update(toMap()):create(toMap()));
   }
 
