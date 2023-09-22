@@ -21,7 +21,7 @@ class Member {
       'name': name,
       'age': age,
       'relationship': relationship,
-      'familyId': family.id,
+      'familyId': family.idf,
     };
   }
 

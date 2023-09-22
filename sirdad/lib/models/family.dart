@@ -2,7 +2,7 @@ import 'package:sirdad/services/crud.dart';
 import 'package:sirdad/services/tables.dart';
 
 class Family extends Crud {
-  int id;
+  int idf;
   String barrio;
   String address;
   int phone;
@@ -10,7 +10,7 @@ class Family extends Crud {
   int eventId;
 
   Family({
-    this.id=0,
+    this.idf=0,
     this.barrio='',
     this.address='',
     this.phone=0,
@@ -20,12 +20,12 @@ class Family extends Crud {
 
   @override
   String toString(){
-    return '\n Id: $id barrio: $barrio phone: $phone \n';
+    return '\n Id: $idf barrio: $barrio phone: $phone \n';
   }
 
   Family toObject(Map<dynamic,dynamic>data){
     return Family(
-     id: data['id'],
+     idf: data['idf'],
      barrio: data['barrio'],
      address: data['address'],
      phone: data['phone'],
@@ -35,7 +35,7 @@ class Family extends Crud {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id>0?id:null,
+      'idf': idf>0?idf:null,
       'barrio': barrio,
       'address': address,
       'phone': phone,
@@ -45,16 +45,17 @@ class Family extends Crud {
   }
 
   save()async{
-    return await((id>0)?update(toMap()):create(toMap()));
+    print("mama"); 
+    await((idf>0)?update(toMap()):create(toMap()));
   }
 
   remove()async{
-    await delete(id);
+    await delete(idf);
   }
 
   Future<List<Family>>getFamilys()async{
-    var result = await query('SELECT * FROM $familyTable');
-    return _getListObject(result);
+    var resultf = await query('SELECT * FROM $familyTable');
+    return _getListObject(resultf);
   }
 
   List<Family> _getListObject(parsed){

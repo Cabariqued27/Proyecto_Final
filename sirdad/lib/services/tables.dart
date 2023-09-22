@@ -11,7 +11,7 @@ List get tables => [
           'date TEXT'),
       _createTable(
           familyTable,
-          'id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
+          'idf INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
           'barrio TEXT,'
           'address TEXT,'
           'phone INTEGER,'

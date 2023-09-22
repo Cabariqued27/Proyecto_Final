@@ -70,16 +70,19 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  getFamilys()async{
-    List familys = await Family().getFamilys();
-    setState(() {
-      this.familys=familys.toString();
-    });
-  }
+  getFamilys() async {
+  List familys = await Family().getFamilys();
+  print('Familias obtenidas: $familys');
+  setState(() {
+    this.familys = familys.toString();
+  });
+}
+
 
 
   getEvents()async{
     List events = await Event().getEvents();
+    print('Eventos obtenidas: $events');
     setState(() {
       this.events=events.toString();
     });
@@ -89,11 +92,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() async {
     Event event = Event( name: 'davidcabarique', description: 'prueba', date: 'hoy');
-    int id = event.save();
-    print('id event $id');
+    event.save();
+    
     Family family = Family(barrio: 'salamanca', address: 'asdasd', phone: 5465465465, date: 'asdasddd', eventId: 1);
-    int f = family.save();
-    print('id de la familia $f');
+    family.save();
+    
     setState(() {
       events;
       familys;
@@ -141,6 +144,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               events,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              familys,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
