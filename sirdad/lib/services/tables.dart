@@ -1,6 +1,7 @@
 const String eventTable = 'event';
 const String familyTable = 'family';
 const String memberTable = 'member';
+const String volunteerTable = 'volunteer';
 
 List get tables => [
       _createTable(
@@ -32,7 +33,16 @@ List get tables => [
           'heal INTEGER,'
           'aheal INTEGER,'
           'familyId INTEGER,'
-          'FOREIGN KEY (familyId) REFERENCES $familyTable(idf)')
+          'FOREIGN KEY (familyId) REFERENCES $familyTable(idf)'),
+      _createTable(
+          volunteerTable,
+          'idv INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
+          'namev TEXT,'
+          'nidv TEXT,'
+          'phonev TEXT,'
+          'ong TEXT,'
+          'sign TEXT,'
+          'news TEXT,')
     ];
 
 _createTable(String table, String columns) {
