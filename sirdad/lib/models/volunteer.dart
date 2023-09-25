@@ -33,7 +33,7 @@ class Volunteer extends Crud {
       phonev: data['phonev'],
       ong: data['ong'],
       sign: data['sign'],
-      news: data['news'],
+      news: data['news']
     );
   }
 
@@ -51,7 +51,7 @@ class Volunteer extends Crud {
 
   save() async {
     print("Volunteer");
-    await ((idv > 0) ? update(toMap()) : create(toMap()));
+    return await ((idv > 0) ? update(toMap()) : create(toMap()));
   }
 
   remove() async {
