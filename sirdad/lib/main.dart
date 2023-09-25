@@ -125,10 +125,10 @@ getVolunteers() async {
   
   // Actualiza las variables y la interfaz de usuario
   setState(() {
-    events = event.toString();
-    familys = family.toString();
-    members = member.toString();
-    volunteers = volunteer.toString();
+    events;
+    familys;
+    members;
+    volunteers;
   });
 }
 
