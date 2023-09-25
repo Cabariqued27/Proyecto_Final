@@ -42,7 +42,7 @@ List get tables => [
           'phonev TEXT,'
           'ong TEXT,'
           'sign TEXT,'
-          'news TEXT,')
+          'news TEXT')
     ];
 
 _createTable(String table, String columns) {
