@@ -1,20 +1,25 @@
 import 'package:checkbox_grouped/checkbox_grouped.dart';
 
+
 // import '/flutter_flow/flutter_flow_checkbox_group.dart';
 // import '/flutter_flow/flutter_flow_theme.dart';
 // import '/flutter_flow/flutter_flow_util.dart';
 // import '/flutter_flow/flutter_flow_widgets.dart';
 // import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:sirdad/model/sharedData.dart';
 
 class AddMemberWidget extends StatefulWidget {
-  const AddMemberWidget({Key? key}) : super(key: key);
+  final SharedData sharedData;
+
+  const AddMemberWidget({Key? key, required this.sharedData}) : super(key: key);
 
   @override
   _AddMemberWidget createState() => _AddMemberWidget();
 }
 
 class _AddMemberWidget extends State<AddMemberWidget> {
+  SharedData sharedData = SharedData();
   TextEditingController textController1 = TextEditingController();
   TextEditingController textController2 = TextEditingController();
   TextEditingController textController3 = TextEditingController();
@@ -34,7 +39,7 @@ class _AddMemberWidget extends State<AddMemberWidget> {
   List<String> checkboxGroupValues12 = [];
   List<String> checkboxGroupValues13 = [];
 
-  var _value = -1;
+  //var _value = -1;
 
   @override
   void dispose() {
@@ -86,45 +91,44 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Apellido...',
-                        // Aquí puedes personalizar los estilos de acuerdo a tus preferencias
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black, // Cambiar al color deseado
-                        ),
-                        hintStyle: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black, // Cambiar al color deseado
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey, // Cambiar al color deseado
-                            width: 2,
+                          labelText: 'Apellido...',
+                          // Aquí puedes personalizar los estilos de acuerdo a tus preferencias
+                          labelStyle: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black, // Cambiar al color deseado
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue, // Cambiar al color deseado
-                            width: 2,
+                          hintStyle: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black, // Cambiar al color deseado
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red, // Cambiar al color deseado
-                            width: 2,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey, // Cambiar al color deseado
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red, // Cambiar al color deseado
-                            width: 2,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue, // Cambiar al color deseado
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red, // Cambiar al color deseado
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red, // Cambiar al color deseado
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          )),
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black, // Cambiar al color deseado
@@ -145,11 +149,12 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                           padding: const EdgeInsets.all(18.0),
                           child: DropdownButtonFormField(
                             //controller: GroupController(),
-                            value: _value, // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
+                            value: sharedData
+                                .selectedDropdownDocument, // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
                             items: [
                               DropdownMenuItem(
                                 child: Text("Documento de identidad..."),
-                                value: "-1",
+                                value: -1,
                               ),
                               DropdownMenuItem(
                                 child: Text("Registro civil"),
@@ -176,7 +181,11 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                                 value: 6,
                               ),
                             ],
-                            onChanged: (VoidCallback) {},
+                            onChanged: (value) {
+                              sharedData.selectedDropdownDocument = value!;
+                              int shared = sharedData.selectedDropdownDocument;
+                              print("sharedData: $shared");
+                            },
                             // onChange: (v) {
                             //   // Implementa tu lógica aquí
                             // },
@@ -276,8 +285,9 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                   Expanded(
                     child: DropdownButtonFormField(
                       //controller: GroupController(),
-                      value: _value,
-                      items: [ // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
+                      value: sharedData.seledtedDropdownParentesco,
+                      items: [
+                        // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
                         DropdownMenuItem(
                           child: Text("Parentesco..."),
                           value: -1,
@@ -315,7 +325,9 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                           value: 8,
                         ),
                       ],
-                      onChanged: (VoidCallback) {},
+                      onChanged: (value) {
+                        sharedData.seledtedDropdownParentesco = value!;
+                      },
                       // onChange: (v) {
                       //   // Implementa tu lógica aquí
                       // },
@@ -457,8 +469,9 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                   Expanded(
                     child: DropdownButtonFormField(
                       //controller: GroupController(),
-                      value: _value,
-                      items: [ // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
+                      value: sharedData.selectedDropdownParentesco,
+                      items: [
+                        // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
                         DropdownMenuItem(
                           child: Text("Etnia..."),
                           value: -1,
@@ -488,7 +501,9 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                           value: 6,
                         ),
                       ],
-                      onChanged: (VoidCallback) {},
+                      onChanged: (value) {
+                        sharedData.selectedDropdownParentesco = value!;
+                      },
                       // onChange: (v) {
                       //   // Implementa tu lógica aquí
                       // },
@@ -527,6 +542,7 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                       'No requiere asistencia medica'
                     ],
                     values: [1, 2],
+
                     // onSelected: (List<String> selected) {
                     //   // Implementa tu lógica aquí con la lista de elementos seleccionados
                     // },
@@ -552,7 +568,8 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                 children: [
                   SimpleGroupedCheckbox(
                     controller: GroupController(),
-                    itemsTitle: [ // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
+                    itemsTitle: [
+                      // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
                       'Contributivo',
                       'Subsidiado',
                       'Sin Afiliación'
@@ -583,8 +600,9 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                 children: [
                   DropdownButtonFormField(
                     //controller: GroupController(),
-                    value: _value,
-                    items: [// EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
+                    value: sharedData.selectedDropdownInmueble,
+                    items: [
+                      // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
                       DropdownMenuItem(
                         child: Text("Estado del inmueble..."),
                         value: -1,
@@ -602,7 +620,9 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                         value: 3,
                       ),
                     ],
-                    onChanged: (VoidCallback) {},
+                    onChanged: (value) {
+                      sharedData.selectedDropdownInmueble = value!;
+                    },
                     // onChange: (v) {
                     //   // Implementa tu lógica aquí
                     // },
@@ -639,7 +659,7 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                       Expanded(
                         child: DropdownButtonFormField(
                           //controller: GroupController(),
-                          value: _value,
+                          value: sharedData.selectedDropdownNecesidad,
                           items: [
                             DropdownMenuItem(
                               child: Text("Necesidades..."),
@@ -662,7 +682,9 @@ class _AddMemberWidget extends State<AddMemberWidget> {
                               value: 4,
                             ),
                           ],
-                          onChanged: (VoidCallback) {},
+                          onChanged: (value) {
+                            sharedData.selectedDropdownNecesidad = value!;
+                          },
                           // onChange: (v) {
                           //   // Implementa tu lógica aquí
                           // },
