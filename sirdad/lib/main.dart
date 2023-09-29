@@ -61,10 +61,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- String events='';
- String familys='';
- String members='';
- String volunteers='';
+  String events='';
+  String familys='';
+  String members='';
+  String volunteers='';
+
+
 
   @override
   void initState(){
@@ -117,18 +119,24 @@ getVolunteers() async {
   await family.save();
 
   Member member = Member(name: 'David', surname: 'Cabarique',kid: 1,nid: 1,rela: 2,gen: 'm',age: 22,
-  et: 1,heal: 2,aheal: 3);
+  et: 1,heal: 2,aheal: 3, familyId: 1);
   await member.save();
 
-  Volunteer volunteer = Volunteer(namev: 'primerv', nidv: 1002, phonev: 3225, ong: 'siu', sign: 'firma', news: 'no paso nada');
+  Volunteer volunteer = Volunteer(namev: 'primerv', nidv:55, phonev: 3225, ong: 'siu', sign: 'firma', news: 'no paso nada');
   await volunteer.save();
+
+    await getEvents();
+  await getFamilys();
+  await getMembers();
+  await getVolunteers();
   
   // Actualiza las variables y la interfaz de usuario
-  setState(() {
-    events;
-    familys;
-    members;
-    volunteers;
+   setState(() {
+    // No es necesario asignar las variables nuevamente aquí
+    // events;
+    // familys;
+    // members;
+    // volunteers;
   });
 }
 

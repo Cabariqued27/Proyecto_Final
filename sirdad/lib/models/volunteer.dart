@@ -29,8 +29,8 @@ class Volunteer extends Crud {
     return Volunteer(
       idv: data['idv'],
       namev: data['namev'],
-      nidv: data['nidv'],
-      phonev: data['phonev'],
+      nidv: int.parse(data['nidv']),
+      phonev: int.parse(data['phonev']),
       ong: data['ong'],
       sign: data['sign'],
       news: data['news']
