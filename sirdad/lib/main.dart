@@ -6,8 +6,6 @@ import 'package:sirdad/models/member.dart';
 import 'package:sirdad/widgets/add_member.dart';
 import 'models/event.dart';
 
-
-
 void main() {
   runApp(const MyApp());
 }
@@ -39,9 +37,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'SIRDAD'),
-      //AQUÍ SE HABRE LO DEL FORMATO PARA UN MIEMBRO DE LA FAMILIA
-      //const AddMemberWidget(),
+      home: //const MyHomePage(title: 'SIRDAD'),
+          //AQUÍ SE HABRE LO DEL FORMATO PARA UN MIEMBRO DE LA FAMILIA
+          const AddMemberWidget(),
     );
   }
 }
@@ -65,12 +63,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- String events='';
- String familys='';
- String members='';
+  String events = '';
+  String familys = '';
+  String members = '';
 
   @override
-  void initState(){
+  void initState() {
     getEvents();
     getFamilys();
     getMembers();
@@ -78,47 +76,62 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   getFamilys() async {
-  List familys = await Family().getFamilys();
-  print('Familias obtenidas: $familys');
-  setState(() {
-    this.familys = familys.toString();
-  });
-}
-  getEvents()async{
+    List familys = await Family().getFamilys();
+    print('Familias obtenidas: $familys');
+    setState(() {
+      this.familys = familys.toString();
+    });
+  }
+
+  getEvents() async {
     List events = await Event().getEvents();
     print('Eventos obtenidas: $events');
     setState(() {
-      this.events=events.toString();
+      this.events = events.toString();
     });
   }
-  getMembers()async{
+
+  getMembers() async {
     List members = await Member().getMembers();
     print('Miembros obtenidos: $members');
     setState(() {
-      this.members=members.toString();
+      this.members = members.toString();
     });
   }
-  
-
-
 
   void _incrementCounter() async {
-    Event event = Event( name: 'davidcabarique', description: 'prueba', date: 'hoy');
+    Event event =
+        Event(name: 'davidcabarique', description: 'prueba', date: 'hoy');
     event.save();
-    
-    Family family = Family(barrio: 'salamanca', address: 'asdasd', phone: 5465465465, date: 'asdasddd', eventId: 1);
+
+    Family family = Family(
+        barrio: 'salamanca',
+        address: 'asdasd',
+        phone: 5465465465,
+        date: 'asdasddd',
+        eventId: 1);
     family.save();
 
-    Member member = Member(name: 'David', surname: 'Cabarique',kid: 1,nid: 1,rela: 2,gen: 'm',age: 22,
-    et: 1,heal: 2,aheal: 3);
+    Member member = Member(
+        name: 'David',
+        surname: 'Cabarique',
+        kid: 1,
+        nid: 1,
+        rela: 2,
+        gen: 'm',
+        age: 22,
+        et: 1,
+        heal: 2,
+        aheal: 3);
     member.save();
-    
+
     setState(() {
       events;
       familys;
       members;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -166,7 +179,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               familys,
               style: Theme.of(context).textTheme.headlineMedium,
-            ),Text(
+            ),
+            Text(
               members,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
