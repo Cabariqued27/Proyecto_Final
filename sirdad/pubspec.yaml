@@ -38,6 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   sqflite: ^2.3.0
   path: ^1.8.3
+  connectivity_plus: ^4.0.2
+  firebase_core: ^2.16.0
+  cloud_firestore: ^4.9.2
   
   
 

@@ -3,10 +3,14 @@ import 'package:sirdad/models/family.dart';
 import 'package:sirdad/models/member.dart';
 import 'package:sirdad/models/volunteer.dart';
 import 'models/event.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
-
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
@@ -118,8 +122,7 @@ getVolunteers() async {
   Family family = Family(barrio: 'salamanca', address: 'asdasd', phone: 5465465465, date: 'asdasddd', eventId: 1);
   await family.save();
 
-  Member member = Member(name: 'David', surname: 'Cabarique',kid: 1,nid: 1,rela: 2,gen: 'm',age: 22,
-  et: 1,heal: 2,aheal: 3, familyId: 1);
+  Member member = Member(name: 'David', surname: 'Cabarique',kid: 1,nid: 1,rela: 2,gen: 'm',age: 22, et: 1,heal: 2,aheal: 3, familyId: 1);
   await member.save();
 
   Volunteer volunteer = Volunteer(namev: 'primerv', nidv:55, phonev: 3225, ong: 'siu', sign: 'firma', news: 'no paso nada');
