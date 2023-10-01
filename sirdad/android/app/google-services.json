@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "647456780174",
+    "project_id": "sirdad-db",
+    "storage_bucket": "sirdad-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647456780174:android:e62a86be66678d5d16bedf",
+        "android_client_info": {
+          "package_name": "com.example.sirdad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPkPw-zjNSxHHMQfMVlECM_-zFVbJTJew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
