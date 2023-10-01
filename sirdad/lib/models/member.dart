@@ -28,7 +28,7 @@ class Member extends Crud {
     this.et = 0,
     this.heal = 0,
     this.aheal = 0,
-    this.familyId=0,
+    this.familyId = 0,
   }) : super(memberTable);
 
   @override
@@ -55,7 +55,7 @@ class Member extends Crud {
 
   Map<String, dynamic> toMap() {
     return {
-      'idm': idm>0?idm:null,
+      'idm': idm > 0 ? idm : null,
       'name': name,
       'surname': surname,
       'kid': kid,
@@ -70,21 +70,21 @@ class Member extends Crud {
     };
   }
 
-  save()async{
-    print("Member"); 
-    await((idm>0)?update(toMap()):create(toMap()));
+  save() async {
+    print("Member");
+    await ((idm > 0) ? update(toMap()) : create(toMap()));
   }
 
-  remove()async{
+  remove() async {
     await delete(idm);
   }
 
-  Future<List<Member>>getMembers()async{
+  Future<List<Member>> getMembers() async {
     var resultf = await query('SELECT * FROM $memberTable');
     return _getListObject(resultf);
   }
 
-  List<Member> _getListObject(parsed){
-    return(parsed as List).map((map) => toObject(map)).toList();
+  List<Member> _getListObject(parsed) {
+    return (parsed as List).map((map) => toObject(map)).toList();
   }
 }

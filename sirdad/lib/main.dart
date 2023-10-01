@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/models/member.dart';
+import 'package:sirdad/models/volunteer.dart';
 import 'models/event.dart';
 
 
@@ -60,17 +61,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- String events='';
- String familys='';
- String members='';
+  String events='';
+  String familys='';
+  String members='';
+  String volunteers='';
+
+
 
   @override
   void initState(){
     getEvents();
     getFamilys();
     getMembers();
+    getVolunteers();
     super.initState();
   }
+
+
+getVolunteers() async {
+  List volunteers = await Volunteer().getVolunteers();
+  print('Voluntarios obtenidas: $volunteers');
+  setState(() {
+    this.volunteers = volunteers.toString();
+  });
+}
 
   getFamilys() async {
   List familys = await Family().getFamilys();
@@ -97,23 +111,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-  void _incrementCounter() async {
-    Event event = Event( name: 'davidcabarique', description: 'prueba', date: 'hoy');
-    event.save();
-    
-    Family family = Family(barrio: 'salamanca', address: 'asdasd', phone: 5465465465, date: 'asdasddd', eventId: 1);
-    family.save();
+ void _incrementCounter() async {
+  Event event = Event(name: 'davidcabarique', description: 'prueba', date: 'hoy');
+  await event.save();
+  
+  Family family = Family(barrio: 'salamanca', address: 'asdasd', phone: 5465465465, date: 'asdasddd', eventId: 1);
+  await family.save();
 
-    Member member = Member(name: 'David', surname: 'Cabarique',kid: 1,nid: 1,rela: 2,gen: 'm',age: 22,
-    et: 1,heal: 2,aheal: 3);
-    member.save();
-    
-    setState(() {
-      events;
-      familys;
-      members;
-    });
-  }
+  Member member = Member(name: 'David', surname: 'Cabarique',kid: 1,nid: 1,rela: 2,gen: 'm',age: 22,
+  et: 1,heal: 2,aheal: 3, familyId: 1);
+  await member.save();
+
+  Volunteer volunteer = Volunteer(namev: 'primerv', nidv:55, phonev: 3225, ong: 'siu', sign: 'firma', news: 'no paso nada');
+  await volunteer.save();
+
+  await getEvents();
+  await getFamilys();
+  await getMembers();
+  await getVolunteers();
+  
+  // Actualiza las variables y la interfaz de usuario
+   setState(() {
+    //No es necesario asignar las variables nuevamente aquí
+    // events;
+    // familys;
+    // members;
+    // volunteers;
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -164,7 +190,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),Text(
               members,
               style: Theme.of(context).textTheme.headlineMedium,
+            ),Text(
+              volunteers,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
+
           ],
         ),
       ),
