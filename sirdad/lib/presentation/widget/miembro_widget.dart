@@ -1,5 +1,3 @@
-
-
 // import '/flutter_flow/flutter_flow_checkbox_group.dart';
 // import '/flutter_flow/flutter_flow_theme.dart';
 // import '/flutter_flow/flutter_flow_util.dart';
@@ -7,7 +5,8 @@
 // import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/models/miembro_model.dart';
+import 'package:sirdad/presentation/model/miembro_model.dart';
+import 'package:sirdad/presentation/model/member_object.dart';
 
 MiembroModel miembroModel = MiembroModel();
 
@@ -24,29 +23,6 @@ class Miembro_Widget extends StatefulWidget {
 }
 
 class _Miembro_Widget extends State<Miembro_Widget> {
-  
-
-  // TextEditingController textController1 = TextEditingController();
-  // TextEditingController textController2 = TextEditingController();
-  // TextEditingController textController3 = TextEditingController();
-  // TextEditingController textController4 = TextEditingController();
-
-  // List<String> checkboxGroupValues1 = [];
-  // List<String> checkboxGroupValues2 = [];
-  // List<String> checkboxGroupValues3 = [];
-  // List<String> checkboxGroupValues4 = [];
-  // List<String> checkboxGroupValues5 = [];
-  // List<String> checkboxGroupValues6 = [];
-  // List<String> checkboxGroupValues7 = [];
-  // List<String> checkboxGroupValues8 = [];
-  // List<String> checkboxGroupValues9 = [];
-  // List<String> checkboxGroupValues10 = [];
-  // List<String> checkboxGroupValues11 = [];
-  // List<String> checkboxGroupValues12 = [];
-  // List<String> checkboxGroupValues13 = [];
-
-  //var _value = -1;
-
   @override
   void dispose() {
     // textController1.dispose();
@@ -610,32 +586,16 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     items: [
                       // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
                       DropdownMenuItem(
-                        child: Text("Etnia..."),
+                        child: Text("Estado de Salud.."),
                         value: -1,
                       ),
                       DropdownMenuItem(
-                        child: Text("Afrocolombiano"),
+                        child: Text("Requiere atención médica"),
                         value: 1,
                       ),
                       DropdownMenuItem(
-                        child: Text("Indigena"),
+                        child: Text("No requiere atención médica"),
                         value: 2,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Gitano/Rom"),
-                        value: 3,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Raizal"),
-                        value: 4,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Otro"),
-                        value: 5,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Sin Información"),
-                        value: 6,
                       ),
                     ],
                     onChanged: (value) {
@@ -679,32 +639,20 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     items: [
                       // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
                       DropdownMenuItem(
-                        child: Text("Etnia..."),
+                        child: Text("Afiliación al regimen de salud..."),
                         value: -1,
                       ),
                       DropdownMenuItem(
-                        child: Text("Afrocolombiano"),
+                        child: Text("Contributivo"),
                         value: 1,
                       ),
                       DropdownMenuItem(
-                        child: Text("Indigena"),
+                        child: Text("Subsidiado"),
                         value: 2,
                       ),
                       DropdownMenuItem(
-                        child: Text("Gitano/Rom"),
+                        child: Text("Sin afiliación"),
                         value: 3,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Raizal"),
-                        value: 4,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Otro"),
-                        value: 5,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Sin Información"),
-                        value: 6,
                       ),
                     ],
                     onChanged: (value) {
@@ -846,6 +794,63 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                   ),
                 ],
               ),
+
+              /* 
+                  A partir de aquí es en donde está contenido el boton que crea la instancia del objeto con lod formularios
+                  El objecto que cree de miembro es diferente al que tienes, ya que no le incluí el familiId
+                  
+
+              */
+
+              Container(
+                width: 100,
+                height: 134,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Opacity(
+                      opacity: 0.6,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          int _kid = miembroModel.DropDownValue1!.toInt();
+                          //print("type_id: $_kid");
+                          String nid_text = miembroModel.textController3!.text;
+
+                          int _age =
+                              int.parse(miembroModel.textController4!.text);
+                          int _nid = int.parse(nid_text);
+
+                          Member member = Member(
+                            name: miembroModel.textController1!.text,
+                            surname: miembroModel.textController2!.text,
+                            kid: _kid,
+                            nid: _nid,
+                            rela: miembroModel.DropDownValue2 as int,
+                            gen: miembroModel.DropDownValue3 as String,
+                            age: _age,
+                            et: miembroModel.DropDownValue4 as int,
+                            heal: miembroModel.DropDownValue5 as int,
+                            aheal: miembroModel.DropDownValue6 as int,
+                            //familyId: 8,
+                          );
+                          // print("surname:");
+                          // print(member.surname);
+                          // Obtén los valores del modelo y envíalos al backend
+
+                          // ... Obtén otros valores según sea necesario
+
+                          // Luego, llama a una función para enviar los datos al backend
+                        },
+                        child: Text('Enviar'),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
