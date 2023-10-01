@@ -824,6 +824,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                               int.parse(miembroModel.textController4!.text);
                           int _nid = int.parse(nid_text);
 
+                        //Este es tú objeto de prueba
                           Member member = Member(
                             name: miembroModel.textController1!.text,
                             surname: miembroModel.textController2!.text,
