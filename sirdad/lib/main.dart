@@ -1,4 +1,13 @@
+<<<<<<< Updated upstream
 import 'dart:html';
+=======
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sirdad/models/family.dart';
+import 'package:sirdad/models/member.dart';
+import 'package:sirdad/widget/miembro_widget.dart';
+import 'models/event.dart';
+>>>>>>> Stashed changes
 
 import 'package:flutter/material.dart';
 import 'package:sirdad/model/sharedData.dart';
@@ -31,19 +40,27 @@ class MyApp extends StatelessWidget {
         //
         // Notice that the counter didn't reset back to zero; the application
         // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
+        // restart instead.                         
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+<<<<<<< Updated upstream
       home: //const MyHomePage(title: 'SIRDAD'),
           //AQUÍ SE HABRE LO DEL FORMATO PARA UN MIEMBRO DE LA FAMILIA
           AddMemberWidget(
               sharedData:
                   sharedData), //De sharedData recibiras el objeto con todos sus atributos
       //con sus valores actualizados
+=======
+      home: ChangeNotifierProvider(
+          create: (context) => miembroModel,
+          child: Miembro_Widget(),
+        )
+      //const MyHomePage(title: 'SIRDAD'),
+>>>>>>> Stashed changes
     );
   }
 }
