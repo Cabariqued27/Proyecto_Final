@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:sirdad/presentation/widget/miembro_widget.dart';
+import 'package:sirdad/widget/miembro_widget.dart';
 //import 'package:flutter_flow/flutter_flow.dart';
 
 // import 'package:flutter_flow/flutter_flow_checkbox_group.dart';

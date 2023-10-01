@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/presentation/getters/miembro_model.dart';
+import 'package:sirdad/getters/miembro_model.dart';
 
 
 MiembroModel miembroModel = MiembroModel();
