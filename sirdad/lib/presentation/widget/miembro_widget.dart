@@ -5,8 +5,8 @@
 // import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/presentation/model/miembro_model.dart';
-import 'package:sirdad/presentation/model/member_object.dart';
+import 'package:sirdad/presentation/models/miembro_model.dart';
+import 'package:sirdad/presentation/models/member_object.dart';
 
 MiembroModel miembroModel = MiembroModel();
 
