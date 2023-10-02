@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/getters/miembro_model.dart';
 
+import 'package:sirdad/getters/miembro_model.dart';
+import 'package:sirdad/models/member.dart';
 
 MiembroModel miembroModel = MiembroModel();
 
@@ -820,8 +820,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                               int.parse(miembroModel.textController4!.text);
                           int _nid = int.parse(nid_text);
 
-                        //Este es tú objeto de prueba
-                          /*Member member = Member(
+                          //Este es tú objeto de prueba
+                          Member member = Member(
                             name: miembroModel.textController1!.text,
                             surname: miembroModel.textController2!.text,
                             kid: _kid,
@@ -832,10 +832,10 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                             et: miembroModel.DropDownValue4 as int,
                             heal: miembroModel.DropDownValue5 as int,
                             aheal: miembroModel.DropDownValue6 as int,
-                            //familyId: 8,
-                          );*/
-                          // print("surname:");
-                          // print(member.surname);
+                            familyId: 8,
+                          );
+                          print("surname:");
+                          print(member.surname);
                           // Obtén los valores del modelo y envíalos al backend
 
                           // ... Obtén otros valores según sea necesario

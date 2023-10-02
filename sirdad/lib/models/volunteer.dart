@@ -49,21 +49,21 @@ class Volunteer extends Crud {
     };
   }
 
-  save() async {
-    print("Volunteer");
-    return await ((idv > 0) ? update(toMap()) : create(toMap()));
-  }
+  // save() async {
+  //   print("Volunteer");
+  //   return await ((idv > 0) ? update(toMap()) : create(toMap()));
+  // }
 
-  remove() async {
-    await delete(idv);
-  }
+  // remove() async {
+  //   await delete(idv);
+  // }
 
-  Future<List<Volunteer>> getVolunteers() async {
-    var resultf = await query('SELECT * FROM $volunteerTable');
-    return _getListObject(resultf);
-  }
+  // Future<List<Volunteer>> getVolunteers() async {
+  //   var resultf = await query('SELECT * FROM $volunteerTable');
+  //   return _getListObject(resultf);
+  // }
 
-  List<Volunteer> _getListObject(parsed) {
-    return (parsed as List).map((map) => toObject(map)).toList();
-  }
+  // List<Volunteer> _getListObject(parsed) {
+  //   return (parsed as List).map((map) => toObject(map)).toList();
+  // }
 }
