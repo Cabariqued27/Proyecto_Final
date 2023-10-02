@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/models/member.dart';
+import 'package:sirdad/widget/reload.dart';
 
 MiembroModel miembroModel = MiembroModel();
 
@@ -26,10 +27,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
     // textController3.dispose();
     // textController4.dispose();
     super.dispose();
-     
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +174,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                               int save = miembroModel.DropDownValue1 as int;
                               print("Tipo de documento: $save");
                             },
-                           
                           ),
                         ),
                       ),
@@ -193,7 +190,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                   obscureText: false,
                   onChanged: (value) {
                     miembroModel.textController3 =
-                        
                         TextEditingController(text: value);
                     String save;
                     save = miembroModel.textController3!.text;
@@ -243,7 +239,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     fontSize: 16,
                     color: Colors.black, // Cambia al color deseado
                   ),
-                  
                 ),
               ),
               Container(
@@ -267,10 +262,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
-                     
                       value: miembroModel.DropDownValue2,
                       items: [
-                        
                         DropdownMenuItem(
                           child: Text("Parentesco..."),
                           value: -1,
@@ -312,7 +305,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                         miembroModel.DropDownValue2 = value as int;
                         //sharedData.seledtedDropdownParentesco = value!;
                       },
-                    
                     ),
                   ),
                 ],
@@ -336,8 +328,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
-                     
-
                       value: miembroModel.DropDownValue3,
                       items: [
                         // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
@@ -355,9 +345,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                         ),
                       ],
                       onChanged: (value) {
-                        miembroModel.DropDownValue3 = value;  
+                        miembroModel.DropDownValue3 = value;
                       },
-                     
                     ),
                   )
                 ],
@@ -417,7 +406,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     fontSize: 16,
                     color: Colors.black, // Cambia al color deseado
                   ),
-                 
                 ),
               ),
               Container(
@@ -441,10 +429,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
-                      
                       value: miembroModel.DropDownValue4,
                       items: [
-                        
                         DropdownMenuItem(
                           child: Text("Etnia..."),
                           value: -1,
@@ -477,7 +463,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                       onChanged: (value) {
                         miembroModel.DropDownValue4 = value as int;
                       },
-                     
                     ),
                   ),
                 ],
@@ -566,7 +551,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                       miembroModel.DropDownValue6 = value;
                     },
                   ),
-                
                 ],
               ),
               Container(
@@ -611,7 +595,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     onChanged: (value) {
                       miembroModel.DropDownValue7 = value;
                     },
-                   
                   ),
                 ],
               ),
@@ -664,7 +647,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           onChanged: (value) {
                             miembroModel.DropDownValue8 = value;
                           },
-                         
                         ),
                       ),
                     ],
@@ -685,7 +667,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                       opacity: 0.6,
                       child: ElevatedButton(
                         onPressed: () async {
-                          
                           int _kid = miembroModel.DropDownValue1!.toInt();
                           //print("type_id: $_kid");
                           String nid_text = miembroModel.textController3!.text;
@@ -711,6 +692,12 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           print("surname:");
                           print(member.surname);
                           await member.save();
+                          
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyApp()),
+                          );
                         },
                         child: Text('Enviar'),
                       ),
