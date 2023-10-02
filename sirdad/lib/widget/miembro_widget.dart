@@ -26,7 +26,10 @@ class _Miembro_Widget extends State<Miembro_Widget> {
     // textController3.dispose();
     // textController4.dispose();
     super.dispose();
+     
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -172,20 +175,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                               miembroModel.DropDownValue1 = value as int;
                               int save = miembroModel.DropDownValue1 as int;
                               print("Tipo de documento: $save");
-                              // sharedData.selectedDropdownDocument = value!;
-                              // int shared = sharedData.selectedDropdownDocument;
-                              // print("sharedData: $shared");
                             },
-                            // onChange: (v) {
-                            //   // Implementa tu lógica aquí
-                            // },
-                            //values: [1, 2, 3],
-                            // groupStyle: GroupStyle(
-                            //   activeColor: Colors.black,
-                            //   itemTitleStyle: TextStyle(
-                            //     fontSize: 13,
-                            //   ),
-                            // ),
+                           
                           ),
                         ),
                       ),
@@ -202,8 +193,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                   obscureText: false,
                   onChanged: (value) {
                     miembroModel.textController3 =
-                        //preguntar si en la BD tiene el campo de número de documentos
-                        //como un String
+                        
                         TextEditingController(text: value);
                     String save;
                     save = miembroModel.textController3!.text;
@@ -253,13 +243,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     fontSize: 16,
                     color: Colors.black, // Cambia al color deseado
                   ),
-                  // Agrega validadores según tus necesidades
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Please enter some text';
-                  //   }
-                  //   return null;
-                  // },
+                  
                 ),
               ),
               Container(
@@ -283,10 +267,10 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
-                      //controller: GroupController(),
+                     
                       value: miembroModel.DropDownValue2,
                       items: [
-                        // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
+                        
                         DropdownMenuItem(
                           child: Text("Parentesco..."),
                           value: -1,
@@ -328,16 +312,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                         miembroModel.DropDownValue2 = value as int;
                         //sharedData.seledtedDropdownParentesco = value!;
                       },
-                      // onChange: (v) {
-                      //   // Implementa tu lógica aquí
-                      // },
-                      //values: [1, 2, 3],
-                      // groupStyle: GroupStyle(
-                      //   activeColor: Colors.black,
-                      //   itemTitleStyle: TextStyle(
-                      //     fontSize: 13,
-                      //   ),
-                      // ),
+                    
                     ),
                   ),
                 ],
@@ -361,7 +336,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
-                      //controller: GroupController(),
+                     
 
                       value: miembroModel.DropDownValue3,
                       items: [
@@ -380,48 +355,11 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                         ),
                       ],
                       onChanged: (value) {
-                        miembroModel.DropDownValue3 = value;
-                        //sharedData.seledtedDropdownParentesco = value!;
+                        miembroModel.DropDownValue3 = value;  
                       },
-                      // onChange: (v) {
-                      //   // Implementa tu lógica aquí
-                      // },
-                      //values: [1, 2, 3],
-                      // groupStyle: GroupStyle(
-                      //   activeColor: Colors.black,
-                      //   itemTitleStyle: TextStyle(
-                      //     fontSize: 13,
-                      //   ),
-                      // ),
+                     
                     ),
                   )
-
-                  // Expanded(
-                  //   child: SimpleGroupedCheckbox(
-                  //     controller: GroupController(),
-                  //     itemsTitle: ['Femenino'],
-                  //     values: [1],
-                  //     // onSelected: (List<String> selected) {
-                  //     //   // Implementa tu lógica aquí con la lista de elementos seleccionados
-                  //     // },
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: SimpleGroupedCheckbox(
-                  //     controller: miembroModel.SimpleGroupedCheckboxValueController1 as GroupController,
-                  //     itemsTitle: ['Masculino'],
-                  //     values: [2],
-                  //     groupStyle: GroupStyle(
-                  //       activeColor: Colors.black,
-                  //       itemTitleStyle: TextStyle(
-                  //         fontSize: 13,
-                  //       ),
-                  //     ),
-                  //     // onSelected: (List<String> selected) {
-                  //     //   // Implementa tu lógica aquí con la lista de elementos seleccionados
-                  //     // },
-                  //   ),
-                  // ),
                 ],
               ),
               Padding(
@@ -479,13 +417,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     fontSize: 16,
                     color: Colors.black, // Cambia al color deseado
                   ),
-                  // Agrega validadores según tus necesidades
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Please enter some text';
-                  //   }
-                  //   return null;
-                  // },
+                 
                 ),
               ),
               Container(
@@ -509,10 +441,10 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
-                      //controller: GroupController(),
+                      
                       value: miembroModel.DropDownValue4,
                       items: [
-                        // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
+                        
                         DropdownMenuItem(
                           child: Text("Etnia..."),
                           value: -1,
@@ -545,16 +477,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                       onChanged: (value) {
                         miembroModel.DropDownValue4 = value as int;
                       },
-                      // onChange: (v) {
-                      //   // Implementa tu lógica aquí
-                      // },
-                      //values: [1, 2, 3],
-                      // groupStyle: GroupStyle(
-                      //   activeColor: Colors.black,
-                      //   itemTitleStyle: TextStyle(
-                      //     fontSize: 13,
-                      //   ),
-                      // ),
+                     
                     ),
                   ),
                 ],
@@ -598,18 +521,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                       miembroModel.DropDownValue5 = value as int;
                     },
                   ),
-                  // SimpleGroupedCheckbox(
-                  //   controller: GroupController(),
-                  //   itemsTitle: [
-                  //     'Requiere asistencia medica',
-                  //     'No requiere asistencia medica'
-                  //   ],
-                  //   values: [1, 2],
-
-                  //   // onSelected: (List<String> selected) {
-                  //   //   // Implementa tu lógica aquí con la lista de elementos seleccionados
-                  //   // },
-                  // ),
                 ],
               ),
               Container(
@@ -655,19 +566,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                       miembroModel.DropDownValue6 = value;
                     },
                   ),
-                  // SimpleGroupedCheckbox(
-                  //   controller: GroupController(),
-                  //   itemsTitle: [
-                  //     // EN ESTA PARTE SE DEBERIA TOMAR LOS VALUE PARA MANDARLOS A LA BD
-                  //     'Contributivo',
-                  //     'Subsidiado',
-                  //     'Sin Afiliación'
-                  //   ],
-                  //   values: [1, 2, 3],
-                  //   // onSelected: (List<String> selected) {
-                  //   //   // Implementa tu lógica aquí con la lista de elementos seleccionados
-                  //   // },
-                  // )
+                
                 ],
               ),
               Container(
@@ -712,16 +611,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     onChanged: (value) {
                       miembroModel.DropDownValue7 = value;
                     },
-                    // onChange: (v) {
-                    //   // Implementa tu lógica aquí
-                    // },
-                    //values: [1, 2, 3],
-                    // groupStyle: GroupStyle(
-                    //   activeColor: Colors.black,
-                    //   itemTitleStyle: TextStyle(
-                    //     fontSize: 13,
-                    //   ),
-                    // ),
+                   
                   ),
                 ],
               ),
@@ -774,30 +664,13 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           onChanged: (value) {
                             miembroModel.DropDownValue8 = value;
                           },
-                          // onChange: (v) {
-                          //   // Implementa tu lógica aquí
-                          // },
-                          //values: [1, 2, 3],
-                          // groupStyle: GroupStyle(
-                          //   activeColor: Colors.black,
-                          //   itemTitleStyle: TextStyle(
-                          //     fontSize: 13,
-                          //   ),
-                          // ),
+                         
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-
-              /* 
-                  A partir de aquí es en donde está contenido el boton que crea la instancia del objeto con lod formularios
-                  El objecto que cree de miembro es diferente al que tienes, ya que no le incluí el familiId
-                  
-
-              */
-
               Container(
                 width: 100,
                 height: 134,
@@ -811,7 +684,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                     Opacity(
                       opacity: 0.6,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          
                           int _kid = miembroModel.DropDownValue1!.toInt();
                           //print("type_id: $_kid");
                           String nid_text = miembroModel.textController3!.text;
@@ -836,11 +710,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           );
                           print("surname:");
                           print(member.surname);
-                          // Obtén los valores del modelo y envíalos al backend
-
-                          // ... Obtén otros valores según sea necesario
-
-                          // Luego, llama a una función para enviar los datos al backend
+                          await member.save();
                         },
                         child: Text('Enviar'),
                       ),
