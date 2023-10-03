@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 
-
 FamilyModel familyModel = FamilyModel();
 
 class FamilyWidget extends StatefulWidget {

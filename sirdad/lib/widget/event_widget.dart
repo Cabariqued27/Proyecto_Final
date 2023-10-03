@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,10 +12,6 @@ void main() {
   );
 }
 
-
-
-
-
 class EventData extends ChangeNotifier {
   List<Event> _events = [];
 
@@ -29,8 +21,6 @@ class EventData extends ChangeNotifier {
     _events.add(event);
     notifyListeners();
   }
-
-  
 }
 
 class MyApp extends StatelessWidget {
@@ -65,7 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
       String eventDescription = _descriptionController.text;
       String eventDate = _dateController.text;
 
-      Event newEvent = Event(name: eventName, description: eventDescription, date: eventDate);
+      Event newEvent = Event(
+          name: eventName, description: eventDescription, date: eventDate);
       eventData.addEvent(newEvent);
 
       _eventNameController.clear();
@@ -73,8 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _dateController.clear();
     }
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _descriptionController,
-                    decoration: InputDecoration(labelText: 'Descripción del Evento'),
+                    decoration:
+                        InputDecoration(labelText: 'Descripción del Evento'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor, ingresa una descripción para el evento.';
@@ -145,13 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text('Nombre del Evento: ${eventData.events[index].name}'),
+                        title: Text(
+                            'Nombre del Evento: ${eventData.events[index].name}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Descripción: ${eventData.events[index].description}'),
+                            Text(
+                                'Descripción: ${eventData.events[index].description}'),
                             Text('Fecha: ${eventData.events[index].date}'),
-                            
                           ],
                         ),
                         trailing: Column(
@@ -164,8 +155,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text('-->PANTALLA DE CREAR FAMILIA'),
-                                      
+                                      title:
+                                          Text('-->PANTALLA DE CREAR FAMILIA'),
                                       actions: <Widget>[
                                         TextButton(
                                           onPressed: () {
@@ -174,9 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           child: Text('Cancelar'),
                                         ),
                                         ElevatedButton(
-                                          onPressed: () {
-                                            
-                                          },
+                                          onPressed: () {},
                                           child: Text('+'),
                                         ),
                                       ],

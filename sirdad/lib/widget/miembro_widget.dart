@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/models/member.dart';
 import 'package:sirdad/widget/reload.dart';
@@ -692,7 +691,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           print("surname:");
                           print(member.surname);
                           await member.save();
-                          
 
                           Navigator.push(
                             context,
