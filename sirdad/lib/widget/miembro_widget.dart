@@ -691,7 +691,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           );
                           print("surname:");
                           print(member.surname);
-                          icrementCounter();
                           await member.save();
                           
 
