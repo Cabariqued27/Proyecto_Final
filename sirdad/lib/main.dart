@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/widget/miembro_widget.dart';
-
-
-
+import 'package:sirdad/widget/family_widget.dart';
 
 void main() {
   runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  
   const MainApp({super.key});
 
   @override
@@ -19,11 +15,8 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
         home: ChangeNotifierProvider(
-          create: (context) => miembroModel,
-          child: const Miembro_Widget(),
-        )
-
-        
-        );
+          create: (context) => familyModel,
+          child: const FamilyWidget(),
+        ));
   }
 }

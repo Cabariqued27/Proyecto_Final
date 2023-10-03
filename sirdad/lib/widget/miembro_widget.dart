@@ -11,9 +11,7 @@ class Miembro_Widget extends StatefulWidget {
   //final SharedData sharedData;
 
   const Miembro_Widget({
-    Key? key,
-    /*required this.sharedData*/
-  }) : super(key: key);
+    Key? key}) : super(key: key);
 
   @override
   _Miembro_Widget createState() => _Miembro_Widget();
@@ -691,9 +689,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           );
                           print("surname:");
                           print(member.surname);
-                          icrementCounter();
+                          //icrementCounter();
                           await member.save();
-                          
 
                           Navigator.push(
                             context,
