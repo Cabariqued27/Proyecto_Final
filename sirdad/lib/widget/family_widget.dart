@@ -373,7 +373,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                           Family family = Family(
                             barrio: familyModel.textController1!.text,
                             address: familyModel.textController2!.text,
-                            phone: _phone,
+                            phone: _phone,eventId: 1
                           );
                           await family.save();
 

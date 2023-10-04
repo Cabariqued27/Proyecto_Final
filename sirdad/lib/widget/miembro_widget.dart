@@ -686,7 +686,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                             et: miembroModel.DropDownValue4 as int,
                             heal: miembroModel.DropDownValue5 as int,
                             aheal: miembroModel.DropDownValue6 as int,
-                            familyId: 8,
+                            familyId: 1,
                           );
                           print("surname:");
                           print(member.surname);
