@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
 
@@ -20,7 +21,7 @@ class MainApp extends StatelessWidget {
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
         home: ChangeNotifierProvider(
           create: (context) => miembroModel,
-          child: const Miembro_Widget(),
+          child: MyApp(),
         )
 
         

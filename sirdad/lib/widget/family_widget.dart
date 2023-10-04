@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
+import 'package:sirdad/widget/miembro_widget.dart';
 
 FamilyModel familyModel = FamilyModel();
 
@@ -374,14 +375,13 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                             address: familyModel.textController2!.text,
                             phone: _phone,
                           );
+                          await family.save();
 
-                          //icrementCounter();
-                          //await member.save();
 
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => MyApp()),
-                          // );
+                           Navigator.push(
+                             context,
+                            MaterialPageRoute(builder: (context) => Miembro_Widget()),
+                           );
                         },
                         child: Text('Enviar'),
                       ),

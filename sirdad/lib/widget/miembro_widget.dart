@@ -691,7 +691,6 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           print("surname:");
                           print(member.surname);
                           await member.save();
-
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => MyApp()),
