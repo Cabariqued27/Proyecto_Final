@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
-
 
 FamilyModel familyModel = FamilyModel();
 
@@ -64,48 +64,14 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
                     child: TextFormField(
                       controller: familyModel.textController1,
                       autofocus: true,
                       obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Barrio',
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                        ),
-                        hintStyle: TextStyle(
-                          fontSize: 16,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                      decoration: const InputDecoration(
+                          labelText: 'Barrio', border: OutlineInputBorder()),
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -120,48 +86,14 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
                     child: TextFormField(
                       controller: familyModel.textController2,
                       autofocus: true,
                       obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Dirección',
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                        ),
-                        hintStyle: TextStyle(
-                          fontSize: 16,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                      decoration: const InputDecoration(
+                          labelText: 'Dirección', border: OutlineInputBorder()),
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -176,50 +108,14 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
                     child: TextFormField(
                       controller: familyModel.textController3,
                       autofocus: true,
                       obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Celular',
-                        labelStyle: TextStyle(
-                            fontSize: 16), // Cambia el estilo si es necesario
-                        hintStyle: TextStyle(
-                            fontSize: 16), // Cambia el estilo si es necesario
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.black, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.blue, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.red, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.red, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                      decoration: const InputDecoration(
+                          labelText: 'Celular', border: OutlineInputBorder()),
                       style: TextStyle(
                           fontSize: 16), // Cambia el estilo si es necesario
                       onChanged: (value) {
@@ -233,50 +129,14 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
                     child: TextFormField(
                       controller: familyModel.textController4,
                       autofocus: true,
                       obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Fecha',
-                        labelStyle: TextStyle(
-                            fontSize: 16), // Cambia el estilo si es necesario
-                        hintStyle: TextStyle(
-                            fontSize: 16), // Cambia el estilo si es necesario
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.black, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.blue, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.red, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.red, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                      decoration: const InputDecoration(
+                          labelText: 'Fecha', border: OutlineInputBorder()),
                       style: TextStyle(
                           fontSize: 16), // Cambia el estilo si es necesario
                       onChanged: (value) {
@@ -290,50 +150,15 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
                     child: TextFormField(
                       controller: familyModel.textController5,
                       autofocus: true,
                       obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Jefe del Hogar',
-                        labelStyle: TextStyle(
-                            fontSize: 16), // Cambia el estilo si es necesario
-                        hintStyle: TextStyle(
-                            fontSize: 16), // Cambia el estilo si es necesario
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.black, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.blue, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.red, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color:
-                                Colors.red, // Cambia el color si es necesario
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                      decoration: const InputDecoration(
+                          labelText: 'Jefe del Hogar',
+                          border: OutlineInputBorder()),
                       style: TextStyle(
                           fontSize: 16), // Cambia el estilo si es necesario
                       onChanged: (value) {
@@ -359,7 +184,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Opacity(
-                      opacity: 0.6,
+                      opacity: 2.0,
                       child: ElevatedButton(
                         onPressed: () async {
                           String _phone_text =
