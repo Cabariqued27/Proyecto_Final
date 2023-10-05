@@ -1,27 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../getters/event_model.dart';
 import '../models/event.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => EventData(),
-      child: MyApp(),
-    ),
-  );
-}
-
-class EventData extends ChangeNotifier {
-  List<Event> _events = [];
-
-  List<Event> get events => _events;
-
-  void addEvent(Event event) {
-    _events.add(event);
-    notifyListeners();
-  }
-}
+EventData EventModel = EventData();
 
 class MyApp extends StatelessWidget {
   @override
@@ -150,29 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                _familyNameController.clear();
-                                _needsController.clear();
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title:
-                                          Text('-->PANTALLA DE CREAR FAMILIA'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('Cancelar'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text('+'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MyApp()),
+                              );
                               },
                               child: Text('+'),
                             ),
