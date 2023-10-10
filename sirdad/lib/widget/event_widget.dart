@@ -32,6 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _familyNameController = TextEditingController();
   TextEditingController _needsController = TextEditingController();
 
+  
+
   Future<void> _addEvent(EventData eventData) async {
     if (_formKey.currentState!.validate()) {
       String eventName = _eventNameController.text;
@@ -40,7 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       Event newEvent = Event(
           name: eventName, description: eventDescription, date: eventDate);
-          await newEvent.save();
+          
+          
       eventData.addEvent(newEvent);
 
       _eventNameController.clear();

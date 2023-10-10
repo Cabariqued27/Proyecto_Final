@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sirdad/getters/family_model.dart';
+import 'package:sirdad/models/event.dart';
 import 'package:sirdad/models/family.dart';
 
 FamilyModel familyModel = FamilyModel();
@@ -14,19 +15,9 @@ class FamilyWidget extends StatefulWidget {
 }
 
 class _FamilyWidgetState extends State<FamilyWidget> {
-  // TextEditingController textController1 = TextEditingController();
-  // TextEditingController textController2 = TextEditingController();
-  // TextEditingController textController3 = TextEditingController();
-  // TextEditingController textController4 = TextEditingController();
-  // TextEditingController textController5 = TextEditingController();
 
   @override
   void dispose() {
-    // textController1.dispose();
-    // textController2.dispose();
-    // textController3.dispose();
-    // textController4.dispose();
-    // textController5.dispose();
     super.dispose();
   }
 
@@ -184,7 +175,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Opacity(
-                      opacity: 2.0,
+                      opacity: 0.5,
                       child: ElevatedButton(
                         onPressed: () async {
                           String _phone_text =
@@ -194,15 +185,20 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                               int.parse(familyModel.textController3!.text);
                           int _nid = int.parse(_phone_text);
 
+
+Event event = Event(name: 'primer', description: 'dd', date: 'eee');
+                          await event.save();
                           //Este es tú objeto de prueba
                           Family family = Family(
                             barrio: familyModel.textController1!.text,
                             address: familyModel.textController2!.text,
-                            phone: _phone,
+                            phone: _phone,eventId: 1
                           );
+                          await family.save();
+                          
 
                           //icrementCounter();
-                          //await member.save();
+                          
 
                           // Navigator.push(
                           //   context,

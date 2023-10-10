@@ -10,8 +10,10 @@ class EventData extends ChangeNotifier {
 
   List<Event> get events => _events;
 
-  void addEvent(Event event) {
+  Future<void> addEvent(Event event) async {
     _events.add(event);
+    await event.save();
+    print(event.id);
     notifyListeners();
   }
 }
