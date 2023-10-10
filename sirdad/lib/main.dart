@@ -8,7 +8,7 @@ import 'package:sirdad/widget/miembro_widget.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 class MainApp extends StatelessWidget {
   
