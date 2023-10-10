@@ -1,5 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sirdad/firebaseDb.dart/event_model_fb.dart';
 
 import '../models/event.dart';
 
@@ -66,6 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  late DatabaseReference dbRef;
+  @override
+  void initState() {
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('Events');
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,6 +125,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ElevatedButton(
                     onPressed: () {
                       _addEvent(context.read<EventData>());
+                      addEvent(_eventNameController.text, _descriptionController.text, _dateController.text);
+                      
                     },
                     child: Text('Agregar Evento'),
                   ),

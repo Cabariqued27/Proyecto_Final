@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sirdad/firebaseDb.dart/family_model_fb.dart';
 
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
@@ -195,11 +196,8 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                           int _nid = int.parse(_phone_text);
 
                           //Este es tú objeto de prueba
-                          Family family = Family(
-                            barrio: familyModel.textController1!.text,
-                            address: familyModel.textController2!.text,
-                            phone: _phone,
-                          );
+                          
+                          addFamily(familyModel.textController1!.text, familyModel.textController2!.text,_phone , 'asdasd', 'asd');
 
                           //icrementCounter();
                           //await member.save();

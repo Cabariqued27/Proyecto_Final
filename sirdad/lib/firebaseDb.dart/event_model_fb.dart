@@ -1,5 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-final DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
 void addEvent(String name, String description, String date) {
   databaseReference.child("events").push().set({
