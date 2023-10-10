@@ -5,13 +5,11 @@ import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
 
-void main() async {
-  await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MainApp());
 }
-
 class MainApp extends StatelessWidget {
   
   const MainApp({super.key});
