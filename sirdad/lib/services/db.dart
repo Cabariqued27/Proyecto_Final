@@ -7,7 +7,7 @@ class db {
 
   Future<Database> open()async{
     String path = join(await getDatabasesPath(),name);
-    //await deleteDatabase(path);
+   // await deleteDatabase(path);
     return openDatabase(path, 
     version: version,
     onConfigure: onConfigure,

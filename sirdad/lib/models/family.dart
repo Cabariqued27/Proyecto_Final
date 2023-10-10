@@ -44,21 +44,21 @@ class Family extends Crud {
     };
   }
 
-  save() async {
-    print("Family");
-    await ((idf > 0) ? update(toMap()) : create(toMap()));
-  }
+   save() async {
+     print("Family");
+     await ((idf > 0) ? update(toMap()) : create(toMap()));
+   }
 
-  remove() async {
-    await delete(idf);
-  }
+   remove() async {
+     await delete(idf);
+   }
 
-  Future<List<Family>> getFamilys() async {
-    var resultf = await query('SELECT * FROM $familyTable');
-    return _getListObject(resultf);
-  }
+   Future<List<Family>> getFamilys() async {
+     var resultf = await query('SELECT * FROM $familyTable');
+     return _getListObject(resultf);
+   }
 
-  List<Family> _getListObject(parsed) {
-    return (parsed as List).map((map) => toObject(map)).toList();
-  }
+   List<Family> _getListObject(parsed) {
+     return (parsed as List).map((map) => toObject(map)).toList();
+   }
 }

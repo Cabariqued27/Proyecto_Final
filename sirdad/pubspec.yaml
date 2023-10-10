@@ -37,10 +37,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   sqflite: ^2.3.0
-  path: ^1.8.3
-  connectivity_plus: ^4.0.2
-  firebase_core: ^2.16.0
-  cloud_firestore: ^4.9.2
+  path: ^1.8.3 
+  firebase_core: ^2.17.0
+  cloud_firestore: ^4.9.3
+  provider: ^6.0.5
+  firebase_database: ^10.2.7
   
   
 
