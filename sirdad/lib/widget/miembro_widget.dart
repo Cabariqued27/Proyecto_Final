@@ -568,10 +568,7 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           //icrementCounter();
                           await member.save();
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyApp()),
-                          );
+                          Navigator.pop(context);
                         },
                         child: Text('Enviar'),
                       ),
