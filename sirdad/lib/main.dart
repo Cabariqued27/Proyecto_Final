@@ -16,11 +16,16 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => miembroModel)],
+      providers: [
+        ChangeNotifierProvider(create: (_) => miembroModel),
+        ChangeNotifierProvider(create: (_) => familyModel),
+
+        //Colocar aquí todos los ChangeNotifierProvider de los modelos que se van a usar
+      ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-          home: const FormatWidget()
+          home: const FamilyWidget()
           // ChangeNotifierProvider(
           //   create: (context) => familyModel,
           //   child: const FormatWidget(),

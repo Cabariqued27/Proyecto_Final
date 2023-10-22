@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/models/member.dart';
+import 'package:sirdad/provider/members_provider.dart';
 import 'package:sirdad/widget/reload.dart';
 
 MiembroModel miembroModel = MiembroModel();
@@ -567,7 +568,8 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           print(member.surname);
                           //icrementCounter();
                           await member.save();
-
+                      // AQUÍ TENDRÍA QUE HACER EL CAMBIO DE ESTADO HACIA LA PANTALLA DE EDAN
+                      Provider.of<Members_Provider>(context, listen: false).addMember(member);
                           Navigator.pop(context);
                         },
                         child: Text('Enviar'),

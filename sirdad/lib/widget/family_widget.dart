@@ -184,7 +184,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Opacity(
-                      opacity: 2.0,
+                      opacity: 1.0,
                       child: ElevatedButton(
                         onPressed: () async {
                           String _phone_text =
