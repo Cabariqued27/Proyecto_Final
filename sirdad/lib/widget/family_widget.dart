@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/firebaseDb.dart/family_model_fb.dart';
 
 import 'package:sirdad/getters/family_model.dart';
+import 'package:sirdad/models/event.dart';
 import 'package:sirdad/models/family.dart';
+import 'package:sirdad/widget/format_widget.dart';
+import 'package:sirdad/widget/miembro_widget.dart';
 
 FamilyModel familyModel = FamilyModel();
 
@@ -15,19 +17,8 @@ class FamilyWidget extends StatefulWidget {
 }
 
 class _FamilyWidgetState extends State<FamilyWidget> {
-  // TextEditingController textController1 = TextEditingController();
-  // TextEditingController textController2 = TextEditingController();
-  // TextEditingController textController3 = TextEditingController();
-  // TextEditingController textController4 = TextEditingController();
-  // TextEditingController textController5 = TextEditingController();
-
   @override
   void dispose() {
-    // textController1.dispose();
-    // textController2.dispose();
-    // textController3.dispose();
-    // textController4.dispose();
-    // textController5.dispose();
     super.dispose();
   }
 
@@ -166,6 +157,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                         familyModel.textController5 =
                             TextEditingController(text: value);
                       },
+                      
                       validator: (value) {
                         // Agrega la lógica de validación si es necesario
                         return null;
@@ -185,7 +177,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Opacity(
-                      opacity: 2.0,
+                      opacity: 1.0,
                       child: ElevatedButton(
                         onPressed: () async {
                           String _phone_text =
@@ -195,12 +187,23 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                               int.parse(familyModel.textController3!.text);
                           int _nid = int.parse(_phone_text);
 
+                          Event event = Event(
+                              name: 'primer', description: 'dd', date: 'eee');
+                          await event.save();
                           //Este es tú objeto de prueba
-                          
-                          addFamily(familyModel.textController1!.text, familyModel.textController2!.text,_phone , 'asdasd', 'asd');
+                          Family family = Family(
+                              barrio: familyModel.textController1!.text,
+                              address: familyModel.textController2!.text,
+                              phone: _phone,
+                              eventId: 1);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const FormatWidget()),
+                          );
+                          await family.save();
 
                           //icrementCounter();
-                          //await member.save();
 
                           // Navigator.push(
                           //   context,

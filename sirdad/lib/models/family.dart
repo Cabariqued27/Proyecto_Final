@@ -46,7 +46,8 @@ class Family extends Crud {
 
    save() async {
      print("Family");
-     await ((idf > 0) ? update(toMap()) : create(toMap()));
+     print(idf);
+     //await ((idf > 0) ? update(toMap()) : create(toMap()));
    }
 
    remove() async {

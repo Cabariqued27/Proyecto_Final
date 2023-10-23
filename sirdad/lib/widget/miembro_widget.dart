@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/models/member.dart';
+import 'package:sirdad/provider/members_provider.dart';
 import 'package:sirdad/widget/reload.dart';
 
 MiembroModel miembroModel = MiembroModel();
@@ -11,6 +12,7 @@ class Miembro_Widget extends StatefulWidget {
   //final SharedData sharedData;
 
   const Miembro_Widget({Key? key}) : super(key: key);
+  
 
   @override
   _Miembro_Widget createState() => _Miembro_Widget();
@@ -50,11 +52,13 @@ class _Miembro_Widget extends State<Miembro_Widget> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                
                 child: TextFormField(
                   controller: miembroModel.textController1,
                   decoration: InputDecoration(
                     labelText: 'Nombre...',
                     border: OutlineInputBorder(),
+                    
                   ),
                   onChanged: (value) {
                     miembroModel.textController1 =
@@ -567,11 +571,10 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           print(member.surname);
                           //icrementCounter();
                           await member.save();
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyApp()),
-                          );
+                          // AQUÍ TENDRÍA QUE HACER EL CAMBIO DE ESTADO HACIA LA PANTALLA DE EDAN
+                          Provider.of<Members_Provider>(context, listen: false)
+                              .addMember(member);
+                          Navigator.pop(context);
                         },
                         child: Text('Enviar'),
                       ),

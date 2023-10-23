@@ -1,13 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import '../firebase_options.dart';
 import '../models/event.dart';
 import '../models/family.dart';
 import '../models/member.dart';
 import '../models/volunteer.dart';
 
 void main() async {
-  
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
