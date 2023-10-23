@@ -27,7 +27,7 @@ class postDB {
   }
 }
 
-void enviarm(member) async {
+void enviarm() async {
   Member member = Member(
       name: 'David',
       surname: 'Cabarique',

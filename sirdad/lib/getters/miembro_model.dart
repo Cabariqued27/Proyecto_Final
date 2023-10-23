@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
-
 
 class MiembroModel extends ChangeNotifier {
   final unfocusNode = FocusNode();
@@ -59,8 +57,8 @@ class MiembroModel extends ChangeNotifier {
   // List<String>? SimpleGroupedCheckboxValueController4;
 
   // este es el de estado del inmueble
-   int? DropDownValue7;
-   List<String>? DropDownButtonController7;
+  int? DropDownValue7;
+  List<String>? DropDownButtonController7;
 
   //este es necesidades
   int? DropDownValue8;
