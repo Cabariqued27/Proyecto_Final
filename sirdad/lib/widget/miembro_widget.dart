@@ -568,12 +568,10 @@ class _Miembro_Widget extends State<Miembro_Widget> {
                           print(member.surname);
                           //icrementCounter();
                           await member.save();
-                          
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyApp()),
-                          );
+                          // AQUÍ TENDRÍA QUE HACER EL CAMBIO DE ESTADO HACIA LA PANTALLA DE EDAN
+                          Provider.of<Members_Provider>(context, listen: false)
+                              .addMember(member);
+                          Navigator.pop(context);
                         },
                         child: Text('Enviar'),
                       ),

@@ -5,7 +5,6 @@ import 'package:sirdad/widget/family_widget.dart';
 import '../getters/event_model.dart';
 import '../models/event.dart';
 
-
 EventData EventModel = EventData();
 
 class MyApp extends StatelessWidget {
@@ -34,8 +33,6 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _familyNameController = TextEditingController();
   TextEditingController _needsController = TextEditingController();
 
-  
-
   Future<void> _addEvent(EventData eventData) async {
     if (_formKey.currentState!.validate()) {
       String eventName = _eventNameController.text;
@@ -44,8 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       Event newEvent = Event(
           name: eventName, description: eventDescription, date: eventDate);
-          
-          
+
       eventData.addEvent(newEvent);
 
       _eventNameController.clear();
@@ -139,9 +135,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => MyApp()),
-                              );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FamilyWidget()),
+                                );
                               },
                               child: Text('+'),
                             ),
