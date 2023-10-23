@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login Page',
+      title: 'Login Page Example',
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
@@ -136,5 +136,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
