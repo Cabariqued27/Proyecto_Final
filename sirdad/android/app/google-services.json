@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "623455353282",
+    "firebase_url": "https://sirdad-sql-default-rtdb.firebaseio.com",
     "project_id": "sirdad-sql",
     "storage_bucket": "sirdad-sql.appspot.com"
   },

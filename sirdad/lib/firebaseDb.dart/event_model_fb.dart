@@ -1,17 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
+final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
 
-class Event {
-  String id;
-  String name;
-  String description;
-  String date;
-
-  Event({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.date,
+void addEvent(String name, String description, String date) {
+  databaseReference.child("events").push().set({
+    'name': name,
+    'description': description,
+    'date': date,
   });
-
-  
 }
