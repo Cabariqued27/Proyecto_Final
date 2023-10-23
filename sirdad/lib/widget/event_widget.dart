@@ -1,29 +1,12 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/firebaseDb.dart/event_model_fb.dart';
+import 'package:sirdad/widget/family_widget.dart';
 
+import '../getters/event_model.dart';
 import '../models/event.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => EventData(),
-      child: MyApp(),
-    ),
-  );
-}
 
-class EventData extends ChangeNotifier {
-  List<Event> _events = [];
-
-  List<Event> get events => _events;
-
-  void addEvent(Event event) {
-    _events.add(event);
-    notifyListeners();
-  }
-}
+EventData EventModel = EventData();
 
 class MyApp extends StatelessWidget {
   @override
@@ -31,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Gestión de Eventos',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       home: MyHomePage(),
     );
@@ -51,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _familyNameController = TextEditingController();
   TextEditingController _needsController = TextEditingController();
 
+  
+
   Future<void> _addEvent(EventData eventData) async {
     if (_formKey.currentState!.validate()) {
       String eventName = _eventNameController.text;
@@ -59,7 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       Event newEvent = Event(
           name: eventName, description: eventDescription, date: eventDate);
-          await newEvent.save();
+          
+          
       eventData.addEvent(newEvent);
 
       _eventNameController.clear();
@@ -67,14 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _dateController.clear();
     }
   }
-
-  late DatabaseReference dbRef;
-  @override
-  void initState() {
-    super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('Events');
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ElevatedButton(
                     onPressed: () {
                       _addEvent(context.read<EventData>());
-                      addEvent(_eventNameController.text, _descriptionController.text, _dateController.text);
-                      
                     },
                     child: Text('Agregar Evento'),
                   ),
@@ -162,29 +138,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                _familyNameController.clear();
-                                _needsController.clear();
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title:
-                                          Text('-->PANTALLA DE CREAR FAMILIA'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('Cancelar'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text('+'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MyApp()),
+                              );
                               },
                               child: Text('+'),
                             ),

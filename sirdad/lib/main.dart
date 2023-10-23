@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sirdad/getters/event_model.dart';
+import 'package:sirdad/widget/acceso_widget.dart';
 import 'package:sirdad/widget/event_widget.dart';
+import 'package:sirdad/widget/family_widget.dart';
+import 'package:sirdad/widget/login_widget.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MainApp());
+
+
+
+void main() {
+  runApp(MainApp());
 }
+
 class MainApp extends StatelessWidget {
   
   const MainApp({super.key});
@@ -22,8 +24,9 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
         home: ChangeNotifierProvider(
-          create: (context) => miembroModel,
-          child: MyApp(),
+          create: (context) => EventModel,
+          child: LoginScreen(),
+        
         )
 
         
