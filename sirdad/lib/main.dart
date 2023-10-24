@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sirdad/firebase_options.dart';
 
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/provider/members_provider.dart';
@@ -9,8 +11,10 @@ import 'package:sirdad/widget/format_widget.dart';
 import 'package:sirdad/widget/login_widget.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
-void main() {
-  runApp(MainApp());
+void main()  async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options:DefaultFirebaseOptions.currentPlatform);
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
