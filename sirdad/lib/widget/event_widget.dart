@@ -1,10 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/widget/family_widget.dart';
 
 import '../getters/event_model.dart';
 import '../models/event.dart';
-
 
 EventData EventModel = EventData();
 
@@ -33,8 +33,13 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _familyNameController = TextEditingController();
   TextEditingController _needsController = TextEditingController();
+  late DatabaseReference dbRef;
 
-  
+  @override
+  void initState() {
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('events');
+  }
 
   Future<void> _addEvent(EventData eventData) async {
     if (_formKey.currentState!.validate()) {
@@ -44,8 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       Event newEvent = Event(
           name: eventName, description: eventDescription, date: eventDate);
-          
-          
+
       eventData.addEvent(newEvent);
 
       _eventNameController.clear();
@@ -138,10 +142,18 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
+                                Map<String, String> events = {
+                                  'name': _eventNameController.text,
+                                  'description': _descriptionController.text,
+                                  'date': _dateController.text
+                                };
+
+                                dbRef.push().set(events);
                                 Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => FamilyWidget()),
-                              );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FamilyWidget()),
+                                );
                               },
                               child: Text('+'),
                             ),

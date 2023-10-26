@@ -13,7 +13,7 @@ import 'package:sirdad/widget/miembro_widget.dart';
 
 void main()  async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options:DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   runApp(const MainApp());
 }
 
@@ -46,3 +46,4 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+

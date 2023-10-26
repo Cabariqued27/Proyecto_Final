@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "623455353282",
-    "firebase_url": "https://sirdad-sql-default-rtdb.firebaseio.com",
-    "project_id": "sirdad-sql",
-    "storage_bucket": "sirdad-sql.appspot.com"
+    "project_number": "704094492497",
+    "project_id": "sirdad-f1fea",
+    "storage_bucket": "sirdad-f1fea.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:623455353282:android:be393eec6f36655d937e5b",
+        "mobilesdk_app_id": "1:704094492497:android:9481a347fae2be12dd6570",
         "android_client_info": {
           "package_name": "com.example.sirdad"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCXi_QKuv4UYfMAa9ssPRTDhAE3St_FZiQ"
+          "current_key": "AIzaSyB6QokLgR95DW6tcWUxiLz2-47n2dfbBrc"
         }
       ],
       "services": {
