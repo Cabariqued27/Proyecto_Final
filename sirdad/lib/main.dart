@@ -13,7 +13,7 @@ import 'package:sirdad/widget/miembro_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   try {
     final app = Firebase.app();
     print("Firebase se ha inicializado correctamente: ${app.name}");
