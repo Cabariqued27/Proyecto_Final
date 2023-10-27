@@ -11,11 +11,20 @@ import 'package:sirdad/widget/format_widget.dart';
 import 'package:sirdad/widget/login_widget.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
-void main()  async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  try {
+    final app = Firebase.app();
+    print("Firebase se ha inicializado correctamente: ${app.name}");
+  } catch (e) {
+    print("Error al inicializar Firebase: $e");
+  }
+
   runApp(const MainApp());
 }
+
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
