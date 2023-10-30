@@ -8,6 +8,10 @@ import '../models/event.dart';
 
 EventData EventModel = EventData();
 
+void main() {
+  runApp(MyApp());
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,14 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _eventNameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  TextEditingController _familyNameController = TextEditingController();
-  TextEditingController _needsController = TextEditingController();
   late DatabaseReference dbRef;
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('events');
+    dbRef = FirebaseDatabase.instance.reference().child('events');
   }
 
   Future<void> _addEvent(EventData eventData) async {
@@ -48,13 +50,23 @@ class _MyHomePageState extends State<MyHomePage> {
       String eventDate = _dateController.text;
 
       Event newEvent = Event(
-          name: eventName, description: eventDescription, date: eventDate);
+        name: eventName,
+        description: eventDescription,
+        date: eventDate,
+      );
 
       eventData.addEvent(newEvent);
 
       _eventNameController.clear();
       _descriptionController.clear();
       _dateController.clear();
+
+      // Guardar el evento en Firebase Realtime Database
+      dbRef.push().set({
+        'name': eventName,
+        'description': eventDescription,
+        'date': eventDate,
+      });
     }
   }
 
@@ -118,7 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
               'Eventos Registrados:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
             Consumer<EventData>(
               builder: (context, eventData, child) {
                 return ListView.builder(
@@ -128,37 +139,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text(
-                            'Nombre del Evento: ${eventData.events[index].name}'),
+                        title: Text('Nombre del Evento: ${eventData.events[index].name}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                                'Descripción: ${eventData.events[index].description}'),
+                            Text('Descripción: ${eventData.events[index].description}'),
                             Text('Fecha: ${eventData.events[index].date}'),
                           ],
                         ),
-                        trailing: Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Map<String, String> events = {
-                                  'name': _eventNameController.text,
-                                  'description': _descriptionController.text,
-                                  'date': _dateController.text
-                                };
-
-                                dbRef.push().set(events);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FamilyWidget()),
-                                );
-                              },
-                              child: Text('+'),
-                            ),
-                          ],
-                        ),
+                        onTap: () {
+                          
+                           Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const FamilyWidget()),
+                          );
+                        },
                       ),
                     );
                   },
@@ -171,3 +167,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
