@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/models/member.dart';
 import 'package:sirdad/provider/members_provider.dart';
-import 'package:sirdad/widget/reload.dart';
+
 
 MiembroModel miembroModel = MiembroModel();
 

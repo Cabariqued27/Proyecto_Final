@@ -6,7 +6,6 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:sirdad/widget/family_widget.dart';
 import 'dart:io';
-
 import '../getters/event_model.dart';
 import '../models/event.dart';
 
@@ -45,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.reference().child('events');
+    dbRef = FirebaseDatabase.instance.ref().child('events');
   }
 
   Future<void> _addEvent(EventData eventData) async {

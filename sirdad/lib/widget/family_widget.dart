@@ -1,8 +1,7 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sirdad/getters/family_model.dart';
-import 'package:sirdad/models/event.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/format_widget.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
@@ -20,6 +19,14 @@ class _FamilyWidgetState extends State<FamilyWidget> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  late DatabaseReference dbRef;
+
+  @override
+  void initState() {
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('family');
   }
 
   @override
@@ -157,7 +164,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                         familyModel.textController5 =
                             TextEditingController(text: value);
                       },
-                      
+
                       validator: (value) {
                         // Agrega la lógica de validación si es necesario
                         return null;
@@ -187,9 +194,13 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                               int.parse(familyModel.textController3!.text);
                           int _nid = int.parse(_phone_text);
 
-                          Event event = Event(
-                              name: 'primer', description: 'dd', date: 'eee');
-                          await event.save();
+                          dbRef.push().set({
+                            'barrio': familyModel.textController1,
+                            'direccion': familyModel.textController2,
+                            'celular': familyModel.textController3,
+                            'date': familyModel.textController4,
+                            'jefe del hogar': familyModel.textController5,
+                          });
                           //Este es tú objeto de prueba
                           Family family = Family(
                               barrio: familyModel.textController1!.text,
