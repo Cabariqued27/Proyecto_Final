@@ -194,7 +194,7 @@ class _FamilyWidgetState extends State<FamilyWidget> {
                               int.parse(familyModel.textController3!.text);
                           int _nid = int.parse(_phone_text);
 
-                          dbRef.push().set({
+                           await dbRef.push().set({
                             'barrio': familyModel.textController1,
                             'direccion': familyModel.textController2,
                             'celular': familyModel.textController3,
