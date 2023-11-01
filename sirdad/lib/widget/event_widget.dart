@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       eventData.addEvent(newEvent);
+      print(eventData.geteventsfb());
 
       _eventNameController.clear();
       _descriptionController.clear();
