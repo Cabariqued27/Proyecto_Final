@@ -6,15 +6,15 @@ import '../models/family.dart';
 import '../models/member.dart';
 import '../models/volunteer.dart';
 
-void main() async {
+/* void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
-}
+} */
 
-class MyApp extends StatelessWidget {
+/* class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+/* class _MyHomePageState extends State<MyHomePage> {
   String events = '';
   String familys = '';
   String members = '';
@@ -57,17 +57,17 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       this.volunteers = volunteers.toString();
     });
-  }
+  } */
 
-  getFamilys() async {
+/*   getFamilys() async {
     List familys = await Family().getFamilys();
     print('Familias obtenidas: $familys');
     setState(() {
       this.familys = familys.toString();
     });
-  }
+  } */
 
-  getEvents() async {
+/*   getEvents() async {
     List events = await Event().getEvents();
     print('Eventos obtenidas: $events');
     setState(() {
@@ -81,9 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       this.members = members.toString();
     });
-  }
+  } */
 
-  void incrementCounter() async {
+  /* void incrementCounter() async {
     Event event =
         Event(name: 'davidcabarique', description: 'prueba', date: 'hoy');
     await event.save();
@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await getVolunteers();
 
     setState(() {});
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -152,3 +152,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+ */

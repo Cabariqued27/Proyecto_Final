@@ -1,79 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
-class MiembroModel extends ChangeNotifier {
-  final unfocusNode = FocusNode();
-  //Este es el de Nombre
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
+class Person {
+  String name;
+  String surname;
+  int kid;
+  int nid;
+  int rela;
+  String gen;
+  int age;
+  int et;
+  int heal;
+  int aheal;
+  int familyId;
 
-  //Este es el de Apellido
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
+  Person({
+    required this.name,
+    required this.surname,
+    required this.kid,
+    required this.nid,
+    required this.rela,
+    required this.gen,
+    required this.age,
+    required this.et,
+    required this.heal,
+    required this.aheal,
+    required this.familyId,
+  });
+}
 
-  // este es el del tipo de documento
-  int? DropDownValue1; //originalmente estaban en String y los cambie por int
-  int? DropDownButtonController1;
+class PersonData extends ChangeNotifier {
+  List<Person> people = [];
 
-  //este text es para el numero del documento
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)?
-      textController3Validator; //revisar si corresponde
-  //este el de parentesco
-  int? DropDownValue2;
-  List<String>? DropDownButtonController2;
-
-  //este es el de genero
-  String? DropDownValue3;
-  List<String>? DropDownButtonController3;
-
-  // bool? SimpleGroupedCheckboxValue1;
-  // GroupController? SimpleGroupedCheckboxValueController1;
-  // List<String>? SimpleGroupedCheckboxValue2;
-  // List<String>? SimpleGroupedCheckboxValueController2;
-
-  // List<String>? checkboxGroupValues4;
-  // FormFieldController<List<String>>? checkboxGroupValueController4;
-  //este es el de ingresar la edad
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
-
-//este es el de etnia
-  int? DropDownValue4;
-  List<String>? DropDownButtonController4;
-  // List<String>? DropDownValue3;
-  // List<String>? DropDownButtonController3;
-
-// este es el de estado de salud
-  int? DropDownValue5;
-  List<String>? DropDownButtonController5;
-  // List<String>? SimpleGroupedCheckboxValue3;
-  // List<String>? SimpleGroupedCheckboxValueController3;
-
-  // este es el de regimen
-  int? DropDownValue6;
-  List<String>? DropDownButtonController6;
-  // List<String>? SimpleGroupedCheckboxValue4;
-  // List<String>? SimpleGroupedCheckboxValueController4;
-
-  // este es el de estado del inmueble
-  int? DropDownValue7;
-  List<String>? DropDownButtonController7;
-
-  //este es necesidades
-  int? DropDownValue8;
-  List<String>? DropDownButtonController8;
-
-  // List<String>? checkboxGroupValues10;
-  // FormFieldController<List<String>>? checkboxGroupValueController10;
-  // List<String>? checkboxGroupValues11;
-  // FormFieldController<List<String>>? checkboxGroupValueController11;
-
-  void dispose() {
-    unfocusNode.dispose();
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
-    textController4?.dispose();
+  void addPerson(Person person) {
+    people.add(person);
+    notifyListeners();
   }
 }

@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.reference().child('events');
+    dbRef = FirebaseDatabase.instance.ref().child('events');
   }
 
   Future<void> _addEvent(EventData eventData) async {
@@ -206,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                            Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const FamilyWidget()),
+                                builder: (context) => FamilyWidget()),
                           );
                         },
                       ),

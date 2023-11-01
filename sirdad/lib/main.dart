@@ -27,14 +27,16 @@ Future<void> main() async {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
+  
+  
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => miembroModel),
-        ChangeNotifierProvider(create: (_) => familyModel),
-        ChangeNotifierProvider(create: (_) => Members_Provider()),
+        //ChangeNotifierProvider(create: (_) => miembroModel),
+        ChangeNotifierProvider(create: (_) => FamilyModel),
+        ChangeNotifierProvider(create: (_) => personData),
         ChangeNotifierProvider(create: (_) => EventModel),
         // ChangeNotifierProvider(create: (_) => )
 

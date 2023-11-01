@@ -15,7 +15,7 @@ class Family extends Crud {
     this.address = '',
     this.phone = 0,
     this.date = '',
-    this.eventId = 0,
+    this.eventId = 0, required String direccion, required String celular, required String fecha, required String jefeHogar,
   }) : super(familyTable);
 
   @override
@@ -23,7 +23,7 @@ class Family extends Crud {
     return '\n Id: $idf barrio: $barrio phone: $phone \n';
   }
 
-  Family toObject(Map<dynamic, dynamic> data) {
+  /* Family toObject(Map<dynamic, dynamic> data) {
     return Family(
         idf: data['idf'],
         barrio: data['barrio'],
@@ -31,7 +31,7 @@ class Family extends Crud {
         phone: data['phone'],
         date: data['date'],
         eventId: data['eventId']);
-  }
+  } */
 
   Map<String, dynamic> toMap() {
     return {
@@ -53,13 +53,13 @@ class Family extends Crud {
    remove() async {
      await delete(idf);
    }
-
+/* 
    Future<List<Family>> getFamilys() async {
      var resultf = await query('SELECT * FROM $familyTable');
      return _getListObject(resultf);
-   }
+   } */
 
-   List<Family> _getListObject(parsed) {
+   /* List<Family> _getListObject(parsed) {
      return (parsed as List).map((map) => toObject(map)).toList();
-   }
+   } */
 }
