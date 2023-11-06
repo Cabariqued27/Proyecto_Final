@@ -5,6 +5,7 @@ import 'package:sirdad/firebase_options.dart';
 
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/provider/members_provider.dart';
+import 'package:sirdad/widget/acceso_widget.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_widget.dart';
 import 'package:sirdad/widget/format_widget.dart';
@@ -38,6 +39,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FamilyModel),
         ChangeNotifierProvider(create: (_) => personData),
         ChangeNotifierProvider(create: (_) => EventModel),
+        ChangeNotifierProvider(create: (_) => accesoModel),
         // ChangeNotifierProvider(create: (_) => )
 
         //Colocar aquí todos los ChangeNotifierProvider de los modelos que se van a usar
