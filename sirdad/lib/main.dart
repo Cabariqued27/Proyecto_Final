@@ -37,7 +37,7 @@ class MainApp extends StatelessWidget {
       providers: [
         //ChangeNotifierProvider(create: (_) => miembroModel),
         ChangeNotifierProvider(create: (_) => FamilyModel),
-        ChangeNotifierProvider(create: (_) => personData),
+        ChangeNotifierProvider(create: (_) => memberData),
         ChangeNotifierProvider(create: (_) => EventModel),
         ChangeNotifierProvider(create: (_) => accesoModel),
         // ChangeNotifierProvider(create: (_) => )

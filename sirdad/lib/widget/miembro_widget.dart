@@ -2,10 +2,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/miembro_model.dart';
+import 'package:sirdad/models/member.dart';
 
 
 
-PersonData personData = PersonData();
+MemberData memberData = MemberData();
 
 void main() {
   runApp(MiembroWidget());
@@ -48,10 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('people');
+    dbRef = FirebaseDatabase.instance.ref().child('members');
   }
 
-  Future<void> _addPerson(PersonData personData) async {
+  Future<void> _addPerson(MemberData MemberData) async {
     if (_formKey.currentState!.validate()) {
       String name = _nameController.text;
       String surname = _surnameController.text;
@@ -65,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       int aheal = int.parse(_ahealController.text);
       int familyId = int.parse(_familyIdController.text);
 
-      Person newPerson = Person(
+      Member newMember = Member(
         name: name,
         surname: surname,
         kid: kid,
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         familyId: familyId,
       );
 
-      personData.addPerson(newPerson);
+      MemberData.addMember(newMember);
 
       _nameController.clear();
       _surnameController.clear();
@@ -245,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      _addPerson(personData);
+                      _addPerson(context.read<MemberData>());
                     },
                     child: Text('Agregar Persona'),
                   ),
@@ -257,13 +258,13 @@ class _MyHomePageState extends State<MyHomePage> {
               'Personas Registradas:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            Consumer<PersonData>(
-              builder: (context, personData, child) {
+            Consumer<MemberData>(
+              builder: (context, MemberData, child) {
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: personData.people.length,
+                  itemCount: MemberData.members.length,
                   itemBuilder: (context, index) {
-                    Person person = personData.people[index];
+                    Member person = MemberData.members[index];
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(

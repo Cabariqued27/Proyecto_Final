@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
 import 'package:sirdad/getters/family_model.dart';
+import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
 
@@ -47,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('families');
+    dbRef = FirebaseDatabase.instance.ref().child('familys');
   }
 
   Future<void> _addFamily(FamilyData familyData) async {
@@ -63,10 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
         address: familyAddress,
         phone: familyPhone,
         date: familyDate,
-        headOfFamily: familyHead,
+        eventId:familyHead, 
       );
 
       familyData.addFamily(newFamily);
+      print(familyData.getfamilysfb());
 
       _barrioController.clear();
       _addressController.clear();
@@ -85,15 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _generatePDF(List<Family> families) async {
+  Future<void> _generatePDF(List<Family> familys) async {
     final pdf = pw.Document();
 
-    // Generate the content of the PDF from the list of families
+    // Generate the content of the PDF from the list of familys
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) {
           return pw.Column(
-            children: families
+            children: familys
                 .map(
                   (family) => pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -102,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       pw.Text('Address: ${family.address}'),
                       pw.Text('Phone: ${family.phone.toString()}'),
                       pw.Text('Date: ${family.date}'),
-                      pw.Text('Jefe de familia: ${family.headOfFamily}'),
+                      pw.Text('Jefe de familia: ${family.eventId}'),
                       pw.SizedBox(height: 16),
                     ],
                   ),
@@ -117,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final output = await getApplicationDocumentsDirectory();
 
     // Create the PDF file in the document directory
-    final pdfFile = File("${output.path}/families.pdf");
+    final pdfFile = File("${output.path}/familys.pdf");
 
     // Write the content of the PDF to the file
     await pdfFile.writeAsBytes(await pdf.save());
@@ -205,9 +207,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      // Get the list of families from the context
-                      List<Family> families = context.read<FamilyData>().families;
-                      _generatePDF(families);
+                      // Get the list of familys from the context
+                      List<Family> familys = context.read<FamilyData>().familys;
+                      _generatePDF(familys);
                     },
                     child: Text('Generar PDF de Familias'),
                   ),
@@ -223,19 +225,19 @@ class _MyHomePageState extends State<MyHomePage> {
               builder: (context, familyData, child) {
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: familyData.families.length,
+                  itemCount: familyData.familys.length,
                   itemBuilder: (context, index) {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text('Barrio: ${familyData.families[index].barrio}'),
+                        title: Text('Barrio: ${familyData.familys[index].barrio}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Dirección: ${familyData.families[index].address}'),
-                            Text('Teléfono: ${familyData.families[index].phone.toString()}'),
-                            Text('Fecha: ${familyData.families[index].date}'),
-                            Text('Jefe de familia: ${familyData.families[index].headOfFamily}'),
+                            Text('Dirección: ${familyData.familys[index].address}'),
+                            Text('Teléfono: ${familyData.familys[index].phone.toString()}'),
+                            Text('Fecha: ${familyData.familys[index].date}'),
+                            Text('Jefe de familia: ${familyData.familys[index].eventId}'),
                           ],
                         ),
                         onTap: () {

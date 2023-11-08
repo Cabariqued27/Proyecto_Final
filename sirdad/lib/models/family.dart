@@ -7,15 +7,15 @@ class Family extends Crud {
   String address;
   int phone;
   String date;
-  int eventId;
+  String eventId;
 
   Family({
-    this.idf = 0,
-    this.barrio = '',
-    this.address = '',
-    this.phone = 0,
-    this.date = '',
-    this.eventId = 0, required String direccion, required String celular, required String fecha, required String jefeHogar,
+     this.idf=0,
+    required this.barrio,
+    required this.address,
+    required this.phone,
+    required this.date,
+    required this.eventId,
   }) : super(familyTable);
 
   @override
@@ -44,22 +44,21 @@ class Family extends Crud {
     };
   }
 
-   save() async {
-     print("Family");
-     print(idf);
-     //await ((idf > 0) ? update(toMap()) : create(toMap()));
-   }
+  save() async {
+    print("Family");
+    return await((idf > 0) ? update(toMap()) : create(toMap()));
+  }
 
-   remove() async {
-     await delete(idf);
-   }
+  remove() async {
+    await delete(idf);
+  }
 /* 
    Future<List<Family>> getFamilys() async {
      var resultf = await query('SELECT * FROM $familyTable');
      return _getListObject(resultf);
    } */
 
-   /* List<Family> _getListObject(parsed) {
+  /* List<Family> _getListObject(parsed) {
      return (parsed as List).map((map) => toObject(map)).toList();
    } */
 }
