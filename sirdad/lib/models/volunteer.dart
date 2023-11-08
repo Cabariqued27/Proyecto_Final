@@ -4,20 +4,26 @@ import '../services/tables.dart';
 class Volunteer extends Crud {
   int idv;
   String namev;
+  String password;
   int nidv;
   int phonev;
   String ong;
   String sign;
   String news;
+  bool hasAccess;
+  bool isAdmid;
 
   Volunteer({
     this.idv = 0,
     this.namev = '',
+    this.password = '',
     this.nidv = 0,
     this.phonev = 0,
     this.ong = '',
     this.sign = '',
     this.news = '',
+    this.hasAccess = false,
+    this.isAdmid = false,
   }) : super(volunteerTable);
 
   @override
@@ -27,14 +33,17 @@ class Volunteer extends Crud {
 
   Volunteer toObject(Map<dynamic, dynamic> data) {
     return Volunteer(
-      idv: data['idv'],
-      namev: data['namev'],
-      nidv: int.parse(data['nidv']),
-      phonev: int.parse(data['phonev']),
-      ong: data['ong'],
-      sign: data['sign'],
-      news: data['news']
-    );
+        idv: data['idv'],
+        namev: data['namev'],
+        password: data['password'],
+        nidv: int.parse(data['nidv']),
+        phonev: int.parse(data['phonev']),
+        ong: data['ong'],
+        sign: data['sign'],
+        news: data['news'],
+        hasAccess: data[false],
+        isAdmid: data[false]);
+        
   }
 
   Map<String, dynamic> toMap() {
@@ -46,26 +55,26 @@ class Volunteer extends Crud {
       'ong': ong,
       'sign': sign,
       'news': news,
+      'hasAccess': hasAccess,
+      'isAmid': isAdmid,
     };
   }
 
-  
+  save() async {
+    print("Volunteer");
+    return await ((idv > 0) ? update(toMap()) : create(toMap()));
+  }
 
-   save() async {
-     print("Volunteer");
-     return await ((idv > 0) ? update(toMap()) : create(toMap()));
-   }
+  remove() async {
+    await delete(idv);
+  }
 
-   remove() async {
-     await delete(idv);
-   }
+  Future<List<Volunteer>> getVolunteers() async {
+    var resultf = await query('SELECT * FROM $volunteerTable');
+    return _getListObject(resultf);
+  }
 
-   Future<List<Volunteer>> getVolunteers() async {
-     var resultf = await query('SELECT * FROM $volunteerTable');
-     return _getListObject(resultf);
-   }
-
-   List<Volunteer> _getListObject(parsed) {
-     return (parsed as List).map((map) => toObject(map)).toList();
-   }
+  List<Volunteer> _getListObject(parsed) {
+    return (parsed as List).map((map) => toObject(map)).toList();
+  }
 }

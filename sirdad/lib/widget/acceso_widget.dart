@@ -215,6 +215,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
               news: _newsController.text,
             ));
             print(userProvider.users[0].name);
+            
             Navigator.of(context).pop();
           },
         ),
