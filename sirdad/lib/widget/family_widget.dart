@@ -8,7 +8,7 @@ import 'dart:io';
 
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
-import 'package:sirdad/widget/miembro_widget.dart';
+import 'package:sirdad/widget/member_widget.dart';
 
 
 
