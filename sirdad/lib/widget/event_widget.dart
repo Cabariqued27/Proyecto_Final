@@ -2,13 +2,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw; 
+import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart'; // Importar el paquete de permisos
 import 'package:sirdad/widget/family_widget.dart';
 import 'dart:io';
+
 import '../getters/event_model.dart';
 import '../models/event.dart';
-
 
 EventData EventModel = EventData();
 
@@ -60,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       eventData.addEvent(newEvent);
+      print(eventData.geteventsfb());
 
       _eventNameController.clear();
       _descriptionController.clear();
@@ -75,44 +77,57 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _generatePDF(List<Event> events) async {
-    final pdf = pw.Document();
+    // Verificar y solicitar permiso de escritura en el almacenamiento externo
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      final pdf = pw.Document();
 
-    // Generar el contenido del PDF a partir de la lista de eventos
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Column(
-            children: events
-                .map(
-                  (event) => pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text('Nombre del Evento: ${event.name}'),
-                      pw.Text('Descripción: ${event.description}'),
-                      pw.Text('Fecha: ${event.date}'),
-                      pw.SizedBox(height: 16),
-                    ],
-                  ),
-                )
-                .toList(),
-          );
-        },
-      ),
-    );
+      // Generar el contenido del PDF a partir de la lista de eventos
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Column(
+              children: events
+                  .map(
+                    (event) => pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Text('Nombre del Evento: ${event.name}'),
+                        pw.Text('Descripción: ${event.description}'),
+                        pw.Text('Fecha: ${event.date}'),
+                        pw.SizedBox(height: 16),
+                      ],
+                    ),
+                  )
+                  .toList(),
+            );
+          },
+        ),
+      );
 
-    // Obtener el directorio de documentos en el dispositivo
-    final output = await getApplicationDocumentsDirectory();
+      // Obtener el directorio de almacenamiento externo
+      final directory = await getExternalStorageDirectory();
+      if (directory != null) {
+        // Crear el archivo PDF en el directorio de almacenamiento externo
+        final pdfFilePath = '${directory.path}/eventos.pdf';
 
-    // Crear el archivo PDF en el directorio de documentos
-    final pdfFile = File("${output.path}/eventos.pdf");
+        // Escribir el contenido del PDF en el archivo
+        await File(pdfFilePath).writeAsBytes(await pdf.save());
 
-    // Escribir el contenido del PDF en el archivo
-    await pdfFile.writeAsBytes(await pdf.save());
-
-    // Mostrar un mensaje de éxito
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('PDF generado con éxito en ${pdfFile.path}'),
-    ));
+        // Mostrar un mensaje de éxito
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('PDF generado con éxito en $pdfFilePath'),
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('No se pudo acceder al almacenamiento externo.'),
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Se requieren permisos de almacenamiento para guardar el PDF.'),
+      ));
+    }
   }
 
   @override
@@ -205,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
                            Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const FamilyWidget()),
+                                builder: (context) => FamilyWidget()),
                           );
                         },
                       ),

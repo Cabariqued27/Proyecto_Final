@@ -1,6 +1,6 @@
 import 'package:sirdad/services/tables.dart';
 import '../services/crud.dart';
- //Importa la clase member
+//Importa la clase member
 
 class Member extends Crud {
   int idm;
@@ -18,17 +18,17 @@ class Member extends Crud {
 
   Member({
     this.idm = 0,
-    this.name = '',
-    this.surname = '',
-    this.kid = 0,
-    this.nid = 0,
-    this.rela = 0,
-    this.gen = '',
-    this.age = 0,
-    this.et = 0,
-    this.heal = 0,
-    this.aheal = 0,
-    this.familyId = 0,
+    required this.name,
+    required this.surname,
+    required this.kid,
+    required this.nid,
+    required this.rela,
+    required this.gen,
+    required this.age,
+    required this.et,
+    required this.heal,
+    required this.aheal,
+    required this.familyId,
   }) : super(memberTable);
 
   @override
@@ -70,21 +70,21 @@ class Member extends Crud {
     };
   }
 
-   save() async {
-     print("Member");
-     await ((idm > 0) ? update(toMap()) : create(toMap()));
-   }
+  save() async {
+    print("Member");
+    await ((idm > 0) ? update(toMap()) : create(toMap()));
+  }
 
-   remove() async {
-     await delete(idm);
-   }
+  remove() async {
+    await delete(idm);
+  }
 
-   Future<List<Member>> getMembers() async {
-     var resultf = await query('SELECT * FROM $memberTable');
-     return _getListObject(resultf);
-   }
+  Future<List<Member>> getMembers() async {
+    var resultf = await query('SELECT * FROM $memberTable');
+    return _getListObject(resultf);
+  }
 
-   List<Member> _getListObject(parsed) {
-     return (parsed as List).map((map) => toObject(map)).toList();
-   }
+  List<Member> _getListObject(parsed) {
+    return (parsed as List).map((map) => toObject(map)).toList();
+  }
 }

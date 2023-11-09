@@ -1,4 +1,6 @@
+import 'dart:ffi';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../getters/acceso_model.dart';
@@ -6,8 +8,7 @@ import '../models/event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-UserProvider AccesoModel = UserProvider();
-
+UserProvider accesoModel = UserProvider();
 
 class AccesoScreen extends StatelessWidget {
   @override
@@ -98,15 +99,41 @@ class AddUserDialog extends StatefulWidget {
 }
 
 class _AddUserDialogState extends State<AddUserDialog> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _ongController = TextEditingController();
   final TextEditingController _signController = TextEditingController();
   final TextEditingController _newsController = TextEditingController();
 
+  late DatabaseReference dbRef;
+
+  // Future<void> _addUser(UserProvider userProvider) async {
+  //   if (_formKey.currentState!.validate()) {
+  //     String name = _nameController.text;
+  //     int id = int.parse(_idController.text);
+  //     int phone = int.parse(_phoneController.text);
+  //     String ong = _ongController.text;
+  //     String sign = _signController.text;
+  //     String news = _newsController.text;
+
+  //     User newUser = User(
+  //         name= name, false,
+  //         idv: id,
+  //         phonev: phone,
+  //         ong: ong,
+  //         sign: sign,
+  //         news: news);
+
+  //     userProvider.addUser(newUser);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
+    final accesoModel = context.watch<UserProvider>();
     return AlertDialog(
       title: Text('Agregar Nuevo Usuario'),
       content: SingleChildScrollView(
@@ -117,6 +144,12 @@ class _AddUserDialogState extends State<AddUserDialog> {
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: 'Nombre del Usuario',
+              ),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: 'Contraseña',
               ),
             ),
             TextField(
@@ -168,9 +201,12 @@ class _AddUserDialogState extends State<AddUserDialog> {
             style: TextStyle(color: Theme.of(context).hintColor),
           ),
           onPressed: () {
-            final userProvider = Provider.of<UserProvider>(context, listen: false);
+            final userProvider =
+                Provider.of<UserProvider>(context, listen: false);
+
             userProvider.addUser(User(
               _nameController.text,
+              _passwordController.text,
               false,
               idv: int.parse(_idController.text),
               phonev: int.parse(_phoneController.text),
@@ -178,6 +214,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
               sign: _signController.text,
               news: _newsController.text,
             ));
+            print(userProvider.users[0].name);
             Navigator.of(context).pop();
           },
         ),

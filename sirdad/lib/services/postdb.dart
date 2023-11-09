@@ -4,7 +4,7 @@ import 'package:sirdad/models/member.dart';
 import 'package:sirdad/models/volunteer.dart';
 import '../models/event.dart';
 
-class postDB {
+/* class postDB {
   String events = '';
   String familys = '';
   String members = '';
@@ -53,3 +53,4 @@ void enviarv() async {
       news: 'no paso nada');
   await volunteer.save();
 }
+ */

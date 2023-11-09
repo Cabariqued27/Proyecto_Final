@@ -1,234 +1,261 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
-import 'package:sirdad/widget/format_widget.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
-FamilyModel familyModel = FamilyModel();
 
-class FamilyWidget extends StatefulWidget {
-  const FamilyWidget({Key? key}) : super(key: key);
 
-  @override
-  _FamilyWidgetState createState() => _FamilyWidgetState();
+FamilyData FamilyModel = FamilyData();
+
+void main() {
+  runApp(FamilyWidget());
 }
 
-class _FamilyWidgetState extends State<FamilyWidget> {
+class FamilyWidget extends StatelessWidget {
   @override
-  void dispose() {
-    super.dispose();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Gestión de Familias',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: MyHomePage(),
+    );
   }
+}
 
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _barrioController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _headOfFamilyController = TextEditingController();
   late DatabaseReference dbRef;
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.ref().child('family');
+    dbRef = FirebaseDatabase.instance.ref().child('familys');
+  }
+
+  Future<void> _addFamily(FamilyData familyData) async {
+    if (_formKey.currentState!.validate()) {
+      String familyBarrio = _barrioController.text;
+      String familyAddress = _addressController.text;
+      int familyPhone = int.parse(_phoneController.text);
+      String familyDate = _dateController.text;
+      String familyHead = _headOfFamilyController.text;
+
+      Family newFamily = Family(
+        barrio: familyBarrio,
+        address: familyAddress,
+        phone: familyPhone,
+        date: familyDate,
+        jefe:familyHead, 
+        eventId: 'unico',
+      );
+
+      familyData.addFamily(newFamily);
+      print(familyData.getfamilysfb());
+
+      _barrioController.clear();
+      _addressController.clear();
+      _phoneController.clear();
+      _dateController.clear();
+      _headOfFamilyController.clear();
+
+      // Save the family in Firebase Realtime Database
+      dbRef.push().set({
+        'barrio': familyBarrio,
+        'address': familyAddress,
+        'phone': familyPhone,
+        'date': familyDate,
+        'headOfFamily': familyHead,
+      });
+    }
+  }
+
+  Future<void> _generatePDF(List<Family> familys) async {
+    final pdf = pw.Document();
+
+    // Generate the content of the PDF from the list of familys
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            children: familys
+                .map(
+                  (family) => pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('Barrio: ${family.barrio}'),
+                      pw.Text('Address: ${family.address}'),
+                      pw.Text('Phone: ${family.phone.toString()}'),
+                      pw.Text('Date: ${family.date}'),
+                      pw.Text('Jefe de familia: ${family.eventId}'),
+                      pw.SizedBox(height: 16),
+                    ],
+                  ),
+                )
+                .toList(),
+          );
+        },
+      ),
+    );
+
+    // Get the document directory on the device
+    final output = await getApplicationDocumentsDirectory();
+
+    // Create the PDF file in the document directory
+    final pdfFile = File("${output.path}/familys.pdf");
+
+    // Write the content of the PDF to the file
+    await pdfFile.writeAsBytes(await pdf.save());
+
+    // Show a success message
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('PDF generated successfully at ${pdfFile.path}'),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    final familyModel = context.watch<FamilyModel>();
-
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        backgroundColor:
-            Colors.white, // Cambia el color de fondo según tus preferencias
-        appBar: AppBar(
-          backgroundColor: Colors
-              .blue, // Cambia el color de la barra de navegación según tus preferencias
-          automaticallyImplyLeading: false,
-          title: Text(
-            'JEFE DE FAMILIA',
-            style: TextStyle(
-              fontFamily: 'Outfit',
-              color: Colors.white,
-              fontSize: 22,
-            ),
-          ),
-          actions: [],
-          centerTitle: false,
-          elevation: 2,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    child: TextFormField(
-                      controller: familyModel.textController1,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: const InputDecoration(
-                          labelText: 'Barrio', border: OutlineInputBorder()),
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                      onChanged: (value) {
-                        familyModel.textController1 =
-                            TextEditingController(text: value);
-                      },
-                      validator: (value) {
-                        // Implementa la lógica de validación aquí si es necesario
-                        return null; // Retorna null si la validación es exitosa
-                      },
-                    ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Gestión de Familias'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: _barrioController,
+                    decoration: InputDecoration(labelText: 'Barrio'),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, ingresa el barrio.';
+                      }
+                      return null;
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    child: TextFormField(
-                      controller: familyModel.textController2,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: const InputDecoration(
-                          labelText: 'Dirección', border: OutlineInputBorder()),
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                      onChanged: (value) {
-                        familyModel.textController2 =
-                            TextEditingController(text: value);
-                      },
-                      validator: (value) {
-                        // Implementa la lógica de validación aquí si es necesario
-                        return null; // Retorna null si la validación es exitosa
-                      },
-                    ),
+                  TextFormField(
+                    controller: _addressController,
+                    decoration: InputDecoration(labelText: 'Dirección'),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, ingresa la dirección.';
+                      }
+                      return null;
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    child: TextFormField(
-                      controller: familyModel.textController3,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: const InputDecoration(
-                          labelText: 'Celular', border: OutlineInputBorder()),
-                      style: TextStyle(
-                          fontSize: 16), // Cambia el estilo si es necesario
-                      onChanged: (value) {
-                        familyModel.textController3 =
-                            TextEditingController(text: value);
-                      },
-                      validator: (value) {
-                        // Agrega la lógica de validación si es necesario
-                        return null;
-                      },
-                    ),
+                  TextFormField(
+                    controller: _phoneController,
+                    decoration: InputDecoration(labelText: 'Teléfono'),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, ingresa el teléfono.';
+                      }
+                      if (int.tryParse(value) == null) {
+                        return 'El teléfono debe ser un número.';
+                      }
+                      return null;
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    child: TextFormField(
-                      controller: familyModel.textController4,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: const InputDecoration(
-                          labelText: 'Fecha', border: OutlineInputBorder()),
-                      style: TextStyle(
-                          fontSize: 16), // Cambia el estilo si es necesario
-                      onChanged: (value) {
-                        familyModel.textController4 =
-                            TextEditingController(text: value);
-                      },
-                      validator: (value) {
-                        // Agrega la lógica de validación si es necesario
-                        return null;
-                      },
-                    ),
+                  TextFormField(
+                    controller: _dateController,
+                    decoration: InputDecoration(labelText: 'Fecha'),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, ingresa la fecha.';
+                      }
+                      return null;
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    child: TextFormField(
-                      controller: familyModel.textController5,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: const InputDecoration(
-                          labelText: 'Jefe del Hogar',
-                          border: OutlineInputBorder()),
-                      style: TextStyle(
-                          fontSize: 16), // Cambia el estilo si es necesario
-                      onChanged: (value) {
-                        familyModel.textController5 =
-                            TextEditingController(text: value);
-                      },
-
-                      validator: (value) {
-                        // Agrega la lógica de validación si es necesario
-                        return null;
-                      },
-                    ),
+                  TextFormField(
+                    controller: _headOfFamilyController,
+                    decoration: InputDecoration(labelText: 'Jefe de familia'),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Por favor, ingresa el jefe de familia.';
+                      }
+                      return null;
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _addFamily(context.read<FamilyData>());
+                    },
+                    child: Text('Agregar Familia'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Get the list of familys from the context
+                      List<Family> familys = context.read<FamilyData>().familys;
+                      _generatePDF(familys);
+                    },
+                    child: Text('Generar PDF de Familias'),
                   ),
                 ],
               ),
-              Container(
-                width: 100,
-                height: 134,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Opacity(
-                      opacity: 1.0,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          String _phone_text =
-                              familyModel.textController3!.text;
-
-                          int _phone =
-                              int.parse(familyModel.textController3!.text);
-                          int _nid = int.parse(_phone_text);
-
-                           await dbRef.push().set({
-                            'barrio': familyModel.textController1,
-                            'direccion': familyModel.textController2,
-                            'celular': familyModel.textController3,
-                            'date': familyModel.textController4,
-                            'jefe del hogar': familyModel.textController5,
-                          });
-                          //Este es tú objeto de prueba
-                          Family family = Family(
-                              barrio: familyModel.textController1!.text,
-                              address: familyModel.textController2!.text,
-                              phone: _phone,
-                              eventId: 1);
-                          Navigator.push(
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Familias Registradas:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Consumer<FamilyData>(
+              builder: (context, familyData, child) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: familyData.familys.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      child: ListTile(
+                        title: Text('Barrio: ${familyData.familys[index].barrio}'),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Dirección: ${familyData.familys[index].address}'),
+                            Text('Teléfono: ${familyData.familys[index].phone.toString()}'),
+                            Text('Fecha: ${familyData.familys[index].date}'),
+                            Text('Jefe de familia: ${familyData.familys[index].eventId}'),
+                          ],
+                        ),
+                        onTap: () {
+                          
+                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const FormatWidget()),
+                                builder: (context) => MiembroWidget()),
                           );
-                          await family.save();
-
-                          //icrementCounter();
-
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => MyApp()),
-                          // );
                         },
-                        child: Text('Enviar'),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sirdad/getters/acceso_model.dart';
 import 'package:sirdad/widget/acceso_widget.dart';
 
 import '../getters/event_model.dart';
@@ -45,23 +46,57 @@ class _LoginPageState extends State<LoginPage> {
   String password = '';
 
   // Define a list of allowed users
-  final List<User> allowedUsers = [
-    User(username: 'admin', password: 'password', isAdmin: true),
-    User(username: 'user', password: '123456', isAdmin: false),
-  ];
+  // final List<User> allowedUsers = [
+  //   User(username: 'admin', password: 'password', isAdmin: true),
+  //   User(username: 'user', password: '123456', isAdmin: false),
+  // ];
 
   // Verify if the user is allowed to proceed
-  User? verifyUser() {
-    for (final user in allowedUsers) {
-      if (user.username == username && user.password == password) {
+  // User? verifyAdmin() {
+  //   for (final user in allowedUsers) {
+  //     if (user.username == username && user.password == password) {
+  //       return user;
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  verifyUser(String username, String password) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    for (final user in userProvider.users) {
+      if (user.name == username && user.password == password) {
         return user;
       }
     }
     return null;
   }
 
-  void _login() {
-    final verifiedUser = verifyUser();
+  // void _login(String username, String password) {
+  //   final verifiedUser = verifyUser(username, password);
+  //   if (verifiedUser != null) {
+  //     if (verifiedUser.isAdmin) {
+  //       // Navigate to the admin panel or authenticated area
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => AccesoScreen()),
+  //       );
+  //     } else {
+  //       // Navigate to the regular user panel or authenticated area
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => MyApp()),
+  //       );
+  //     }
+  //   } else {
+  //     // Handle invalid login or show an error message
+  //     print('Invalid login');
+  //   }
+  // }
+
+  _login(String username, String password) {
+    final verifiedUser = verifyUser(username, password);
+    // final verifiedAdmin = verifyAdmin();
     if (verifiedUser != null) {
       if (verifiedUser.isAdmin) {
         // Navigate to the admin panel or authenticated area
@@ -125,7 +160,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 24.0),
                 ElevatedButton(
-                  onPressed: _login,
+                  onPressed: () {
+                    _login(username, password);
+                  },
                   child: Text('Login'),
                 ),
               ],
@@ -136,4 +173,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
