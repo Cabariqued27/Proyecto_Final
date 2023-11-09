@@ -1,79 +1,57 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:sirdad/models/member.dart';
 import 'package:sirdad/widget/miembro_widget.dart';
 
-class MiembroModel extends ChangeNotifier {
-  final unfocusNode = FocusNode();
-  //Este es el de Nombre
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
+class MemberData extends ChangeNotifier {
+  List<Member> _members = [];
+  List<Member> get members => _members;
 
-  //Este es el de Apellido
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
+  Future<void> addMember(Member member) async {
+    _members.add(member);
+    await member.save();
+    notifyListeners();
+  }
 
-  // este es el del tipo de documento
-  int? DropDownValue1; //originalmente estaban en String y los cambie por int
-  int? DropDownButtonController1;
+  Future<void> getmembersfb() async {
+    final ref = FirebaseDatabase.instance.ref().child('members');
+    final snapshot = await ref.get();
 
-  //este text es para el numero del documento
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)?
-      textController3Validator; //revisar si corresponde
-  //este el de parentesco
-  int? DropDownValue2;
-  List<String>? DropDownButtonController2;
+    if (snapshot.exists) {
+      final Map<dynamic, dynamic> data =
+          snapshot.value as Map<dynamic, dynamic>;
 
-  //este es el de genero
-  String? DropDownValue3;
-  List<String>? DropDownButtonController3;
+      data.forEach((key, value) {
+        int idm = data['idm'];
+        String name = data['name'];
+        String surname = data['surname'];
+        int kid = data['kid'];
+        int nid = data['nid'];
+        int rela = data['rela'];
+        String gen = data['gen'];
+        int age = data['age'];
+        int et = data['et'];
+        int heal = data['heal'];
+        int aheal = data['aheal'];
+        int familyId = data['familyId'];
 
-  // bool? SimpleGroupedCheckboxValue1;
-  // GroupController? SimpleGroupedCheckboxValueController1;
-  // List<String>? SimpleGroupedCheckboxValue2;
-  // List<String>? SimpleGroupedCheckboxValueController2;
-
-  // List<String>? checkboxGroupValues4;
-  // FormFieldController<List<String>>? checkboxGroupValueController4;
-  //este es el de ingresar la edad
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
-
-//este es el de etnia
-  int? DropDownValue4;
-  List<String>? DropDownButtonController4;
-  // List<String>? DropDownValue3;
-  // List<String>? DropDownButtonController3;
-
-// este es el de estado de salud
-  int? DropDownValue5;
-  List<String>? DropDownButtonController5;
-  // List<String>? SimpleGroupedCheckboxValue3;
-  // List<String>? SimpleGroupedCheckboxValueController3;
-
-  // este es el de regimen
-  int? DropDownValue6;
-  List<String>? DropDownButtonController6;
-  // List<String>? SimpleGroupedCheckboxValue4;
-  // List<String>? SimpleGroupedCheckboxValueController4;
-
-  // este es el de estado del inmueble
-  int? DropDownValue7;
-  List<String>? DropDownButtonController7;
-
-  //este es necesidades
-  int? DropDownValue8;
-  List<String>? DropDownButtonController8;
-
-  // List<String>? checkboxGroupValues10;
-  // FormFieldController<List<String>>? checkboxGroupValueController10;
-  // List<String>? checkboxGroupValues11;
-  // FormFieldController<List<String>>? checkboxGroupValueController11;
-
-  void dispose() {
-    unfocusNode.dispose();
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
-    textController4?.dispose();
+        Member newMember = Member(
+            idm: idm,
+            name: name,
+            surname: surname,
+            kid: kid,
+            nid: nid,
+            rela: rela,
+            gen: gen,
+            age: age,
+            et: et,
+            heal: heal,
+            aheal: aheal,
+            familyId: familyId);
+            addMember(newMember);
+      });
+    } else {
+      print('No data available.');
+    }
   }
 }
