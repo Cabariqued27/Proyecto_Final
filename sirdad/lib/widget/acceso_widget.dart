@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:sirdad/models/volunteer.dart';
 
 import '../getters/acceso_model.dart';
 import '../models/event.dart';
@@ -46,7 +47,7 @@ class UserListScreen extends StatelessWidget {
 
               return ListTile(
                 title: Text(
-                  user.name,
+                  user.namev,
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
@@ -204,18 +205,20 @@ class _AddUserDialogState extends State<AddUserDialog> {
             final userProvider =
                 Provider.of<UserProvider>(context, listen: false);
 
-            userProvider.addUser(User(
-              _nameController.text,
-              _passwordController.text,
-              false,
+            userProvider.addUser(Volunteer(
+              namev: _nameController.text,
+              password: _passwordController.text,
+              hasAccess: false,
               idv: int.parse(_idController.text),
               phonev: int.parse(_phoneController.text),
               ong: _ongController.text,
               sign: _signController.text,
               news: _newsController.text,
             ));
-            print(userProvider.users[0].name);
-            
+            Volunteer newUser = userProvider.users[1]; // esto esta apuntando al metodo de addUser en acceso_model
+            //que  a su vez usa el objeto Volunteer de la BD local
+            print("user$newUser.name");
+
             Navigator.of(context).pop();
           },
         ),

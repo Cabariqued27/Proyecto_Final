@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/acceso_model.dart';
+import 'package:sirdad/models/volunteer.dart';
 import 'package:sirdad/widget/acceso_widget.dart';
 
 import '../getters/event_model.dart';
@@ -65,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     for (final user in userProvider.users) {
-      if (user.name == username && user.password == password) {
+      if (user.namev == username && user.password == password) {
         return user;
       }
     }
@@ -98,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
     final verifiedUser = verifyUser(username, password);
     // final verifiedAdmin = verifyAdmin();
     if (verifiedUser != null) {
-      if (verifiedUser.isAdmin) {
+      if (verifiedUser.isAdmid) {
         // Navigate to the admin panel or authenticated area
         Navigator.push(
           context,
