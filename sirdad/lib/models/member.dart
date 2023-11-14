@@ -72,7 +72,7 @@ class Member extends Crud {
 
   save() async {
     print("Member");
-    await ((idm > 0) ? update(toMap()) : create(toMap()));
+    //await ((idm > 0) ? update(toMap()) : create(toMap()));
   }
 
   remove() async {

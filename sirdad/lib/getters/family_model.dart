@@ -27,6 +27,7 @@ class FamilyData extends ChangeNotifier {
         String address = value['address'];
         int phone = value['phone'];
         String date = value['date'];
+        String jefe = value['jefe'];
         String eventId = value['eventId'];
 
         Family newFamily = Family(
@@ -34,6 +35,7 @@ class FamilyData extends ChangeNotifier {
             address: address,
             phone: phone,
             date: date,
+            jefe: jefe,
             eventId: eventId);
         addFamily(newFamily);
       });
