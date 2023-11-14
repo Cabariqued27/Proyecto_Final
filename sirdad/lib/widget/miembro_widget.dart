@@ -1,10 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/getters/miembro_model.dart';
-import 'package:sirdad/models/member.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
 
-
+import '../getters/miembro_model.dart';
+import '../models/member.dart';
 
 MemberData memberData = MemberData();
 
@@ -52,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     dbRef = FirebaseDatabase.instance.ref().child('members');
   }
 
-  Future<void> _addPerson(MemberData MemberData) async {
+  Future<void> _addPerson(MemberData memberData) async {
     if (_formKey.currentState!.validate()) {
       String name = _nameController.text;
       String surname = _surnameController.text;
@@ -80,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         familyId: familyId,
       );
 
-      MemberData.addMember(newMember);
+      memberData.addMember(newMember);
 
       _nameController.clear();
       _surnameController.clear();
@@ -94,7 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _ahealController.clear();
       _familyIdController.clear();
 
-      // Save the person in Firebase Realtime Database
       dbRef.push().set({
         'name': name,
         'surname': surname,
@@ -108,6 +111,58 @@ class _MyHomePageState extends State<MyHomePage> {
         'aheal': aheal,
         'familyId': familyId,
       });
+    }
+  }
+
+  Future<void> _generatePDF(List<Member> members) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            children: members
+                .map(
+                  (member) => pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('Nombre: ${member.name} ${member.surname}'),
+                      pw.Text('Kid: ${member.kid}'),
+                      pw.Text('Nid: ${member.nid}'),
+                      pw.Text('Rela: ${member.rela}'),
+                      pw.Text('Gen: ${member.gen}'),
+                      pw.Text('Edad: ${member.age}'),
+                      pw.Text('Et: ${member.et}'),
+                      pw.Text('Heal: ${member.heal}'),
+                      pw.Text('Aheal: ${member.aheal}'),
+                      pw.Text('ID de Familia: ${member.familyId}'),
+                      pw.SizedBox(height: 16),
+                    ],
+                  ),
+                )
+                .toList(),
+          );
+        },
+      ),
+    );
+
+    final status = await Permission.storage.status;
+    if (status.isGranted) {
+      final directory = await getExternalStorageDirectory();
+      final pdfFilePath = '${directory!.path}/Download/miembros.pdf';
+
+      if (!await Directory('${directory.path}/Download').exists()) {
+        await Directory('${directory.path}/Download').create(recursive: true);
+      }
+
+      await File(pdfFilePath).writeAsBytes(await pdf.save());
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('PDF generado con éxito en $pdfFilePath'),
+      ));
+    } else {
+      await Permission.storage.request();
+      _generatePDF(members);
     }
   }
 
@@ -250,6 +305,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text('Agregar Persona'),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      List<Member> members = context.read<MemberData>().members;
+                      _generatePDF(members);
+                    },
+                    child: Text('Generar PDF de Personas'),
+                  ),
                 ],
               ),
             ),
@@ -259,12 +321,12 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Consumer<MemberData>(
-              builder: (context, MemberData, child) {
+              builder: (context, memberData, child) {
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: MemberData.members.length,
+                  itemCount: memberData.members.length,
                   itemBuilder: (context, index) {
-                    Member person = MemberData.members[index];
+                    Member person = memberData.members[index];
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
