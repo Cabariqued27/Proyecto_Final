@@ -84,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'phone': familyPhone,
         'date': familyDate,
         'jefe': familyHead,
+       'eventId':'no hay',
       });
     }
   }
