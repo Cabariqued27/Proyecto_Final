@@ -17,7 +17,7 @@ class Family extends Crud {
     required this.phone,
     required this.date,
     required this.jefe,
-    required this.eventId,
+     this.eventId='este',
   }) : super(familyTable);
 
   @override
@@ -50,7 +50,7 @@ class Family extends Crud {
 
   save() async {
     print("Family");
-    //return await((idf > 0) ? update(toMap()) : create(toMap()));
+    // await((idf > 0) ? update(toMap()) : create(toMap()));
   }
 
   remove() async {

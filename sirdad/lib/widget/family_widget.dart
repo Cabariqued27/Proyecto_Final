@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'address': familyAddress,
         'phone': familyPhone,
         'date': familyDate,
-        'headOfFamily': familyHead,
+        'jefe': familyHead,
       });
     }
   }
