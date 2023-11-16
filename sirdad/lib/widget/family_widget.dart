@@ -87,48 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _generatePDF(List<Family> familys) async {
-    final pdf = pw.Document();
-
-    // Generate the content of the PDF from the list of familys
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Column(
-            children: familys
-                .map(
-                  (family) => pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text('Barrio: ${family.barrio}'),
-                      pw.Text('Address: ${family.address}'),
-                      pw.Text('Phone: ${family.phone.toString()}'),
-                      pw.Text('Date: ${family.date}'),
-                      pw.Text('Jefe de familia: ${family.eventId}'),
-                      pw.SizedBox(height: 16),
-                    ],
-                  ),
-                )
-                .toList(),
-          );
-        },
-      ),
-    );
-
-    // Get the document directory on the device
-    final output = await getApplicationDocumentsDirectory();
-
-    // Create the PDF file in the document directory
-    final pdfFile = File("${output.path}/familys.pdf");
-
-    // Write the content of the PDF to the file
-    await pdfFile.writeAsBytes(await pdf.save());
-
-    // Show a success message
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('PDF generated successfully at ${pdfFile.path}'),
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +167,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       // Get the list of familys from the context
                       List<Family> familys = context.read<FamilyData>().familys;
-                      _generatePDF(familys);
                     },
                     child: Text('Generar PDF de Familias'),
                   ),

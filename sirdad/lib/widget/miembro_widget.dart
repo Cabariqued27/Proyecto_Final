@@ -1,8 +1,7 @@
+import 'package:csv/csv.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
@@ -114,55 +113,57 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _generatePDF(List<Member> members) async {
-    final pdf = pw.Document();
+  Future<void> _generateCSV(List<Member> members) async {
+    final List<List<dynamic>> csvData = [];
 
-    pdf.addPage(
-      pw.Page(
-        build: (pw.Context context) {
-          return pw.Column(
-            children: members
-                .map(
-                  (member) => pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text('Nombre: ${member.name} ${member.surname}'),
-                      pw.Text('Kid: ${member.kid}'),
-                      pw.Text('Nid: ${member.nid}'),
-                      pw.Text('Rela: ${member.rela}'),
-                      pw.Text('Gen: ${member.gen}'),
-                      pw.Text('Edad: ${member.age}'),
-                      pw.Text('Et: ${member.et}'),
-                      pw.Text('Heal: ${member.heal}'),
-                      pw.Text('Aheal: ${member.aheal}'),
-                      pw.Text('ID de Familia: ${member.familyId}'),
-                      pw.SizedBox(height: 16),
-                    ],
-                  ),
-                )
-                .toList(),
-          );
-        },
-      ),
-    );
+    csvData.add([
+      'Nombre',
+      'Apellido',
+      'Kid',
+      'Nid',
+      'Rela',
+      'Gen',
+      'Edad',
+      'Et',
+      'Heal',
+      'Aheal',
+      'ID de Familia',
+    ]);
+
+    members.forEach((member) {
+      csvData.add([
+        member.name,
+        member.surname,
+        member.kid,
+        member.nid,
+        member.rela,
+        member.gen,
+        member.age,
+        member.et,
+        member.heal,
+        member.aheal,
+        member.familyId,
+      ]);
+    });
 
     final status = await Permission.storage.status;
     if (status.isGranted) {
       final directory = await getExternalStorageDirectory();
-      final pdfFilePath = '${directory!.path}/Download/miembros.pdf';
+      final csvFilePath = '${directory!.path}/Download/miembros.csv';
 
       if (!await Directory('${directory.path}/Download').exists()) {
         await Directory('${directory.path}/Download').create(recursive: true);
       }
 
-      await File(pdfFilePath).writeAsBytes(await pdf.save());
+      final csvFile = File(csvFilePath);
+      csvFile.writeAsString(const ListToCsvConverter().convert(csvData));
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('PDF generado con éxito en $pdfFilePath'),
+        content: Text('CSV generado con éxito en $csvFilePath'),
       ));
     } else {
       await Permission.storage.request();
-      _generatePDF(members);
+      _generateCSV(members);
     }
   }
 
@@ -308,9 +309,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ElevatedButton(
                     onPressed: () {
                       List<Member> members = context.read<MemberData>().members;
-                      _generatePDF(members);
+                      _generateCSV(members);
                     },
-                    child: Text('Generar PDF de Personas'),
+                    child: Text('Generar CSV de Personas'),
                   ),
                 ],
               ),

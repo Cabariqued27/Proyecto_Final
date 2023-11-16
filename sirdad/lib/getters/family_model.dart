@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/family_widget.dart';
 
@@ -15,30 +14,35 @@ class FamilyData extends ChangeNotifier {
   }
 
   Future<void> getfamilysfb() async {
-    final ref = FirebaseDatabase.instance.ref().child('familys');
-    final snapshot = await ref.get();
+    try {
+      final ref = FirebaseDatabase.instance.reference().child('familys');
+      final snapshot = await ref.get();
 
-    if (snapshot.exists) {
-      final Map<dynamic, dynamic> data =
-          snapshot.value as Map<dynamic, dynamic>;
+      if (snapshot.exists) {
+        final Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
 
-      data.forEach((key, value) {
-        String barrio = value['barrio'];
-        String address = value['address'];
-        int phone = value['phone'];
-        String date = value['date'];
-        String eventId = value['eventId'];
+        data.forEach((key, value) {
+          String barrio = value['barrio'] ?? '';
+          String address = value['address'] ?? '';
+          int phone = value['phone'] ?? 0;
+          String date = value['date'] ?? '';
+          String eventId = value['eventId'] ?? '';
 
-        Family newFamily = Family(
+          Family newFamily = Family(
             barrio: barrio,
             address: address,
             phone: phone,
             date: date,
-            eventId: eventId);
-        addFamily(newFamily);
-      });
-    } else {
-      print('No data available.');
+            eventId: eventId,
+          );
+
+          addFamily(newFamily);
+        });
+      } else {
+        print('No data available.');
+      }
+    } catch (error) {
+      print('Error fetching data from Firebase: $error');
     }
   }
 }

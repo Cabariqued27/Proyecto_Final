@@ -47,7 +47,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-          home: MiembroWidget()
+          home: MyApp()
           //const FormatWidget()
           // ChangeNotifierProvider(
           //   create: (context) => familyModel,
