@@ -46,6 +46,7 @@ dependencies:
   cloud_firestore: ^4.9.3
   provider: ^6.0.5
   firebase_database: ^10.3.2
+  syncfusion_flutter_xlsio: 23.1.44
   
   
 

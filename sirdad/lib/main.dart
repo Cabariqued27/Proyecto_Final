@@ -6,6 +6,7 @@ import 'package:sirdad/firebase_options.dart';
 import 'package:sirdad/getters/miembro_model.dart';
 import 'package:sirdad/provider/members_provider.dart';
 import 'package:sirdad/widget/acceso_widget.dart';
+import 'package:sirdad/widget/create_excel_widget.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_widget.dart';
 import 'package:sirdad/widget/format_widget.dart';
@@ -25,11 +26,8 @@ Future<void> main() async {
   runApp(const MainApp());
 }
 
-
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +38,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => memberData),
         ChangeNotifierProvider(create: (_) => EventModel),
         ChangeNotifierProvider(create: (_) => accesoModel),
+        
         // ChangeNotifierProvider(create: (_) => )
 
         //Colocar aquí todos los ChangeNotifierProvider de los modelos que se van a usar
@@ -47,7 +46,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-          home: const LoginScreen()
+          home: const Excel()
           //const FormatWidget()
           // ChangeNotifierProvider(
           //   create: (context) => familyModel,
@@ -58,4 +57,3 @@ class MainApp extends StatelessWidget {
     );
   }
 }
-
