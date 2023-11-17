@@ -1,7 +1,8 @@
-import 'package:csv/csv.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
@@ -113,59 +114,127 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _generateCSV(List<Member> members) async {
-    final List<List<dynamic>> csvData = [];
+Future<void> _generatePDF(List<Member> members) async {
+  final pdf = pw.Document();
 
-    csvData.add([
-      'Nombre',
-      'Apellido',
-      'Kid',
-      'Nid',
-      'Rela',
-      'Gen',
-      'Edad',
-      'Et',
-      'Heal',
-      'Aheal',
-      'ID de Familia',
-    ]);
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) {
+        return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              'Evaluacion de daños y analisis de necesidades (EDAN)',
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 16),
+            ),
+            pw.SizedBox(height: 12),
+            _buildInfoBoxes(),
+            pw.SizedBox(height: 12),
+            pw.Table(
+              border: pw.TableBorder.all(),
+              children: [
+                pw.TableRow(
+                  children: [
+                    pw.Text('Nombre'),
+                    pw.Text('Kid'),
+                    pw.Text('Nid'),
+                    pw.Text('Rela'),
+                    pw.Text('Gen'),
+                    pw.Text('Edad'),
+                    pw.Text('Et'),
+                    pw.Text('Heal'),
+                    pw.Text('Aheal'),
+                    pw.Text('ID de Familia'),
+                  ],
+                ),
+                // Add a TableRow for each member
+                for (var member in members)
+                  pw.TableRow(
+                    children: [
+                      pw.Text('${member.name} ${member.surname}'),
+                      pw.Text('${member.kid}'),
+                      pw.Text('${member.nid}'),
+                      pw.Text('${member.rela}'),
+                      pw.Text('${member.gen}'),
+                      pw.Text('${member.age}'),
+                      pw.Text('${member.et}'),
+                      pw.Text('${member.heal}'),
+                      pw.Text('${member.aheal}'),
+                      pw.Text('${member.familyId}'),
+                    ],
+                  ),
+              ],
+            ),
+          ],
+        );
+      },
+    ),
+  );
 
-    members.forEach((member) {
-      csvData.add([
-        member.name,
-        member.surname,
-        member.kid,
-        member.nid,
-        member.rela,
-        member.gen,
-        member.age,
-        member.et,
-        member.heal,
-        member.aheal,
-        member.familyId,
-      ]);
-    });
+   final status = await Permission.storage.status;
+     if (status.isGranted) {
+       final directory = await getExternalStorageDirectory();
+       final pdfFilePath = '${directory!.path}/Download/miembros.pdf';
 
-    final status = await Permission.storage.status;
-    if (status.isGranted) {
-      final directory = await getExternalStorageDirectory();
-      final csvFilePath = '${directory!.path}/Download/miembros.csv';
-
-      if (!await Directory('${directory.path}/Download').exists()) {
-        await Directory('${directory.path}/Download').create(recursive: true);
+       if (!await Directory('${directory.path}/Download').exists()) {
+         await Directory('${directory.path}/Download').create(recursive: true);
       }
 
-      final csvFile = File(csvFilePath);
-      csvFile.writeAsString(const ListToCsvConverter().convert(csvData));
+       await File(pdfFilePath).writeAsBytes(await pdf.save());
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('CSV generado con éxito en $csvFilePath'),
+     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('PDF generado con éxito en $pdfFilePath'),
       ));
-    } else {
+     } else {
       await Permission.storage.request();
-      _generateCSV(members);
-    }
-  }
+      _generatePDF(members);
+     }
+}
+
+pw.Widget _buildInfoBoxes() {
+  return pw.Row(
+    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    children: [
+      _buildInfoBox('Barrio'),
+      _buildInfoBox('Direccion'),
+      _buildInfoBox('Celular'),
+      _buildInfoBox('Fecha'),
+      _buildInfoBox('Firma del Jefe'),
+    ],
+  );
+}
+
+pw.Widget _buildInfoBox(String label) {
+  return pw.Container(
+    width: 100, // Adjust the width as needed
+    child: pw.Column(
+      children: [
+        pw.Text(label, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+        pw.Container(height: 20, width: double.infinity, decoration: pw.BoxDecoration(border: pw.Border.all())),
+      ],
+    ),
+  );
+}
+
+
+    // final status = await Permission.storage.status;
+    // if (status.isGranted) {
+    //   final directory = await getExternalStorageDirectory();
+    //   final pdfFilePath = '${directory!.path}/Download/miembros.pdf';
+
+    //   if (!await Directory('${directory.path}/Download').exists()) {
+    //     await Directory('${directory.path}/Download').create(recursive: true);
+    //   }
+
+    //   await File(pdfFilePath).writeAsBytes(await pdf.save());
+
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: Text('PDF generado con éxito en $pdfFilePath'),
+    //   ));
+    // } else {
+    //   await Permission.storage.request();
+    //   _generatePDF(members);
+    // }
 
   @override
   Widget build(BuildContext context) {
@@ -309,9 +378,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ElevatedButton(
                     onPressed: () {
                       List<Member> members = context.read<MemberData>().members;
-                      _generateCSV(members);
+                      _generatePDF(members);
                     },
-                    child: Text('Generar CSV de Personas'),
+                    child: Text('Generar PDF de Personas'),
                   ),
                 ],
               ),
