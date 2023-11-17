@@ -8,7 +8,7 @@ import 'dart:io';
 
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
-import 'package:sirdad/widget/miembro_widget.dart';
+import 'package:sirdad/widget/member_widget.dart';
 
 
 
@@ -64,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
         address: familyAddress,
         phone: familyPhone,
         date: familyDate,
-        eventId:familyHead, 
+        jefe:familyHead, 
+        eventId: 'unico',
       );
 
       familyData.addFamily(newFamily);
@@ -82,7 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
         'address': familyAddress,
         'phone': familyPhone,
         'date': familyDate,
-        'headOfFamily': familyHead,
+        'jefe': familyHead,
+       'eventId':'no hay',
       });
     }
   }

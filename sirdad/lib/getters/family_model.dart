@@ -23,18 +23,20 @@ class FamilyData extends ChangeNotifier {
           snapshot.value as Map<dynamic, dynamic>;
 
       data.forEach((key, value) {
-        String barrio = value['barrio'];
-        String address = value['address'];
-        int phone = value['phone'];
-        String date = value['date'];
-        String eventId = value['eventId'];
+        String barrio = value['barrio']?? "";
+        String address = value['address']?? "";
+        int phone = value['phone']?? "";
+        String date = value['date']?? "";
+        String jefe = value['jefe']?? "";
+        String eventId = value['eventId'] ?? "";
 
         Family newFamily = Family(
             barrio: barrio,
             address: address,
             phone: phone,
             date: date,
-            eventId: eventId);
+            jefe: jefe,
+            eventId: eventId,);
         addFamily(newFamily);
       });
     } else {

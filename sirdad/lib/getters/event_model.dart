@@ -35,9 +35,9 @@ class EventData extends ChangeNotifier {
         print('Description: $description');
         print('Name: $name');
          Event newEvent = Event(
-        name: date,
+        name: name,
         description: description,
-        date: name,
+        date: date,
       );
       addEvent(newEvent);
 
