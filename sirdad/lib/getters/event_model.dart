@@ -1,10 +1,8 @@
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../models/event.dart';
-
 
 class EventData extends ChangeNotifier {
   List<Event> _events = [];
@@ -17,7 +15,8 @@ class EventData extends ChangeNotifier {
     print(event.id);
     notifyListeners();
   }
-   Future<void> geteventsfb() async {
+
+  Future<void> geteventsfb() async {
     final ref = FirebaseDatabase.instance.ref().child('events');
     final snapshot = await ref.get();
 
@@ -34,13 +33,11 @@ class EventData extends ChangeNotifier {
         print('Date: $date');
         print('Description: $description');
         print('Name: $name');
-         Event newEvent = Event(
-        name: name,
-        description: description,
-        date: date,
-      );
-      addEvent(newEvent);
-
+        Event newEvent = Event(
+          name: name,
+          description: description,
+          date: date,);
+        addEvent(newEvent);
       });
     } else {
       print('No data available.');

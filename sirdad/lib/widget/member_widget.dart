@@ -81,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       MemberData.addMember(newMember);
+      print(MemberData.getmembersfb());
 
       _nameController.clear();
       _surnameController.clear();
@@ -96,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // Save the person in Firebase Realtime Database
       dbRef.push().set({
+        'idm':8,
         'name': name,
         'surname': surname,
         'kid': kid,
