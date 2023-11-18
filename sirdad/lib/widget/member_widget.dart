@@ -1,10 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sirdad/getters/miembro_model.dart';
-import 'package:sirdad/models/member.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
 
-
+import '../getters/miembro_model.dart';
+import '../models/member.dart';
 
 MemberData memberData = MemberData();
 
@@ -52,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     dbRef = FirebaseDatabase.instance.ref().child('members');
   }
 
-  Future<void> _addPerson(MemberData MemberData) async {
+  Future<void> _addPerson(MemberData memberData) async {
     if (_formKey.currentState!.validate()) {
       String name = _nameController.text;
       String surname = _surnameController.text;
@@ -80,8 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         familyId: familyId,
       );
 
-      MemberData.addMember(newMember);
-      print(MemberData.getmembersfb());
+      memberData.addMember(newMember);
 
       _nameController.clear();
       _surnameController.clear();
@@ -95,9 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _ahealController.clear();
       _familyIdController.clear();
 
-      // Save the person in Firebase Realtime Database
       dbRef.push().set({
-        'idm':8,
         'name': name,
         'surname': surname,
         'kid': kid,
@@ -112,6 +113,245 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
+
+Future<void> _generatePDF(List<Member> members) async {
+  final pdf = pw.Document();
+
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) {
+        return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            // Title Box
+            pw.Container(
+              width: double.infinity,
+              padding: pw.EdgeInsets.all(10),
+              margin: pw.EdgeInsets.only(bottom: 10),
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(),
+              ),
+              child: pw.Text(
+                '  Evaluacion de daños y analisis de necesidades (EDAN)',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 16),
+              ),
+            ),
+            pw.Row(
+              
+              children: [
+                // Left Section
+                pw.Container(
+                  width: 100, // Adjust the width as needed
+                  height: 40, // Adjust the height as needed
+                  child: pw.Column(
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: [
+                      pw.Text('NGRD'),
+                    ],
+                  ),
+                  decoration: pw.BoxDecoration(border: pw.Border.all()),
+                ),
+                // Center Section
+                pw.Text(
+                  'Gestion manejo de desastres',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 15),
+                ),
+                // Right Sections
+                pw.Container(
+                  width: 120, // Adjust the width as needed
+                  height: 40, // Adjust the height as needed
+                  child: pw.Column(
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: [
+                      pw.Text('Codigo: FR-1703-SMD-08'),
+                    ],
+                  ),
+                  decoration: pw.BoxDecoration(border: pw.Border.all()),
+                ),
+                pw.Container(
+                  width: 80, // Adjust the width as needed
+                  height: 40, // Adjust the height as needed
+                  child: pw.Column(
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: [
+                      pw.Text('version.01'),
+                    ],
+                  ),
+                  decoration: pw.BoxDecoration(border: pw.Border.all()),
+                ),
+              ],
+            ),
+            pw.SizedBox(height: 3),
+            _buildInfoBoxes(),
+            pw.SizedBox(height: 3),
+            pw.Table(
+              border: pw.TableBorder.all(),
+              children: [
+                pw.TableRow(
+                  children: [
+                    pw.Text('Nombre'),
+                    pw.Text('Tipo de documento'),
+                    pw.Text('Numero de documento'),
+                    pw.Text('Parentesco con el jefe de Hogar'),
+                    pw.Text('Genero'),
+                    pw.Text('Edad'),
+                    pw.Text('Etnia'),
+                    pw.Text('Estado de salud'),
+                    pw.Text('Afiliacion al regimen de salud'),
+                    pw.Text('Estado del Inmueble'),
+                  ],
+                ),
+                // Add a TableRow for each member
+                for (var member in members)
+                  pw.TableRow(
+                    children: [
+                      pw.Text('${member.name} ${member.surname}'),
+                      pw.Text('${member.kid}'),
+                      pw.Text('${member.nid}'),
+                      pw.Text('${member.rela}'),
+                      pw.Text('${member.gen}'),
+                      pw.Text('${member.age}'),
+                      pw.Text('${member.et}'),
+                      pw.Text('${member.heal}'),
+                      pw.Text('${member.aheal}'),
+                      pw.Text('${member.familyId}'),
+                    ],
+                  ),
+              ],
+            ),
+            
+            pw.SizedBox(height: 3),
+            // Boxes with titles and text
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildInfoBoxWithText('Tipo de documento', '1.registro civil 2.tarjeta de identidad 3.cedula de ciudadania 4.cedula de extrajeria 5.indocumentado 6.no sabe/ no responde'),
+                _buildInfoBoxWithText('Parentesco con el jefe de hogar', '1. jefe de hogar 2.esposo(a) 3.hijo(a) 4.primo(a) 5.tio(a) 6.nieto(a) 7.suegro(a) 8.yerno/nuera'),
+                _buildInfoBoxWithText('Etnia', '1.afrocolombiano 2.indigena 3.Gitano 4.Razial 5.Otro 6.sin informacion'),
+                _buildInfoBoxWithText('Estado de salud', ' 1.Requiere asistencia 2.no requiere asistencia medica'),
+                _buildInfoBoxWithText('Afiliacion al regimen de salud', '1.contributivo 2.subsidio 3.sin afilicion'),
+                _buildInfoBoxWithText('Estado del Inmueble', ' 1.habitable 2.no habitable 3.destruida'),
+              ],
+            ),
+            pw.SizedBox(height: 3),
+            // Box with 3 columns and 2 rows
+            pw.Container(
+              child: pw.Row(
+                children: [
+                  _buildInfoBox1('Elaborado por : jack'),
+                  _buildInfoBox1('Entidad operativa: jack'),
+                  _buildInfoBox1('Observaciones: hola'),
+                ],
+              ),
+              decoration: pw.BoxDecoration(border: pw.Border.all()),
+            ),
+            pw.Container(
+              child: pw.Row(
+                children: [
+                  _buildInfoBox1('Vo.Bo. CMGRD :   '),
+                  _buildInfoBox1('Presidente CMGRD :   '),
+                  _buildInfoBox1('Vo.Bo. CDGRD:   '),
+                ],
+              ),
+              decoration: pw.BoxDecoration(border: pw.Border.all()),
+            ),
+            // Box with text below
+            pw.Container(
+              margin: pw.EdgeInsets.only(top: 10),
+              child: pw.Text(
+                'PROTOTIPO DE FORMATO PARA PRESENTACION',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+              decoration: pw.BoxDecoration(border: pw.Border.all()),
+            ),
+          ],
+        );
+      },
+    ),
+  );
+
+
+
+
+
+
+   final status = await Permission.storage.status;
+     if (status.isGranted) {
+       final directory = await getExternalStorageDirectory();
+       final pdfFilePath = '${directory!.path}/Download/miembros.pdf';
+
+       if (!await Directory('${directory.path}/Download').exists()) {
+         await Directory('${directory.path}/Download').create(recursive: true);
+      }
+
+       await File(pdfFilePath).writeAsBytes(await pdf.save());
+
+     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('PDF generado con éxito en $pdfFilePath'),
+      ));
+     } else {
+      await Permission.storage.request();
+      _generatePDF(members);
+     }
+}
+
+pw.Widget _buildInfoBoxes() {
+  return pw.Row(
+    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    children: [
+      _buildInfoBox('Barrio:soledad'),
+      _buildInfoBox('Direccion:cra 25'),
+      _buildInfoBox('Celular: 3008000697'),
+      _buildInfoBox('Fecha: 12/12/23'),
+      _buildInfoBox('Firma del Jefe: Luis diaz'),
+    ],
+  );
+}
+
+pw.Widget _buildInfoBox(String label) {
+  return pw.Container(
+    width: 100, // Adjust the width as needed
+    height: 60, // Adjust the height as needed
+    child: pw.Column(
+      mainAxisAlignment: pw.MainAxisAlignment.center,
+      children: [
+        pw.Text(label, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+      ],
+    ),
+    decoration: pw.BoxDecoration(border: pw.Border.all()),
+  );
+}
+
+pw.Widget _buildInfoBox1(String label) {
+  return pw.Container(
+    width: 160, // Adjust the width as needed
+    height: 50, // Adjust the height as needed
+    child: pw.Column(
+      mainAxisAlignment: pw.MainAxisAlignment.center,
+      children: [
+        pw.Text(label, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+      ],
+    ),
+    decoration: pw.BoxDecoration(border: pw.Border.all()),
+  );
+}
+
+pw.Widget _buildInfoBoxWithText(String title, String text) {
+  return pw.Container(
+    width: 80, // Adjust the width as needed
+    height: 200, // Adjust the height as needed
+    child: pw.Column(
+      mainAxisAlignment: pw.MainAxisAlignment.start,
+      children: [
+        pw.Text(title, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+        pw.SizedBox(height: 4),
+        pw.Text(text),
+      ],
+    ),
+    decoration: pw.BoxDecoration(border: pw.Border.all()),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +390,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _kidController,
-                    decoration: InputDecoration(labelText: 'Kid'),
+                    decoration: InputDecoration(labelText: 'tipo de documento: 1. registro civil 2.tarjeta de identidad 3.cedula de ciudadania 4.cedulan de extranjera 5.indocumentado 6.no sabe/no responde'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -161,7 +401,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _nidController,
-                    decoration: InputDecoration(labelText: 'Nid'),
+                    decoration: InputDecoration(labelText: 'numero de documento'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -172,7 +412,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _relaController,
-                    decoration: InputDecoration(labelText: 'Rela'),
+                    decoration: InputDecoration(labelText: 'parentesco con el jefe de hogar: 1. jefe de hogar 2.esposo(a) 3.hijo(a) 4.primo(a) 5.tio(a) 6.nieto(a) 7.suegro(a) 8.yerno/nuera'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -183,7 +423,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _genController,
-                    decoration: InputDecoration(labelText: 'Gen'),
+                    decoration: InputDecoration(labelText: 'Genero'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor, ingresa un valor válido.';
@@ -204,7 +444,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _etController,
-                    decoration: InputDecoration(labelText: 'Et'),
+                    decoration: InputDecoration(labelText: 'Etnia : 1. afrocolombiano 2.indigena 3.Gitano 4.Razial 5.Otro 6.sin informacion'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -215,7 +455,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _healController,
-                    decoration: InputDecoration(labelText: 'Heal'),
+                    decoration: InputDecoration(labelText: 'Estado de salud: 1.Requiere asistencia 2.no requiere asistencia medica'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -226,7 +466,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _ahealController,
-                    decoration: InputDecoration(labelText: 'Aheal'),
+                    decoration: InputDecoration(labelText: 'Afiliacion al regimen de salud: 1.contributivo 2.subsidio 3.sin afilicion'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -237,7 +477,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _familyIdController,
-                    decoration: InputDecoration(labelText: 'ID de Familia'),
+                    decoration: InputDecoration(labelText: 'Estado del inmueble 1. habitable 2.no habitable 3.destruida'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -252,6 +492,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text('Agregar Persona'),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      List<Member> members = context.read<MemberData>().members;
+                      _generatePDF(members);
+                    },
+                    child: Text('Generar PDF de Personas'),
+                  ),
                 ],
               ),
             ),
@@ -261,12 +508,12 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Consumer<MemberData>(
-              builder: (context, MemberData, child) {
+              builder: (context, memberData, child) {
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: MemberData.members.length,
+                  itemCount: memberData.members.length,
                   itemBuilder: (context, index) {
-                    Member person = MemberData.members[index];
+                    Member person = memberData.members[index];
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
@@ -274,15 +521,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Kid: ${person.kid}'),
-                            Text('Nid: ${person.nid}'),
-                            Text('Rela: ${person.rela}'),
-                            Text('Gen: ${person.gen}'),
+                            Text('Tipo de documento: ${person.kid}'),
+                            Text('Numero de documento: ${person.nid}'),
+                            Text('parentesco: ${person.rela}'),
+                            Text('Genero: ${person.gen}'),
                             Text('Edad: ${person.age}'),
-                            Text('Et: ${person.et}'),
-                            Text('Heal: ${person.heal}'),
-                            Text('Aheal: ${person.aheal}'),
-                            Text('ID de Familia: ${person.familyId}'),
+                            Text('Etnia: ${person.et}'),
+                            Text('Estado de salud: ${person.heal}'),
+                            Text('Afiliacion al regimen: ${person.aheal}'),
+                            Text('Estado del inmueble: ${person.familyId}'),
                           ],
                         ),
                       ),
