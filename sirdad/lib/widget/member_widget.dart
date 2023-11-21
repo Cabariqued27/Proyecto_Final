@@ -1,12 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
-
 import '../getters/miembro_model.dart';
 import '../models/member.dart';
 
@@ -70,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
       int aheal = int.parse(_ahealController.text);
       int familyId = int.parse(_familyIdController.text);
 
-      Member newMember = Member(
+      /*Member newMember = Member(
         name: name,
         surname: surname,
         kid: kid,
@@ -84,7 +82,9 @@ class _MyHomePageState extends State<MyHomePage> {
         familyId: familyId,
       );
 
-      memberData.addMember(newMember);
+
+      memberData.addMember(newMember);*/
+
 
       _nameController.clear();
       _surnameController.clear();

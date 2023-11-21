@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:sirdad/models/member.dart';
-import 'package:sirdad/widget/member_widget.dart';
 
 class MemberData extends ChangeNotifier {
   List<Member> _members = [];

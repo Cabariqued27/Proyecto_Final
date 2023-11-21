@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sirdad/models/family.dart';
-import 'package:sirdad/widget/family_widget.dart';
+
 
 class FamilyData extends ChangeNotifier {
   List<Family> _familys = [];
