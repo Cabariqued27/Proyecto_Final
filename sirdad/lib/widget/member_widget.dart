@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _surnameController = TextEditingController();
-  TextEditingController _kidController = TextEditingController();
+  String? _selectedDocumento ;
   TextEditingController _nidController = TextEditingController();
   TextEditingController _relaController = TextEditingController();
   TextEditingController _genController = TextEditingController();
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_formKey.currentState!.validate()) {
       String name = _nameController.text;
       String surname = _surnameController.text;
-      int kid = int.parse(_kidController.text);
+      int kid = int.parse(_selectedDocumento!);
       int nid = int.parse(_nidController.text);
       int rela = int.parse(_relaController.text);
       String gen = _genController.text;
@@ -88,7 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
       _nameController.clear();
       _surnameController.clear();
-      _kidController.clear();
       _nidController.clear();
       _relaController.clear();
       _genController.clear();
@@ -353,6 +352,7 @@ pw.Widget _buildInfoBoxWithText(String title, String text) {
 }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -388,17 +388,47 @@ pw.Widget _buildInfoBoxWithText(String title, String text) {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    controller: _kidController,
-                    decoration: InputDecoration(labelText: 'tipo de documento: 1. registro civil 2.tarjeta de identidad 3.cedula de ciudadania 4.cedulan de extranjera 5.indocumentado 6.no sabe/no responde'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
-                  ),
+                  DropdownButtonFormField<String>(
+  value: _selectedDocumento,
+  onChanged: (String? value) {
+    setState(() {
+      _selectedDocumento = value;
+    });
+  },
+  items: [
+    DropdownMenuItem(
+      value: '1',
+      child: Text('Registro Civil'),
+    ),
+    DropdownMenuItem(
+      value: '2',
+      child: Text('Tarjeta de Identidad'),
+    ),
+    DropdownMenuItem(
+      value: '3',
+      child: Text('Cédula de Ciudadanía'),
+    ),
+    DropdownMenuItem(
+      value: '4',
+      child: Text('Cédula de Extranjería'),
+    ),
+    DropdownMenuItem(
+      value: '5',
+      child: Text('Indocumentado'),
+    ),
+    DropdownMenuItem(
+      value: '6',
+      child: Text('No Sabe/No Responde'),
+    ),
+  ],
+  decoration: InputDecoration(labelText: 'Tipo de documento'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, selecciona un valor válido.';
+    }
+    return null;
+  },
+),
                   TextFormField(
                     controller: _nidController,
                     decoration: InputDecoration(labelText: 'numero de documento'),
