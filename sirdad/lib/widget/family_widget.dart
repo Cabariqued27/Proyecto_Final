@@ -1,11 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/member_widget.dart';
@@ -49,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('familys');
+    // Establecer la fecha actual como valor por defecto
+    _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
   }
 
   Future<void> _addFamily(FamilyData familyData) async {
@@ -69,12 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
       familyData.addFamily(newFamily);
-      print(familyData.getfamilysfb());
+      
 
       _barrioController.clear();
       _addressController.clear();
       _phoneController.clear();
-      _dateController.clear();
       _headOfFamilyController.clear();
 
       // Save the family in Firebase Realtime Database
@@ -86,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'jefe': familyHead,
        'eventId':'no hay',
       });
+      print(familyData.getfamilysfb());
     }
   }
 
@@ -190,6 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                       return null;
                     },
+                    readOnly: true,
                   ),
                   TextFormField(
                     controller: _headOfFamilyController,

@@ -38,7 +38,7 @@ class Event extends Crud {
   }
 
   save() async {
-    return await ((id > 0) ? update(toMap()) : create(toMap()));
+    //return await ((id > 0) ? update(toMap()) : create(toMap()));
   }
 
   remove() async {

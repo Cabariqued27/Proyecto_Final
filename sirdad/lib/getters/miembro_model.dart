@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:sirdad/models/member.dart';
-import 'package:sirdad/widget/member_widget.dart';
 
 class MemberData extends ChangeNotifier {
   List<Member> _members = [];
@@ -22,18 +21,18 @@ class MemberData extends ChangeNotifier {
           snapshot.value as Map<dynamic, dynamic>;
 
       data.forEach((key, value) {
-        int idm = data['idm'];
-        String name = data['name'];
-        String surname = data['surname'];
-        int kid = data['kid'];
-        int nid = data['nid'];
-        int rela = data['rela'];
-        String gen = data['gen'];
-        int age = data['age'];
-        int et = data['et'];
-        int heal = data['heal'];
-        int aheal = data['aheal'];
-        int familyId = data['familyId'];
+        int idm = data['idm'] ?? 0;
+        String name = data['name']??"";
+        String surname = data['surname']??"";
+        int kid = data['kid']??0;
+        int nid = data['nid']??0;
+        int rela = data['rela']??0;
+        String gen = data['gen']??"";
+        int age = data['age']??0;
+        int et = data['et']??0;
+        int heal = data['heal']??0;
+        int aheal = data['aheal']??0;
+        int familyId = data['familyId']??0;
 
         Member newMember = Member(
             idm: idm,
@@ -48,7 +47,7 @@ class MemberData extends ChangeNotifier {
             heal: heal,
             aheal: aheal,
             familyId: familyId);
-            addMember(newMember);
+        addMember(newMember);
       });
     } else {
       print('No data available.');

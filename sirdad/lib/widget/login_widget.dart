@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/acceso_model.dart';
-import 'package:sirdad/models/volunteer.dart';
 import 'package:sirdad/widget/acceso_widget.dart';
-
-import '../getters/event_model.dart';
-import '../models/event.dart';
 import 'event_widget.dart';
 
 class User {
