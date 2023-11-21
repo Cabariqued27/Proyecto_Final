@@ -181,24 +181,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              pw.SizedBox(height: 3),
+              pw.SizedBox(height: 5),
               _buildInfoBoxes(),
-              pw.SizedBox(height: 3),
+              pw.SizedBox(height: 5),
+
               pw.Table(
                 border: pw.TableBorder.all(),
                 children: [
                   pw.TableRow(
                     children: [
-                      pw.Text('Nombre'),
-                      pw.Text('Tipo de documento'),
-                      pw.Text('Numero de documento'),
-                      pw.Text('Parentesco con el jefe de Hogar'),
-                      pw.Text('Genero'),
-                      pw.Text('Edad'),
-                      pw.Text('Etnia'),
-                      pw.Text('Estado de salud'),
-                      pw.Text('Afiliacion al regimen de salud'),
-                      pw.Text('Estado del Inmueble'),
+                      _buildTableCell('Nombres'),
+                      _buildTableCell('Apellidos'),
+                      _buildTableCell('Tipo de documento'),
+                      _buildTableCell('Numero de documento'),
+                      _buildTableCell('Parentesco con el jefe de Hogar'),
+                      _buildTableCell('Genero'),
+                      _buildTableCell('Edad'),
+                      _buildTableCell('Etnia'),
+                      _buildTableCell('Estado de salud'),
+                      _buildTableCell('Afiliacion al regimen de salud'),
+                      _buildTableCell('Estado del Inmueble'),
                     ],
                   ),
                   // Add a TableRow for each member
@@ -294,6 +296,17 @@ class _MyHomePageState extends State<MyHomePage> {
       await Permission.storage.request();
       _generatePDF(members);
     }
+  }
+
+// Helper function to create TableCell with specified style
+  pw.Widget _buildTableCell(String text) {
+    return pw.Container(
+      width: 700,
+      height: 60,
+      alignment: pw.Alignment.center, // Align text to center
+      padding: pw.EdgeInsets.all(8), // Add padding for spacing
+      child: pw.Text(text),
+    );
   }
 
   pw.Widget _buildInfoBoxes() {
