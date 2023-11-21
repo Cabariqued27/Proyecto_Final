@@ -40,13 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _surnameController = TextEditingController();
   String? _selectedDocumento ;
   TextEditingController _nidController = TextEditingController();
-  TextEditingController _relaController = TextEditingController();
+  String? _selectedParentesco;
   TextEditingController _genController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
-  TextEditingController _etController = TextEditingController();
-  TextEditingController _healController = TextEditingController();
-  TextEditingController _ahealController = TextEditingController();
-  TextEditingController _familyIdController = TextEditingController();
+  String? _selectedEtnia;
+  String? _selectedEstadoSalud;
+  String? _selectedAfiliacionSalud;
+  String? _selectedEstadoInmueble;
 
   late DatabaseReference dbRef;
 
@@ -62,13 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
       String surname = _surnameController.text;
       int kid = int.parse(_selectedDocumento!);
       int nid = int.parse(_nidController.text);
-      int rela = int.parse(_relaController.text);
+      int rela = int.parse(_selectedParentesco!);
       String gen = _genController.text;
       int age = int.parse(_ageController.text);
-      int et = int.parse(_etController.text);
-      int heal = int.parse(_healController.text);
-      int aheal = int.parse(_ahealController.text);
-      int familyId = int.parse(_familyIdController.text);
+      int et = int.parse(_selectedEtnia!);
+      int heal = int.parse(_selectedEstadoSalud!); 
+      int aheal = int.parse(_selectedAfiliacionSalud!);
+      int familyId = int.parse(_selectedEstadoInmueble!);
 
       Member newMember = Member(
         name: name,
@@ -89,13 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _nameController.clear();
       _surnameController.clear();
       _nidController.clear();
-      _relaController.clear();
       _genController.clear();
       _ageController.clear();
-      _etController.clear();
-      _healController.clear();
-      _ahealController.clear();
-      _familyIdController.clear();
+      
 
       dbRef.push().set({
         'name': name,
@@ -440,17 +436,55 @@ pw.Widget _buildInfoBoxWithText(String title, String text) {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    controller: _relaController,
-                    decoration: InputDecoration(labelText: 'parentesco con el jefe de hogar: 1. jefe de hogar 2.esposo(a) 3.hijo(a) 4.primo(a) 5.tio(a) 6.nieto(a) 7.suegro(a) 8.yerno/nuera'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
-                  ),
+                  DropdownButtonFormField<String>(
+  value: _selectedParentesco,
+  onChanged: (String? value) {
+    setState(() {
+      _selectedParentesco = value;
+    });
+  },
+  items: [
+    DropdownMenuItem(
+      value: '1',
+      child: Text('Jefe de Hogar'),
+    ),
+    DropdownMenuItem(
+      value: '2',
+      child: Text('Esposo(a)'),
+    ),
+    DropdownMenuItem(
+      value: '3',
+      child: Text('Hijo(a)'),
+    ),
+    DropdownMenuItem(
+      value: '4',
+      child: Text('Primo(a)'),
+    ),
+    DropdownMenuItem(
+      value: '5',
+      child: Text('Tío(a)'),
+    ),
+    DropdownMenuItem(
+      value: '6',
+      child: Text('Nieto(a)'),
+    ),
+    DropdownMenuItem(
+      value: '7',
+      child: Text('Suegro(a)'),
+    ),
+    DropdownMenuItem(
+      value: '8',
+      child: Text('Yerno/Nuera'),
+    ),
+  ],
+  decoration: InputDecoration(labelText: 'Parentesco con el jefe de hogar'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, selecciona un valor válido.';
+    }
+    return null;
+  },
+),
                   TextFormField(
                     controller: _genController,
                     decoration: InputDecoration(labelText: 'Genero'),
@@ -472,50 +506,133 @@ pw.Widget _buildInfoBoxWithText(String title, String text) {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    controller: _etController,
-                    decoration: InputDecoration(labelText: 'Etnia : 1. afrocolombiano 2.indigena 3.Gitano 4.Razial 5.Otro 6.sin informacion'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _healController,
-                    decoration: InputDecoration(labelText: 'Estado de salud: 1.Requiere asistencia 2.no requiere asistencia medica'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _ahealController,
-                    decoration: InputDecoration(labelText: 'Afiliacion al regimen de salud: 1.contributivo 2.subsidio 3.sin afilicion'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _familyIdController,
-                    decoration: InputDecoration(labelText: 'Estado del inmueble 1. habitable 2.no habitable 3.destruida'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
-                  ),
+                  DropdownButtonFormField<String>(
+  value: _selectedEtnia,
+  onChanged: (String? value) {
+    setState(() {
+      _selectedEtnia = value;
+    });
+  },
+  items: [
+    DropdownMenuItem(
+      value: '1',
+      child: Text('Afrocolombiano'),
+    ),
+    DropdownMenuItem(
+      value: '2',
+      child: Text('Indígena'),
+    ),
+    DropdownMenuItem(
+      value: '3',
+      child: Text('Gitano'),
+    ),
+    DropdownMenuItem(
+      value: '4',
+      child: Text('Racial'),
+    ),
+    DropdownMenuItem(
+      value: '5',
+      child: Text('Otro'),
+    ),
+    DropdownMenuItem(
+      value: '6',
+      child: Text('Sin información'),
+    ),
+  ],
+  decoration: InputDecoration(labelText: 'Etnia'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, selecciona un valor válido.';
+    }
+    return null;
+  },
+),
+
+DropdownButtonFormField<String>(
+  value: _selectedEstadoSalud,
+  onChanged: (String? value) {
+    setState(() {
+      _selectedEstadoSalud = value;
+    });
+  },
+  items: [
+    DropdownMenuItem(
+      value: '1',
+      child: Text('Requiere asistencia'),
+    ),
+    DropdownMenuItem(
+      value: '2',
+      child: Text('No requiere asistencia médica'),
+    ),
+  ],
+  decoration: InputDecoration(labelText: 'Estado de salud'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, selecciona un valor válido.';
+    }
+    return null;
+  },
+),
+
+DropdownButtonFormField<String>(
+  value: _selectedAfiliacionSalud,
+  onChanged: (String? value) {
+    setState(() {
+      _selectedAfiliacionSalud = value;
+    });
+  },
+  items: [
+    DropdownMenuItem(
+      value: '1',
+      child: Text('Contributivo'),
+    ),
+    DropdownMenuItem(
+      value: '2',
+      child: Text('Subsidio'),
+    ),
+    DropdownMenuItem(
+      value: '3',
+      child: Text('Sin afiliación'),
+    ),
+  ],
+  decoration: InputDecoration(labelText: 'Afiliación al régimen de salud'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, selecciona un valor válido.';
+    }
+    return null;
+  },
+),
+
+DropdownButtonFormField<String>(
+  value: _selectedEstadoInmueble,
+  onChanged: (String? value) {
+    setState(() {
+      _selectedEstadoInmueble = value;
+    });
+  },
+  items: [
+    DropdownMenuItem(
+      value: '1',
+      child: Text('Habitable'),
+    ),
+    DropdownMenuItem(
+      value: '2',
+      child: Text('No habitable'),
+    ),
+    DropdownMenuItem(
+      value: '3',
+      child: Text('Destruida'),
+    ),
+  ],
+  decoration: InputDecoration(labelText: 'Estado del inmueble'),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor, selecciona un valor válido.';
+    }
+    return null;
+  },
+),
                   ElevatedButton(
                     onPressed: () {
                       _addPerson(context.read<MemberData>());
