@@ -9,15 +9,17 @@ import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
-
-
 FamilyData FamilyModel = FamilyData();
 
 void main() {
-  runApp(FamilyWidget());
+  runApp(FamilyWidget(eventIdf: ''));
 }
 
 class FamilyWidget extends StatelessWidget {
+  final String eventIdf;
+
+  FamilyWidget({required this.eventIdf});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,14 +27,18 @@ class FamilyWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(),
+      home: MyHomePage(eventIdf: eventIdf),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final String eventIdf;
+
+  MyHomePage({required this.eventIdf});
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(eventIdf);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -43,6 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _headOfFamilyController = TextEditingController();
   late DatabaseReference dbRef;
+  final String eventIdf;
+
+  _MyHomePageState(this.eventIdf);
 
   @override
   void initState() {
@@ -65,12 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
         address: familyAddress,
         phone: familyPhone,
         date: familyDate,
-        jefe:familyHead, 
-        eventId: 'unico',
+        jefe: familyHead,
+        eventId: eventIdf,
       );
 
       familyData.addFamily(newFamily);
-      
 
       _barrioController.clear();
       _addressController.clear();
@@ -84,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'phone': familyPhone,
         'date': familyDate,
         'jefe': familyHead,
-       'eventId':'no hay',
+        'eventId': eventIdf,
       });
       print(familyData.getfamilysfb());
     }
@@ -234,19 +242,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text('Barrio: ${familyData.familys[index].barrio}'),
+                        title: Text(
+                            'Barrio: ${familyData.familys[index].barrio}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Dirección: ${familyData.familys[index].address}'),
-                            Text('Teléfono: ${familyData.familys[index].phone.toString()}'),
+                            Text(
+                                'Dirección: ${familyData.familys[index].address}'),
+                            Text(
+                                'Teléfono: ${familyData.familys[index].phone.toString()}'),
                             Text('Fecha: ${familyData.familys[index].date}'),
-                            Text('Jefe de familia: ${familyData.familys[index].eventId}'),
+                            Text(
+                                'Jefe de familia: ${familyData.familys[index].eventId}'),
                           ],
                         ),
                         onTap: () {
-                          
-                           Navigator.push(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MiembroWidget()),

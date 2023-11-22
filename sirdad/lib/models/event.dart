@@ -3,13 +3,13 @@ import 'package:sirdad/services/tables.dart';
 // Importa la clase Family
 
 class Event extends Crud {
-  int id;
+  String id;
   String name;
   String description;
   String date;
 
   Event({
-    this.id = 0,
+    this.id = '',
     this.name = '',
     this.description = '',
     this.date = '',
@@ -28,22 +28,22 @@ class Event extends Crud {
         date: data['date']);
   }
 
-  Map<String, dynamic> toMap() {
+  /*Map<String, dynamic> toMap() {
     return {
       'id': id > 0 ? id : null,
       'name': name,
       'description': description,
       'date': date,
     };
-  }
+  }*/
 
-  save() async {
+  /*save() async {
     //return await ((id > 0) ? update(toMap()) : create(toMap()));
   }
 
   remove() async {
     await delete(id);
-  }
+  }*/
 
   Future<List<Event>> getEvents() async {
     var result = await query('SELECT * FROM $eventTable');
