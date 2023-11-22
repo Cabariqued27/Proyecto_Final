@@ -59,6 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
     dbRef = FirebaseDatabase.instance.ref().child('familys');
     // Establecer la fecha actual como valor por defecto
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    _getFamilysFromCache();
+  }
+
+  Future<void> _getFamilysFromCache() async {
+    // Llamar a la función getFamilysFromCache de tu modelo de datos
+    await FamilyModel.getFamilysFromCache();
   }
 
   Future<void> _addFamily(FamilyData familyData) async {
@@ -94,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'jefe': familyHead,
         'eventId': eventIdf,
       });
-      print(familyData.getfamilysfb());
+      print(familyData.getFamilysFromCache());
     }
   }
 
@@ -242,8 +248,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text(
-                            'Barrio: ${familyData.familys[index].barrio}'),
+                        title:
+                            Text('Barrio: ${familyData.familys[index].barrio}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
