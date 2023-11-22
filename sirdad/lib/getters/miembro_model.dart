@@ -8,33 +8,33 @@ class MemberData extends ChangeNotifier {
 
   Future<void> addMember(Member member) async {
     _members.add(member);
-    await member.save();
     notifyListeners();
   }
 
-  Future<void> getmembersfb() async {
+  Future<void> getMembersFromCache() async {
+    FirebaseDatabase.instance.ref().keepSynced(true);
     final ref = FirebaseDatabase.instance.ref().child('members');
-    final snapshot = await ref.get();
 
-    if (snapshot.exists) {
-      final Map<dynamic, dynamic> data =
-          snapshot.value as Map<dynamic, dynamic>;
+    ref.onValue.listen((member) {
+      _members.clear();
+      if (member.snapshot.exists) {
+        final Map<dynamic, dynamic> data = member.snapshot.value as Map<dynamic, dynamic>;
 
-      data.forEach((key, value) {
-        int idm = data['idm'] ?? 0;
-        String name = data['name']??"";
-        String surname = data['surname']??"";
-        int kid = data['kid']??0;
-        int nid = data['nid']??0;
-        int rela = data['rela']??0;
-        String gen = data['gen']??"";
-        int age = data['age']??0;
-        int et = data['et']??0;
-        int heal = data['heal']??0;
-        int aheal = data['aheal']??0;
-        int familyId = data['familyId']??0;
+        data.forEach((key, value) {
+          int idm = value['idm'] ?? 0;
+          String name = value['name'] ?? '';
+          String surname = value['surname'] ?? '';
+          int kid = value['kid'] ?? 0;
+          int nid = value['nid'] ?? 0;
+          int rela = value['rela'] ?? 0;
+          String gen = value['gen'] ?? '';
+          int age = value['age'] ?? 0;
+          int et = value['et'] ?? 0;
+          int heal = value['heal'] ?? 0;
+          int aheal = value['aheal'] ?? 0;
+          int familyId = value['familyId'] ?? 0;
 
-        Member newMember = Member(
+          Member newMember = Member(
             idm: idm,
             name: name,
             surname: surname,
@@ -46,11 +46,14 @@ class MemberData extends ChangeNotifier {
             et: et,
             heal: heal,
             aheal: aheal,
-            familyId: familyId);
-        addMember(newMember);
-      });
-    } else {
-      print('No data available.');
-    }
+            familyId: familyId,
+          );
+          print(newMember);
+          addMember(newMember);
+        });
+      } else {
+        print('No data available.');
+      }
+    });
   }
 }

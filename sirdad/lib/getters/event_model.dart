@@ -17,7 +17,6 @@ class EventData extends ChangeNotifier {
   Future<void> getEventsFromCache() async {
     // Habilitar la sincronización en tiempo real para mantener los datos en caché
     FirebaseDatabase.instance.ref().keepSynced(true);
-
     // Obtener referencia a un nodo específico en la base de datos
     final ref = FirebaseDatabase.instance.ref().child('events');
 

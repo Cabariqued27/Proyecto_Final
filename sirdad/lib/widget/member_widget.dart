@@ -54,7 +54,14 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('members');
+    _getMembersFromCache();
   }
+
+  Future<void> _getMembersFromCache() async {
+    // Llamar a la función getEventsFromCache de tu modelo de datos
+    await memberData.getMembersFromCache();
+  }
+
 
   Future<void> _addPerson(MemberData memberData) async {
     if (_formKey.currentState!.validate()) {
