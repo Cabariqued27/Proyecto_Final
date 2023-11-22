@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_formKey.currentState!.validate()) {
       String eventName = _eventNameController.text;
       String eventDescription = _descriptionController.text;
-      final now = DateTime.now().toString();
+      String eventDate = _dateController.text;
       /*Event newEvent = Event(
         name: eventName,
         description: eventDescription,
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
       dbRef.push().set({
         'name': eventName,
         'description': eventDescription,
-        'date': now,
+        'date': eventDate,
       });
 
       // Llamar a la función geteventsfb para actualizar la lista de eventos
