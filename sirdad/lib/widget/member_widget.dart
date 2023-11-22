@@ -113,12 +113,13 @@ Future<void> _generatePDF(List<Member> members) async {
   final pdf = pw.Document();
 
   pdf.addPage(
-    pw.Page(
-      build: (pw.Context context) {
-        return pw.Column(
+  pw.Page(
+    build: (pw.Context context) {
+      return pw.Transform.rotate(
+        angle: 0 * 3.1415926535 / 180,
+        child: pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            // Title Box
             pw.Container(
               width: double.infinity,
               padding: pw.EdgeInsets.all(10),
@@ -132,12 +133,10 @@ Future<void> _generatePDF(List<Member> members) async {
               ),
             ),
             pw.Row(
-              
               children: [
-                // Left Section
                 pw.Container(
-                  width: 100, // Adjust the width as needed
-                  height: 40, // Adjust the height as needed
+                  width: 100,
+                  height: 40,
                   child: pw.Column(
                     mainAxisAlignment: pw.MainAxisAlignment.center,
                     children: [
@@ -146,15 +145,13 @@ Future<void> _generatePDF(List<Member> members) async {
                   ),
                   decoration: pw.BoxDecoration(border: pw.Border.all()),
                 ),
-                // Center Section
                 pw.Text(
                   'Gestion manejo de desastres',
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 15),
                 ),
-                // Right Sections
                 pw.Container(
-                  width: 120, // Adjust the width as needed
-                  height: 40, // Adjust the height as needed
+                  width: 120,
+                  height: 40,
                   child: pw.Column(
                     mainAxisAlignment: pw.MainAxisAlignment.center,
                     children: [
@@ -164,8 +161,8 @@ Future<void> _generatePDF(List<Member> members) async {
                   decoration: pw.BoxDecoration(border: pw.Border.all()),
                 ),
                 pw.Container(
-                  width: 80, // Adjust the width as needed
-                  height: 40, // Adjust the height as needed
+                  width: 80,
+                  height: 40,
                   child: pw.Column(
                     mainAxisAlignment: pw.MainAxisAlignment.center,
                     children: [
@@ -176,47 +173,9 @@ Future<void> _generatePDF(List<Member> members) async {
                 ),
               ],
             ),
-            pw.SizedBox(height: 3),
-            _buildInfoBoxes(),
-            pw.SizedBox(height: 3),
-            pw.Table(
-              border: pw.TableBorder.all(),
-              children: [
-                pw.TableRow(
-                  children: [
-                    pw.Text('Nombre'),
-                    pw.Text('Tipo de documento'),
-                    pw.Text('Numero de documento'),
-                    pw.Text('Parentesco con el jefe de Hogar'),
-                    pw.Text('Genero'),
-                    pw.Text('Edad'),
-                    pw.Text('Etnia'),
-                    pw.Text('Estado de salud'),
-                    pw.Text('Afiliacion al regimen de salud'),
-                    pw.Text('Estado del Inmueble'),
-                  ],
-                ),
-                // Add a TableRow for each member
-                for (var member in members)
-                  pw.TableRow(
-                    children: [
-                      pw.Text('${member.name} ${member.surname}'),
-                      pw.Text('${member.kid}'),
-                      pw.Text('${member.nid}'),
-                      pw.Text('${member.rela}'),
-                      pw.Text('${member.gen}'),
-                      pw.Text('${member.age}'),
-                      pw.Text('${member.et}'),
-                      pw.Text('${member.heal}'),
-                      pw.Text('${member.aheal}'),
-                      pw.Text('${member.familyId}'),
-                    ],
-                  ),
-              ],
-            ),
             
-            pw.SizedBox(height: 3),
-            // Boxes with titles and text
+            _buildInfoBoxes(),
+            _buildTable(members),
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
               children: [
@@ -229,7 +188,6 @@ Future<void> _generatePDF(List<Member> members) async {
               ],
             ),
             pw.SizedBox(height: 3),
-            // Box with 3 columns and 2 rows
             pw.Container(
               child: pw.Row(
                 children: [
@@ -250,23 +208,12 @@ Future<void> _generatePDF(List<Member> members) async {
               ),
               decoration: pw.BoxDecoration(border: pw.Border.all()),
             ),
-            // Box with text below
-            pw.Container(
-              margin: pw.EdgeInsets.only(top: 10),
-              child: pw.Text(
-                'PROTOTIPO DE FORMATO PARA PRESENTACION',
-                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-              ),
-              decoration: pw.BoxDecoration(border: pw.Border.all()),
-            ),
           ],
-        );
-      },
-    ),
-  );
-
-
-
+        ),
+      );
+    },
+  ),
+);
 
 
 
@@ -291,17 +238,76 @@ Future<void> _generatePDF(List<Member> members) async {
 }
 
 pw.Widget _buildInfoBoxes() {
-  return pw.Row(
-    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-    children: [
-      _buildInfoBox('Barrio:soledad'),
-      _buildInfoBox('Direccion:cra 25'),
-      _buildInfoBox('Celular: 3008000697'),
-      _buildInfoBox('Fecha: 12/12/23'),
-      _buildInfoBox('Firma del Jefe: Luis diaz'),
-    ],
+  return pw.Container(
+    height: 100, // Puedes ajustar el valor según tus necesidades
+    width: 100, // Puedes ajustar el valor según tus necesidades
+    child: pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        _buildInfoBox('Barrio:soledad'),
+        _buildInfoBox('Direccion:cra 25'),
+        _buildInfoBox('Celular: 3008000697'),
+        _buildInfoBox('Fecha: 12/12/23'),
+        _buildInfoBox('Firma del Jefe: Luis diaz'),
+      ],
+    ),
   );
 }
+
+pw.Widget _buildTable(List<Member> members) {
+  return pw.Container(
+    height: 600,
+    width: 1500, // Ajusta según tus necesidades
+    child: pw.Table(
+      border: pw.TableBorder.all(),
+      columnWidths: {
+        0: pw.FixedColumnWidth(200), // Ancho para la columna 'Nombre'
+        1: pw.FixedColumnWidth(200), // Ancho para la columna 'Tipo de documento'
+        2: pw.FixedColumnWidth(200), // Ancho para la columna 'Numero de documento'
+        3: pw.FixedColumnWidth(200), // Ancho para la columna 'Parentesco con el jefe de Hogar'
+        4: pw.FixedColumnWidth(200), // Ancho para la columna 'Genero'
+        5: pw.FixedColumnWidth(200), // Ancho para la columna 'Edad'
+        6: pw.FixedColumnWidth(200), // Ancho para la columna 'Etnia'
+        7: pw.FixedColumnWidth(200), // Ancho para la columna 'Estado de salud'
+        8: pw.FixedColumnWidth(200), // Ancho para la columna 'Afiliacion al regimen de salud'
+        9: pw.FixedColumnWidth(200), // Ancho para la columna 'Estado del Inmueble'
+      },
+      children: [
+        pw.TableRow(
+          children: [
+            pw.Text('Nombre'),
+            pw.Text('Tipo de documento'),
+            pw.Text('Numero de documento'),
+            pw.Text('Parentesco con el jefe de Hogar'),
+            pw.Text('Genero'),
+            pw.Text('Edad'),
+            pw.Text('Etnia'),
+            pw.Text('Estado de salud'),
+            pw.Text('Afiliacion al regimen de salud'),
+            pw.Text('Estado del Inmueble'),
+          ],
+        ),
+        for (var member in members)
+          pw.TableRow(
+            children: [
+              pw.Text('${member.name} ${member.surname}'),
+              pw.Text('${member.kid}'),
+              pw.Text('${member.nid}'),
+              pw.Text('${member.rela}'),
+              pw.Text('${member.gen}'),
+              pw.Text('${member.age}'),
+              pw.Text('${member.et}'),
+              pw.Text('${member.heal}'),
+              pw.Text('${member.aheal}'),
+              pw.Text('${member.familyId}'),
+            ],
+          ),
+      ],
+    ),
+  );
+}
+
+
 
 pw.Widget _buildInfoBox(String label) {
   return pw.Container(

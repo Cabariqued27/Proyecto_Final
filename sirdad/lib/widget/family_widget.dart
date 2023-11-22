@@ -207,14 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text('Agregar Familia'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Get the list of familys from the context
-                      List<Family> familys = context.read<FamilyData>().familys;
-                      _generatePDF(familys);
-                    },
-                    child: Text('Generar PDF de Familias'),
-                  ),
+                  
                 ],
               ),
             ),
