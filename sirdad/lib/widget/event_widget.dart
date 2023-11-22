@@ -48,6 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Establecer la fecha actual como valor por defecto
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    _getEventsFromCache();
+  }
+
+  Future<void> _getEventsFromCache() async {
+    // Llamar a la función getEventsFromCache de tu modelo de datos
+    await EventModel.getEventsFromCache();
   }
 
   Future<void> _addEvent(EventData eventData) async {
@@ -74,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
 
       // Llamar a la función geteventsfb para actualizar la lista de eventos
-      await eventData.geteventsfb();
+      await eventData.getEventsFromCache();
     }
   }
 
@@ -194,13 +200,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Text('Generar PDF de Eventos'),
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      // Llamar a la función geteventsfb para actualizar la lista de eventos
-                      await context.read<EventData>().geteventsfb();
-                    },
-                    child: Text('Actualizar'),
-                  ),
                 ],
               ),
             ),
@@ -228,11 +227,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             Text('Fecha: ${eventData.events[index].date}'),
                           ],
                         ),
-                        onTap: () {
+                        onTap: () {// Obtener el ID (key) del evento pulsado
+                          String eventId = eventData.events[index].id;
+                          print(eventId);
+                          // Navegar a FamilyWidget y pasar el ID del evento
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FamilyWidget(),
+                              builder: (context) => FamilyWidget(eventIdf: eventId),
                             ),
                           );
                         },
