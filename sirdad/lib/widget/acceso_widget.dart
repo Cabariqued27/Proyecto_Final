@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sirdad/models/volunteer.dart';
 
 import '../getters/acceso_model.dart';
@@ -164,6 +165,11 @@ class _AddUserDialogState extends State<AddUserDialog> {
               decoration: InputDecoration(
                 labelText: 'Teléfono',
               ),
+              keyboardType: TextInputType.phone,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+                // Filtrar para permitir solo números
+              ],
             ),
             TextField(
               controller: _ongController,
@@ -215,7 +221,8 @@ class _AddUserDialogState extends State<AddUserDialog> {
               sign: _signController.text,
               news: _newsController.text,
             ));
-            Volunteer newUser = userProvider.users[1]; // esto esta apuntando al metodo de addUser en acceso_model
+            Volunteer newUser = userProvider.users[
+                1]; // esto esta apuntando al metodo de addUser en acceso_model
             //que  a su vez usa el objeto Volunteer de la BD local
             print("user$newUser.name");
 
