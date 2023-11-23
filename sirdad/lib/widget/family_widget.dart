@@ -34,7 +34,6 @@ class FamilyWidget extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final String eventIdf;
-
   MyHomePage({required this.eventIdf});
 
   @override
@@ -263,10 +262,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                         onTap: () {
+                          String familyId = familyData.familys[index].idf;
+                          print(familyId);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MiembroWidget()),
+                                builder: (context) =>
+                                    MiembroWidget(memberIdf: familyId)),
                           );
                         },
                       ),

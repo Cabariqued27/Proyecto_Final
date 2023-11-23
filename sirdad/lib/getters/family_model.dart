@@ -32,6 +32,7 @@ class FamilyData extends ChangeNotifier {
           String eventId = value['eventId'] ?? "";
 
           Family newFamily = Family(
+            idf: key,
             barrio: barrio,
             address: address,
             phone: phone,

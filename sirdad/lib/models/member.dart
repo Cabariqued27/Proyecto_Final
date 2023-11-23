@@ -14,7 +14,8 @@ class Member extends Crud {
   int et;
   int heal;
   int aheal;
-  int familyId;
+  int sh;
+  String familyId;
 
   Member({
     this.idm = 0,
@@ -28,6 +29,7 @@ class Member extends Crud {
     required this.et,
     required this.heal,
     required this.aheal,
+    required this.sh,
     required this.familyId,
   }) : super(memberTable);
 
@@ -49,6 +51,7 @@ class Member extends Crud {
       et: data['et'],
       heal: data['heal'],
       aheal: data['aheal'],
+      sh:data['sh'],
       familyId: data['familyId'],
     );
   }
