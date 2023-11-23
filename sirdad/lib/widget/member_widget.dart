@@ -117,6 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'aheal': aheal,
         'familyId': memberIdf,
       });
+      print(memberData.getMembersFromCache());
     }
   }
 

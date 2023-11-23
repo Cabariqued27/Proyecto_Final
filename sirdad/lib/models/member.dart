@@ -69,6 +69,7 @@ class Member extends Crud {
       'et': et,
       'heal': heal,
       'aheal': aheal,
+      'sh':sh,
       'familyId': familyId,
     };
   }
