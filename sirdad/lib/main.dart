@@ -1,20 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/firebase_options.dart';
-
-import 'package:sirdad/getters/miembro_model.dart';
-import 'package:sirdad/provider/members_provider.dart';
 import 'package:sirdad/widget/acceso_widget.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_widget.dart';
-import 'package:sirdad/widget/format_widget.dart';
 import 'package:sirdad/widget/login_widget.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseDatabase database;
+  database = FirebaseDatabase.instance;
+  database.setPersistenceEnabled(true);
+  database.setPersistenceCacheSizeBytes(10000000);
   try {
     final app = Firebase.app();
     print("Firebase se ha inicializado correctamente: ${app.name}");

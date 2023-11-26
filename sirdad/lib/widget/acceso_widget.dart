@@ -1,13 +1,8 @@
-import 'dart:ffi';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sirdad/models/volunteer.dart';
-
 import '../getters/acceso_model.dart';
-import '../models/event.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 UserProvider accesoModel = UserProvider();

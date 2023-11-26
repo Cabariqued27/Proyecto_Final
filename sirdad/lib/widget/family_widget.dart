@@ -1,24 +1,25 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
-
-
 FamilyData FamilyModel = FamilyData();
 
 void main() {
-  runApp(FamilyWidget());
+  runApp(FamilyWidget(eventIdf: ''));
 }
 
 class FamilyWidget extends StatelessWidget {
+  final String eventIdf;
+
+  FamilyWidget({required this.eventIdf});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,14 +27,18 @@ class FamilyWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(),
+      home: MyHomePage(eventIdf: eventIdf),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final String eventIdf;
+
+  MyHomePage({required this.eventIdf});
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(eventIdf);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -44,11 +49,22 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _headOfFamilyController = TextEditingController();
   late DatabaseReference dbRef;
+  final String eventIdf;
+
+  _MyHomePageState(this.eventIdf);
 
   @override
   void initState() {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('familys');
+    // Establecer la fecha actual como valor por defecto
+    _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    _getFamilysFromCache();
+  }
+
+  Future<void> _getFamilysFromCache() async {
+    // Llamar a la función getFamilysFromCache de tu modelo de datos
+    await FamilyModel.getFamilysFromCache();
   }
 
   Future<void> _addFamily(FamilyData familyData) async {
@@ -64,17 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
         address: familyAddress,
         phone: familyPhone,
         date: familyDate,
-        jefe:familyHead, 
-        eventId: 'unico',
+        jefe: familyHead,
+        eventId: eventIdf,
       );
 
       familyData.addFamily(newFamily);
-      print(familyData.getfamilysfb());
 
       _barrioController.clear();
       _addressController.clear();
       _phoneController.clear();
-      _dateController.clear();
       _headOfFamilyController.clear();
 
       // Save the family in Firebase Realtime Database
@@ -84,8 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
         'phone': familyPhone,
         'date': familyDate,
         'jefe': familyHead,
-       'eventId':'no hay',
+        'eventId': eventIdf,
       });
+      print(familyData.getFamilysFromCache());
     }
   }
 
@@ -190,6 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                       return null;
                     },
+                    readOnly: true,
                   ),
                   TextFormField(
                     controller: _headOfFamilyController,
@@ -232,19 +248,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text('Barrio: ${familyData.familys[index].barrio}'),
+                        title:
+                            Text('Barrio: ${familyData.familys[index].barrio}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Dirección: ${familyData.familys[index].address}'),
-                            Text('Teléfono: ${familyData.familys[index].phone.toString()}'),
+                            Text(
+                                'Dirección: ${familyData.familys[index].address}'),
+                            Text(
+                                'Teléfono: ${familyData.familys[index].phone.toString()}'),
                             Text('Fecha: ${familyData.familys[index].date}'),
-                            Text('Jefe de familia: ${familyData.familys[index].eventId}'),
+                            Text(
+                                'Jefe de familia: ${familyData.familys[index].eventId}'),
                           ],
                         ),
                         onTap: () {
-                          
-                           Navigator.push(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MiembroWidget()),

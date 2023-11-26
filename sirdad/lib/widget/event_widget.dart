@@ -1,13 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart'; // Importar el paquete de permisos
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sirdad/widget/family_widget.dart';
 import 'dart:io';
-
 import '../getters/event_model.dart';
 import '../models/event.dart';
 
@@ -46,6 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('events');
+
+    // Establecer la fecha actual como valor por defecto
+    _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    _getEventsFromCache();
+  }
+
+  Future<void> _getEventsFromCache() async {
+    // Llamar a la función getEventsFromCache de tu modelo de datos
+    await EventModel.getEventsFromCache();
   }
 
   Future<void> _addEvent(EventData eventData) async {
@@ -53,19 +61,16 @@ class _MyHomePageState extends State<MyHomePage> {
       String eventName = _eventNameController.text;
       String eventDescription = _descriptionController.text;
       String eventDate = _dateController.text;
-
-      Event newEvent = Event(
+      /*Event newEvent = Event(
         name: eventName,
         description: eventDescription,
-        date: eventDate,
-      );
+        date: now,
+      );*/
 
-      eventData.addEvent(newEvent);
-      print(eventData.geteventsfb());
+      //eventData.addEvent(newEvent);
 
       _eventNameController.clear();
       _descriptionController.clear();
-      _dateController.clear();
 
       // Guardar el evento en Firebase Realtime Database
       dbRef.push().set({
@@ -73,6 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
         'description': eventDescription,
         'date': eventDate,
       });
+
+      // Llamar a la función geteventsfb para actualizar la lista de eventos
+      await eventData.getEventsFromCache();
     }
   }
 
@@ -125,7 +133,8 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Se requieren permisos de almacenamiento para guardar el PDF.'),
+        content: Text(
+            'Se requieren permisos de almacenamiento para guardar el PDF.'),
       ));
     }
   }
@@ -175,6 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                       return null;
                     },
+                    readOnly: true, // Hacer el campo de texto de solo lectura
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -207,20 +217,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text('Nombre del Evento: ${eventData.events[index].name}'),
+                        title: Text(
+                            'Nombre del Evento: ${eventData.events[index].name}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Descripción: ${eventData.events[index].description}'),
+                            Text(
+                                'Descripción: ${eventData.events[index].description}'),
                             Text('Fecha: ${eventData.events[index].date}'),
                           ],
                         ),
-                        onTap: () {
-                          
-                           Navigator.push(
+                        onTap: () {// Obtener el ID (key) del evento pulsado
+                          String eventId = eventData.events[index].id;
+                          print(eventId);
+                          // Navegar a FamilyWidget y pasar el ID del evento
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FamilyWidget()),
+                              builder: (context) => FamilyWidget(eventIdf: eventId),
+                            ),
                           );
                         },
                       ),
