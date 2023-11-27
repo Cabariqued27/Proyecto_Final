@@ -34,7 +34,6 @@ class FamilyWidget extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final String eventIdf;
-
   MyHomePage({required this.eventIdf});
 
   @override
@@ -64,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getFamilysFromCache() async {
     // Llamar a la función getFamilysFromCache de tu modelo de datos
-    await FamilyModel.getFamilysFromCache();
+    await FamilyModel.getFamilysByEventId(eventIdf);
   }
 
   Future<void> _addFamily(FamilyData familyData) async {
@@ -100,7 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
         'jefe': familyHead,
         'eventId': eventIdf,
       });
-      print(familyData.getFamilysFromCache());
     }
   }
 
@@ -263,10 +261,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                         onTap: () {
+                          String familyId = familyData.familys[index].idf;
+                          print(familyId);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MiembroWidget()),
+                                builder: (context) =>
+                                    MiembroWidget(memberIdf: familyId)),
                           );
                         },
                       ),
