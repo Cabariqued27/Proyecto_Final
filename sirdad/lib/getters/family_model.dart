@@ -13,37 +13,41 @@ class FamilyData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getFamilysFromCache() async {
-    FirebaseDatabase.instance.ref().keepSynced(true);
-    final ref = FirebaseDatabase.instance.ref().child('familys');
+  Future<void> getFamilysByEventId(String eventId) async {
+  FirebaseDatabase.instance.ref().keepSynced(true);
+  final ref = FirebaseDatabase.instance.ref().child('familys');
 
-    ref.onValue.listen((family) {
-      _familys.clear();
-      if (family.snapshot.exists) {
-        final Map<dynamic, dynamic> data =
-            family.snapshot.value as Map<dynamic, dynamic>;
+  ref.onValue.listen((family) {
+    _familys.clear();
+    if (family.snapshot.exists) {
+      final Map<dynamic, dynamic> data =
+          family.snapshot.value as Map<dynamic, dynamic>;
 
-        data.forEach((key, value) {
-          String barrio = value['barrio'] ?? "";
-          String address = value['address'] ?? "";
-          int phone = value['phone'] ?? "";
-          String date = value['date'] ?? "";
-          String jefe = value['jefe'] ?? "";
-          String eventId = value['eventId'] ?? "";
+      data.forEach((key, value) {
+        String barrio = value['barrio'] ?? "";
+        String address = value['address'] ?? "";
+        int phone = value['phone'] ?? "";
+        String date = value['date'] ?? "";
+        String jefe = value['jefe'] ?? "";
+        String familyEventId = value['eventId'] ?? "";
 
+        if (familyEventId == eventId) {
           Family newFamily = Family(
+            idf: key,
             barrio: barrio,
             address: address,
             phone: phone,
             date: date,
             jefe: jefe,
-            eventId: eventId,
+            eventId: familyEventId,
           );
           addFamily(newFamily);
-        });
-      } else {
-        print('No data available.');
-      }
-    });
-  }
+        }
+      });
+    } else {
+      print('No data available.');
+    }
+  });
+}
+
 }
