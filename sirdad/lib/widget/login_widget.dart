@@ -42,21 +42,6 @@ class _LoginPageState extends State<LoginPage> {
   String username = '';
   String password = '';
 
-  // Define a list of allowed users
-  // final List<User> allowedUsers = [
-  //   User(username: 'admin', password: 'password', isAdmin: true),
-  //   User(username: 'user', password: '123456', isAdmin: false),
-  // ];
-
-  // Verify if the user is allowed to proceed
-  // User? verifyAdmin() {
-  //   for (final user in allowedUsers) {
-  //     if (user.username == username && user.password == password) {
-  //       return user;
-  //     }
-  //   }
-  //   return null;
-  // }
 
   verifyUser(String username, String password) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -68,28 +53,6 @@ class _LoginPageState extends State<LoginPage> {
     }
     return null;
   }
-
-  // void _login(String username, String password) {
-  //   final verifiedUser = verifyUser(username, password);
-  //   if (verifiedUser != null) {
-  //     if (verifiedUser.isAdmin) {
-  //       // Navigate to the admin panel or authenticated area
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => AccesoScreen()),
-  //       );
-  //     } else {
-  //       // Navigate to the regular user panel or authenticated area
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => MyApp()),
-  //       );
-  //     }
-  //   } else {
-  //     // Handle invalid login or show an error message
-  //     print('Invalid login');
-  //   }
-  // }
 
   _login(String username, String password) {
     final verifiedUser = verifyUser(username, password);
@@ -114,25 +77,37 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: <Widget>[
-            const Text('Login Page'),
-            const SizedBox(width: 16.0),
-          ],
-        ),
+
+
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Row(
+        children: <Widget>[
+          const Text(''),
+          const SizedBox(width: 16.0),
+        ],
       ),
-      body: Container(
-        color: Colors.white,
+    ),
+    body: SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                // Contenedor para la imagen
+                Container(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: const Image(
+                    image: NetworkImage('https://seeklogo.com/images/D/defensa-civil-colombiana-logotipo-nuevo-logo-77F9660C5D-seeklogo.com.png'),
+                    height: 200,
+                  ),
+                ),
                 TextField(
                   onChanged: (value) {
                     setState(() {
@@ -167,6 +142,10 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+
+
 }

@@ -38,6 +38,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => memberData),
         ChangeNotifierProvider(create: (_) => EventModel),
         ChangeNotifierProvider(create: (_) => accesoModel),
+
         // ChangeNotifierProvider(create: (_) => )
 
         //Colocar aquí todos los ChangeNotifierProvider de los modelos que se van a usar
@@ -45,7 +46,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-          home: const LoginScreen()
+          home: MiembroWidget()
           //const FormatWidget()
           // ChangeNotifierProvider(
           //   create: (context) => familyModel,
