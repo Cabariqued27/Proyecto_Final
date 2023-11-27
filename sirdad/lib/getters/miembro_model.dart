@@ -32,7 +32,8 @@ class MemberData extends ChangeNotifier {
           int et = value['et'] ?? 0;
           int heal = value['heal'] ?? 0;
           int aheal = value['aheal'] ?? 0;
-          int familyId = value['familyId'] ?? 0;
+          int sh = value['sh'] ?? '';
+          String familyId = value['familyId'] ?? 0;
 
           Member newMember = Member(
             idm: idm,
@@ -46,6 +47,7 @@ class MemberData extends ChangeNotifier {
             et: et,
             heal: heal,
             aheal: aheal,
+            sh:sh,
             familyId: familyId,
           );
           print(newMember);
