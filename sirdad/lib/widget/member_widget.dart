@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
-import '../getters/miembro_model.dart';
+import '../getters/member_model.dart';
 import '../models/member.dart';
 
 MemberData memberData = MemberData();
@@ -115,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
         'et': et,
         'heal': heal,
         'aheal': aheal,
+        'sh': sh,
         'familyId': memberIdf,
       });
       print(memberData.getMembersFromCache());
