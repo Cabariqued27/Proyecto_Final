@@ -12,13 +12,13 @@ import '../models/member.dart';
 MemberData memberData = MemberData();
 
 void main() {
-  runApp(MiembroWidget(memberIdf: ''));
+  runApp(MiembroWidget(familyIdm: ''));
 }
 
 class MiembroWidget extends StatelessWidget {
-  final String memberIdf;
+  final String familyIdm;
 
-  MiembroWidget({required this.memberIdf});
+  MiembroWidget({required this.familyIdm});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,16 +26,16 @@ class MiembroWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(memberIdf: memberIdf),
+      home: MyHomePage(familyIdm: familyIdm),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  final String memberIdf;
-  MyHomePage({required this.memberIdf});
+  final String familyIdm;
+  MyHomePage({required this.familyIdm});
   @override
-  _MyHomePageState createState() => _MyHomePageState(memberIdf);
+  _MyHomePageState createState() => _MyHomePageState(familyIdm);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -51,10 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String? _selectedEstadoSalud;
   String? _selectedAfiliacionSalud;
   String? _selectedEstadoInmueble;
-  final String memberIdf;
+  final String familyIdm;
 
   late DatabaseReference dbRef;
-  _MyHomePageState(this.memberIdf);
+  _MyHomePageState(this.familyIdm);
   @override
   void initState() {
     super.initState();
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getMembersFromCache() async {
     // Llamar a la función getEventsFromCache de tu modelo de datos
-    await memberData.getMembersFromCache();
+    await memberData.getMembersFromCache(familyIdm);
   }
 
   Future<void> _addPerson(MemberData memberData) async {
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
         heal: heal,
         aheal: aheal,
         sh: sh,
-        familyId: memberIdf,
+        familyId: familyIdm,
       );
 
       memberData.addMember(newMember);
@@ -116,9 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
         'heal': heal,
         'aheal': aheal,
         'sh': sh,
-        'familyId': memberIdf,
+        'familyId': familyIdm,
       });
-      print(memberData.getMembersFromCache());
+      print(memberData.getMembersFromCache(familyIdm));
     }
   }
 
@@ -703,7 +703,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Text('Etnia: ${person.et}'),
                             Text('Estado de salud: ${person.heal}'),
                             Text('Afiliacion al regimen: ${person.aheal}'),
-                            Text('Estado del inmueble: ${person.familyId}'),
+                            Text('Estado del inmueble: ${person.sh}'),
                           ],
                         ),
                       ),
