@@ -2,7 +2,7 @@ import 'package:sirdad/services/crud.dart';
 import 'package:sirdad/services/tables.dart';
 
 class Family extends Crud {
-  int idf;
+  String idf;
   String barrio;
   String address;
   int phone;
@@ -11,7 +11,7 @@ class Family extends Crud {
   String eventId;
 
   Family({
-    this.idf = 0,
+    this.idf = '',
     required this.barrio,
     required this.address,
     required this.phone,
@@ -36,7 +36,7 @@ class Family extends Crud {
         eventId: data['eventId']);
   }
 
-  Map<String, dynamic> toMap() {
+  /*Map<String, dynamic> toMap() {
     return {
       'idf': idf > 0 ? idf : null,
       'barrio': barrio,
@@ -46,16 +46,16 @@ class Family extends Crud {
       'jefe': jefe,
       'eventId': eventId,
     };
-  }
+  }*/
 
   save() async {
     print("Family");
     // await((idf > 0) ? update(toMap()) : create(toMap()));
   }
 
-  remove() async {
+  /*remove() async {
     await delete(idf);
-  }
+  }*/
 
   Future<List<Family>> getFamilys() async {
     var resultf = await query('SELECT * FROM $familyTable');
