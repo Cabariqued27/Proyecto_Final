@@ -257,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 'Teléfono: ${familyData.familys[index].phone.toString()}'),
                             Text('Fecha: ${familyData.familys[index].date}'),
                             Text(
-                                'Jefe de familia: ${familyData.familys[index].eventId}'),
+                                'Jefe de familia: ${familyData.familys[index].jefe}'),
                           ],
                         ),
                         onTap: () {
@@ -267,7 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    MiembroWidget(memberIdf: familyId)),
+                                    MiembroWidget(familyIdm: familyId)),
                           );
                         },
                       ),
