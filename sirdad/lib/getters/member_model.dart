@@ -11,14 +11,15 @@ class MemberData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getMembersFromCache() async {
+  Future<void> getMembersFromCache(String familyIdm) async {
     FirebaseDatabase.instance.ref().keepSynced(true);
     final ref = FirebaseDatabase.instance.ref().child('members');
 
     ref.onValue.listen((member) {
       _members.clear();
       if (member.snapshot.exists) {
-        final Map<dynamic, dynamic> data = member.snapshot.value as Map<dynamic, dynamic>;
+        final Map<dynamic, dynamic> data =
+            member.snapshot.value as Map<dynamic, dynamic>;
 
         data.forEach((key, value) {
           int idm = value['idm'] ?? 0;
@@ -35,23 +36,24 @@ class MemberData extends ChangeNotifier {
           int sh = value['sh'] ?? '';
           String familyId = value['familyId'] ?? 0;
 
-          Member newMember = Member(
-            idm: idm,
-            name: name,
-            surname: surname,
-            kid: kid,
-            nid: nid,
-            rela: rela,
-            gen: gen,
-            age: age,
-            et: et,
-            heal: heal,
-            aheal: aheal,
-            sh:sh,
-            familyId: familyId,
-          );
-          print(newMember);
-          addMember(newMember);
+          if (familyId == familyIdm) {
+            Member newMember = Member(
+              idm: idm,
+              name: name,
+              surname: surname,
+              kid: kid,
+              nid: nid,
+              rela: rela,
+              gen: gen,
+              age: age,
+              et: et,
+              heal: heal,
+              aheal: aheal,
+              sh: sh,
+              familyId: familyId,
+            );
+            addMember(newMember);
+          }
         });
       } else {
         print('No data available.');
