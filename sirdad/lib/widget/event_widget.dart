@@ -49,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Establecer la fecha actual como valor por defecto
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     _getEventsFromCache();
+    print('Datos obtenidos correctamente.');
   }
 
   Future<void> _getEventsFromCache() async {
@@ -227,14 +228,16 @@ class _MyHomePageState extends State<MyHomePage> {
                             Text('Fecha: ${eventData.events[index].date}'),
                           ],
                         ),
-                        onTap: () {// Obtener el ID (key) del evento pulsado
+                        onTap: () {
+                          // Obtener el ID (key) del evento pulsado
                           String eventId = eventData.events[index].id;
                           print(eventId);
                           // Navegar a FamilyWidget y pasar el ID del evento
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FamilyWidget(eventIdf: eventId),
+                              builder: (context) =>
+                                  FamilyWidget(eventIdf: eventId),
                             ),
                           );
                         },

@@ -4,6 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sirdad/getters/event_model.dart';
+import 'package:sirdad/getters/family_model.dart';
+import 'package:sirdad/models/family.dart';
+import 'package:sirdad/widget/event_widget.dart';
+import 'package:sirdad/widget/family_widget.dart';
 import 'dart:io';
 
 import '../getters/member_model.dart';
@@ -60,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('members');
     _getMembersFromCache();
+    
   }
 
   Future<void> _getMembersFromCache() async {
@@ -188,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                _buildInfoBoxes(),
+                _buildInfoBoxes(members),
                 _buildTable(members),
                 pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
@@ -255,14 +261,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  pw.Widget _buildInfoBoxes() {
+  pw.Widget _buildInfoBoxes(List<Member> members) {
     return pw.Container(
       height: 100, // Puedes ajustar el valor según tus necesidades
       width: 100, // Puedes ajustar el valor según tus necesidades
       child: pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          _buildInfoBox('Barrio:soledad'),
+          _buildInfoBox('${members.name}'),
           _buildInfoBox('Direccion:cra 25'),
           _buildInfoBox('Celular: 3008000697'),
           _buildInfoBox('Fecha: 12/12/23'),
@@ -324,6 +330,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 pw.Text('${member.heal}'),
                 pw.Text('${member.aheal}'),
                 pw.Text('${member.familyId}'),
+                // pw.Text('${member.familyId}'),
               ],
             ),
         ],
@@ -380,6 +387,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Gestión de Personas'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navegar a FamilyWidget y pasar el ID del evento
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MyApp())); // Esto llevará de regreso a EventWidget
+          },
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -670,6 +688,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       List<Member> members = context.read<MemberData>().members;
                       _generatePDF(members);
+                      memberData.getfamily(familyIdm);
                     },
                     child: Text('Generar PDF de Personas'),
                   ),

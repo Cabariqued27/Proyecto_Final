@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
+import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
 FamilyData FamilyModel = FamilyData();
@@ -150,6 +151,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Gestión de Familias'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navegar a FamilyWidget y pasar el ID del evento
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyApp(),
+                )); // Esto llevará de regreso a EventWidget
+          },
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

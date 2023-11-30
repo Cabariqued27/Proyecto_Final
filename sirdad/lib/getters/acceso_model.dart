@@ -10,7 +10,13 @@ class UserProvider with ChangeNotifier {
             namev: 'admin',
             password: 'password',
             hasAccess: true,
-            isAdmid: true)
+            isAdmid: true),
+            Volunteer(
+              namev: 'user',
+              password: '123456',
+              hasAccess: true,
+              isAdmid: false,
+            )
     
   ];
 
