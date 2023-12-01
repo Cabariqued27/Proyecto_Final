@@ -4,11 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sirdad/getters/event_model.dart';
-import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/event_widget.dart';
-import 'package:sirdad/widget/family_widget.dart';
 import 'dart:io';
 
 import '../getters/member_model.dart';
@@ -65,7 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('members');
     _getMembersFromCache();
-    
   }
 
   Future<void> _getMembersFromCache() async {
@@ -127,8 +123,8 @@ class _MyHomePageState extends State<MyHomePage> {
       print(memberData.getMembersFromCache(familyIdm));
     }
   }
-
-  Future<void> _generatePDF(List<Member> members) async {
+//tanto el member como Family son de models
+  Future<void> _generatePDF(List<Member> members,List<Family> familys ) async {
     final pdf = pw.Document();
 
     pdf.addPage(
@@ -194,7 +190,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                _buildInfoBoxes(members),
+                pw.Container(
+                  height: 120, // Adjust the height as needed
+                  width: 90, // Adjust the width as needed
+                  child: pw.Column(
+            children: familys
+                .map(
+                  (family) => pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text('Barrio: ${family.barrio}'),
+                      pw.Text('Address: ${family.address}'),
+                      pw.Text('Phone: ${family.phone.toString()}'),
+                      pw.Text('Date: ${family.date}'),
+                      pw.Text('Jefe de familia: ${family.eventId}'),
+                      pw.SizedBox(height: 16),
+                    ],
+                  ),
+                )
+                .toList(),
+          ),
+                ),
                 _buildTable(members),
                 pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
@@ -257,26 +273,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ));
     } else {
       await Permission.storage.request();
-      _generatePDF(members);
+      _generatePDF(members, familys);
     }
   }
 
-  pw.Widget _buildInfoBoxes(List<Member> members) {
-    return pw.Container(
-      height: 100, // Puedes ajustar el valor según tus necesidades
-      width: 100, // Puedes ajustar el valor según tus necesidades
-      child: pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        children: [
-          _buildInfoBox('${members.name}'),
-          _buildInfoBox('Direccion:cra 25'),
-          _buildInfoBox('Celular: 3008000697'),
-          _buildInfoBox('Fecha: 12/12/23'),
-          _buildInfoBox('Firma del Jefe: Luis diaz'),
-        ],
-      ),
-    );
-  }
+  
 
   pw.Widget _buildTable(List<Member> members) {
     return pw.Container(
@@ -381,6 +382,8 @@ class _MyHomePageState extends State<MyHomePage> {
       decoration: pw.BoxDecoration(border: pw.Border.all()),
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -686,9 +689,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      /*Sí imprime los member, pero no imprime O al menos no muestra la familys
+                        pero en el widget de family, sí, tendrá que ver con con el context?
+                      */
+                      //MemberData está en Getters
                       List<Member> members = context.read<MemberData>().members;
-                      _generatePDF(members);
-                      memberData.getfamily(familyIdm);
+                      List<Family> familys = context.read<MemberData>().familys;
+                      _generatePDF(members, familys);
                     },
                     child: Text('Generar PDF de Personas'),
                   ),

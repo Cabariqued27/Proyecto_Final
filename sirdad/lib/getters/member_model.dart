@@ -1,12 +1,13 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/models/member.dart';
 
 class MemberData extends ChangeNotifier {
   List<Member> _members = [];
   List<Member> get members => _members;
-  List<Family> _familys = [];
+  List<Family> _familys = []; // Este list no estaba antes
   List<Family> get familys => _familys;
 
   Future<void> addMember(Member member) async {
