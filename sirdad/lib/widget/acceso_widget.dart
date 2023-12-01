@@ -8,8 +8,6 @@ import 'package:provider/provider.dart';
 final UserProvider userProvider = UserProvider();
 
 class AccesoScreen extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -31,7 +29,7 @@ class UserListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-
+    userProvider.getVolunteers();
     return Scaffold(
       appBar: AppBar(
         title: Text('Usuarios con Acceso'),
@@ -195,12 +193,23 @@ class _AddUserDialogState extends State<AddUserDialog> {
               namev: _nameController.text,
               password: _passwordController.text,
               hasAccess: false,
-              idv: int.parse(_idController.text),
+              idv: (_idController.text),
               phonev: int.parse(_phoneController.text),
               ong: _ongController.text,
               sign: _signController.text,
               news: _newsController.text,
             ));
+            dbRef = FirebaseDatabase.instance.ref().child('volunteers');
+            dbRef.push().set({
+              'namev': _nameController.text,
+              'password': _passwordController.text,
+              'hasAccess': true,
+              'idv': (_idController.text),
+              'phonev': int.parse(_phoneController.text),
+              'ong': _ongController.text,
+              'sign': _signController.text,
+              'news': _newsController.text,
+            });
 
             Navigator.of(context).pop();
           },
