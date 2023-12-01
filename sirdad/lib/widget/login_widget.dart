@@ -83,17 +83,20 @@ class _LoginPageState extends State<LoginPage> {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(
-      title: Row(
-        children: <Widget>[
-          const Text(''),
-          const SizedBox(width: 16.0),
-        ],
-      ),
+    // Eliminar la AppBar
+    appBar: PreferredSize(
+      preferredSize: Size.fromHeight(0.0),
+      child: Container(),
     ),
     body: SingleChildScrollView(
       child: Container(
         height: MediaQuery.of(context).size.height,
+        // Añadir decoración al Container que contiene todo
+        decoration: BoxDecoration(
+          color: Colors.white, // Puedes cambiar el color de fondo según tus necesidades
+          borderRadius: BorderRadius.circular(20.0), // Bordes curvos
+          border: Border.all(color: Colors.orange, width: 12.0), // Borde naranja
+        ),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -108,26 +111,44 @@ Widget build(BuildContext context) {
                     height: 200,
                   ),
                 ),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      username = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Username',
+                // TextField para Username con borde naranja y curvas
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.orange, width: 2.0),
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        username = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      border: InputBorder.none, // Eliminar el borde predeterminado
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
+                // TextField para Password con borde naranja y curvas
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.orange, width: 2.0),
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        password = value;
+                      });
+                    },
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: InputBorder.none, // Eliminar el borde predeterminado
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24.0),
@@ -145,6 +166,7 @@ Widget build(BuildContext context) {
     ),
   );
 }
+
 
 
 

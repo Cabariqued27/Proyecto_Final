@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/firebase_options.dart';
+import 'package:sirdad/getters/acceso_model.dart';
 import 'package:sirdad/widget/acceso_widget.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_widget.dart';
@@ -37,8 +38,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FamilyModel),
         ChangeNotifierProvider(create: (_) => memberData),
         ChangeNotifierProvider(create: (_) => EventModel),
-        ChangeNotifierProvider(create: (_) => accesoModel),
-
+        ChangeNotifierProvider(create: (_) => userProvider),
         // ChangeNotifierProvider(create: (_) => )
 
         //Colocar aquí todos los ChangeNotifierProvider de los modelos que se van a usar
@@ -46,7 +46,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-          home: MiembroWidget()
+          home: const LoginScreen()
           //const FormatWidget()
           // ChangeNotifierProvider(
           //   create: (context) => familyModel,

@@ -139,9 +139,19 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+
+
+
+@override
+Widget build(BuildContext context) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: Colors.orange,
+        width: 10.0,
+      ),
+    ),
+    child: Scaffold(
       appBar: AppBar(
         title: Text('Gestión de Eventos'),
       ),
@@ -154,37 +164,66 @@ class _MyHomePageState extends State<MyHomePage> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    controller: _eventNameController,
-                    decoration: InputDecoration(labelText: 'Nombre del Evento'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un nombre para el evento.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 3.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _eventNameController,
+                      decoration: InputDecoration(labelText: 'Nombre del Evento'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa un nombre para el evento.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _descriptionController,
-                    decoration:
-                        InputDecoration(labelText: 'Descripción del Evento'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa una descripción para el evento.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 3.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _descriptionController,
+                      decoration: InputDecoration(labelText: 'Descripción del Evento'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa una descripción para el evento.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _dateController,
-                    decoration: InputDecoration(labelText: 'Fecha del Evento'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa una fecha para el evento.';
-                      }
-                      return null;
-                    },
-                    readOnly: true, // Hacer el campo de texto de solo lectura
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 3.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _dateController,
+                      decoration: InputDecoration(labelText: 'Fecha del Evento'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa una fecha para el evento.';
+                        }
+                        return null;
+                      },
+                      readOnly: true,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -194,7 +233,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      // Obtener la lista de eventos desde el contexto
                       List<Event> events = context.read<EventData>().events;
                       _generatePDF(events);
                     },
@@ -217,20 +255,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
-                        title: Text(
-                            'Nombre del Evento: ${eventData.events[index].name}'),
+                        title: Text('Nombre del Evento: ${eventData.events[index].name}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                                'Descripción: ${eventData.events[index].description}'),
+                            Text('Descripción: ${eventData.events[index].description}'),
                             Text('Fecha: ${eventData.events[index].date}'),
                           ],
                         ),
-                        onTap: () {// Obtener el ID (key) del evento pulsado
+                        onTap: () {
                           String eventId = eventData.events[index].id;
                           print(eventId);
-                          // Navegar a FamilyWidget y pasar el ID del evento
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -247,6 +282,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+
+
+
 }

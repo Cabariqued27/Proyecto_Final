@@ -5,19 +5,19 @@ import 'package:sirdad/models/volunteer.dart';
 import '../getters/acceso_model.dart';
 import 'package:provider/provider.dart';
 
-UserProvider accesoModel = UserProvider();
+final UserProvider userProvider = UserProvider();
 
 class AccesoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+      create: (context) => userProvider,
       child: MaterialApp(
         title: 'Administrar Usuarios',
         theme: ThemeData(
-          primarySwatch: Colors.orange, // Color principal de la aplicación
-          hintColor: Colors.deepOrangeAccent, // Color de acento
-          fontFamily: 'Roboto', // Fuente predeterminada
+          primarySwatch: Colors.orange,
+          hintColor: Colors.deepOrangeAccent,
+          fontFamily: 'Roboto',
         ),
         home: UserListScreen(),
       ),
@@ -28,60 +28,73 @@ class AccesoScreen extends StatelessWidget {
 class UserListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    userProvider.getVolunteers();
     return Scaffold(
       appBar: AppBar(
         title: Text('Usuarios con Acceso'),
       ),
-      body: Consumer<UserProvider>(
-        builder: (context, userProvider, child) {
-          final users = userProvider.users;
+      body: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.orange, width: 10.0),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            final users = userProvider.users;
 
-          return ListView.builder(
-            itemCount: users.length,
-            itemBuilder: (context, index) {
-              final user = users[index];
+            return ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                final user = users[index];
 
-              return ListTile(
-                title: Text(
-                  user.namev,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+                return Container(
+                  margin: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.orange, width: 2.0),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Cédula: ${user.idv}'),
-                    Text('Teléfono: ${user.phonev}'),
-                    Text('ONG: ${user.ong}'),
-                    Text('Sign: ${user.sign}'),
-                    Text('Noticias: ${user.news}'),
-                    Text(
-                      'Acceso: ${user.hasAccess ? 'Concedido' : 'Revocado'}',
+                  child: ListTile(
+                    title: Text(
+                      '${user.namev} (${user.idv})',
                       style: TextStyle(
-                        color: user.hasAccess ? Colors.green : Colors.red,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
-                trailing: Switch(
-                  value: user.hasAccess,
-                  onChanged: (newValue) {
-                    userProvider.toggleUserAccess(index);
-                  },
-                ),
-              );
-            },
-          );
-        },
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('Teléfono:${user.phonev}'),
+                        Text('ONG: ${user.ong}'),
+                        Text('Signo: ${user.sign}'),
+                        Text('Noticias: ${user.news}'),
+                        Text(
+                          'Acceso: ${user.hasAccess ? 'Concedido' : 'Revocado'}',
+                          style: TextStyle(
+                            color: user.hasAccess ? Colors.green : Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                    trailing: Switch(
+                      value: user.hasAccess,
+                      onChanged: (newValue) {
+                        userProvider.toggleUserAccess(index);
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Muestra un diálogo para agregar un nuevo usuario
           showDialog(
             context: context,
-            builder: (context) => AddUserDialog(),
+            builder: (context) => AddUserDialog(userProvider: userProvider),
           );
         },
         child: Icon(Icons.add),
@@ -91,6 +104,10 @@ class UserListScreen extends StatelessWidget {
 }
 
 class AddUserDialog extends StatefulWidget {
+  final UserProvider userProvider;
+
+  const AddUserDialog({required this.userProvider});
+
   @override
   _AddUserDialogState createState() => _AddUserDialogState();
 }
@@ -107,84 +124,53 @@ class _AddUserDialogState extends State<AddUserDialog> {
 
   late DatabaseReference dbRef;
 
-  // Future<void> _addUser(UserProvider userProvider) async {
-  //   if (_formKey.currentState!.validate()) {
-  //     String name = _nameController.text;
-  //     int id = int.parse(_idController.text);
-  //     int phone = int.parse(_phoneController.text);
-  //     String ong = _ongController.text;
-  //     String sign = _signController.text;
-  //     String news = _newsController.text;
-
-  //     User newUser = User(
-  //         name= name, false,
-  //         idv: id,
-  //         phonev: phone,
-  //         ong: ong,
-  //         sign: sign,
-  //         news: news);
-
-  //     userProvider.addUser(newUser);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
-    final accesoModel = context.watch<UserProvider>();
     return AlertDialog(
-      title: Text('Agregar Nuevo Usuario'),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
+      contentPadding: EdgeInsets.zero,
+      content: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(color: Colors.orange, width: 2.0),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              _buildOrangeBorderedTextField(
+                controller: _nameController,
                 labelText: 'Nombre del Usuario',
               ),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
+              _buildOrangeBorderedTextField(
+                controller: _passwordController,
                 labelText: 'Contraseña',
               ),
-            ),
-            TextField(
-              controller: _idController,
-              decoration: InputDecoration(
+              _buildOrangeBorderedTextField(
+                controller: _idController,
                 labelText: 'Cédula',
               ),
-            ),
-            TextField(
-              controller: _phoneController,
-              decoration: InputDecoration(
+              _buildOrangeBorderedTextField(
+                controller: _phoneController,
                 labelText: 'Teléfono',
+                keyboardType: TextInputType.phone,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
               ),
-              keyboardType: TextInputType.phone,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly,
-                // Filtrar para permitir solo números
-              ],
-            ),
-            TextField(
-              controller: _ongController,
-              decoration: InputDecoration(
+              _buildOrangeBorderedTextField(
+                controller: _ongController,
                 labelText: 'ONG',
               ),
-            ),
-            TextField(
-              controller: _signController,
-              decoration: InputDecoration(
+              _buildOrangeBorderedTextField(
+                controller: _signController,
                 labelText: 'Sign',
               ),
-            ),
-            TextField(
-              controller: _newsController,
-              decoration: InputDecoration(
+              _buildOrangeBorderedTextField(
+                controller: _newsController,
                 labelText: 'Noticias',
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       actions: <Widget>[
@@ -203,28 +189,56 @@ class _AddUserDialogState extends State<AddUserDialog> {
             style: TextStyle(color: Theme.of(context).hintColor),
           ),
           onPressed: () {
-            final userProvider =
-                Provider.of<UserProvider>(context, listen: false);
-
-            userProvider.addUser(Volunteer(
+            widget.userProvider.addUser(Volunteer(
               namev: _nameController.text,
               password: _passwordController.text,
               hasAccess: false,
-              idv: int.parse(_idController.text),
+              idv: (_idController.text),
               phonev: int.parse(_phoneController.text),
               ong: _ongController.text,
               sign: _signController.text,
               news: _newsController.text,
             ));
-            Volunteer newUser = userProvider.users[
-                1]; // esto esta apuntando al metodo de addUser en acceso_model
-            //que  a su vez usa el objeto Volunteer de la BD local
-            print("user$newUser.name");
+            dbRef = FirebaseDatabase.instance.ref().child('volunteers');
+            dbRef.push().set({
+              'namev': _nameController.text,
+              'password': _passwordController.text,
+              'hasAccess': true,
+              'idv': (_idController.text),
+              'phonev': int.parse(_phoneController.text),
+              'ong': _ongController.text,
+              'sign': _signController.text,
+              'news': _newsController.text,
+            });
 
             Navigator.of(context).pop();
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildOrangeBorderedTextField({
+    required TextEditingController controller,
+    required String labelText,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? inputFormatters,
+  }) {
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.orange, width: 2.0),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: InputBorder.none,
+        ),
+        keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
+      ),
     );
   }
 

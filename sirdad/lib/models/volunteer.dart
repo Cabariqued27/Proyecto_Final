@@ -2,7 +2,7 @@ import '../services/crud.dart';
 import '../services/tables.dart';
 
 class Volunteer extends Crud {
-  int idv;
+  String idv;
   String namev;
   String password;
   int nidv;
@@ -14,7 +14,7 @@ class Volunteer extends Crud {
   bool isAdmid;
 
   Volunteer({
-    this.idv = 0,
+    this.idv = '',
     this.namev = '',
     this.password = '',
     this.nidv = 0,
@@ -46,7 +46,7 @@ class Volunteer extends Crud {
         
   }
 
-  Map<String, dynamic> toMap() {
+  /*Map<String, dynamic> toMap() {
     return {
       'idv': idv > 0 ? idv : null,
       'namev': namev,
@@ -58,7 +58,7 @@ class Volunteer extends Crud {
       'hasAccess': hasAccess,
       'isAmid': isAdmid,
     };
-  }
+  }*/
 
 
   
@@ -69,9 +69,9 @@ class Volunteer extends Crud {
    }
 
 
-  remove() async {
+  /*remove() async {
     await delete(idv);
-  }
+  }*/
 
   Future<List<Volunteer>> getVolunteers() async {
     var resultf = await query('SELECT * FROM $volunteerTable');
