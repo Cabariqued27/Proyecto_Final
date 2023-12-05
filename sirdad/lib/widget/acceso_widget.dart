@@ -192,7 +192,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
             widget.userProvider.addUser(Volunteer(
               namev: _nameController.text,
               password: _passwordController.text,
-              hasAccess: false,
+              hasAccess: true,
               idv: (_idController.text),
               phonev: int.parse(_phoneController.text),
               ong: _ongController.text,
