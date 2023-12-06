@@ -59,11 +59,12 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor:
+              Colors.deepOrange, // Set background color to deep orange
           title: Center(
             child: Text(
               'Incorrect Email',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white), // Set text color to white
             ),
           ),
         );
@@ -77,11 +78,12 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor:
+              Colors.deepOrange, // Set background color to deep orange
           title: Center(
             child: Text(
               'Incorrect Password',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white), // Set text color to white
             ),
           ),
         );
@@ -92,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.orange, // Set background color to orange
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -102,18 +104,22 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
 
                 // logo
-                const Icon(
-                  Icons.lock,
-                  size: 100,
+
+                // logo using Image widget
+                Image.asset(
+                  'lib/assets/logo.png', // Replace with the actual path to your image asset
+                  width: 100,
+                  height: 100,
+                  color: Colors.white, // Set image color to white
                 ),
 
                 const SizedBox(height: 50),
 
                 // welcome back, you've been missed!
-                Text(
+                const Text(
                   'Welcome back you\'ve been missed!',
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Colors.white, // Set text color to white
                     fontSize: 16,
                   ),
                 ),
@@ -139,14 +145,15 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 10),
 
                 // forgot password?
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(
+                            color: Colors.white), // Set text color to white
                       ),
                     ],
                   ),
@@ -162,27 +169,28 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
 
                 // or continue with
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     children: [
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey[400],
+                          color: Colors.white, // Set divider color to white
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
                           'Or continue with',
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: TextStyle(
+                              color: Colors.white), // Set text color to white
                         ),
                       ),
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey[400],
+                          color: Colors.white, // Set divider color to white
                         ),
                       ),
                     ],
@@ -191,32 +199,28 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 50),
 
-                // google + apple sign in buttons
-                Row(
+                // google sign in button
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     // google button
                     SquareTile(imagePath: 'lib/assets/google.png'),
-
-                    SizedBox(width: 25),
-
-                    // apple button
-                    SquareTile(imagePath: 'lib/assets/apple.png')
                   ],
                 ),
 
                 const SizedBox(height: 50),
 
                 // not a member? register now
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Not a member?',
-                      style: TextStyle(color: Colors.grey[700]),
+                      style: TextStyle(
+                          color: Colors.white), // Set text color to white
                     ),
-                    const SizedBox(width: 4),
-                    const Text(
+                    SizedBox(width: 4),
+                    Text(
                       'Register now',
                       style: TextStyle(
                         color: Colors.blue,
