@@ -1,2 +1,3 @@
-# SIRDAD
-Proyecto Final Sistema de recolección de datos para la atención de desastres
+# Siad
+Proyecto Final Sistema de información para la atención de desastres.
+
