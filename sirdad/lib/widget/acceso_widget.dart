@@ -154,6 +154,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
               decoration: InputDecoration(
                 labelText: 'Cédula',
               ),
+              keyboardType: TextInputType.number,
             ),
             TextField(
               controller: _phoneController,
