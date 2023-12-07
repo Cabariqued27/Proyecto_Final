@@ -299,11 +299,6 @@ Widget build(BuildContext context) {
                   ),
                   ElevatedButton(
                     onPressed: () {
-<<<<<<< HEAD
-=======
-                      // Get the list of familys from the context
-                      // y sí está imprimiento en PDF los families 
->>>>>>> hermmann6
                       List<Family> familys = context.read<FamilyData>().familys;
                       _generatePDF(familys);
                     },

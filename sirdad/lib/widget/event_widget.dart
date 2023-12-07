@@ -265,10 +265,6 @@ Widget build(BuildContext context) {
                           ],
                         ),
                         onTap: () {
-<<<<<<< HEAD
-=======
-                          // Obtener el ID (key) del evento pulsado
->>>>>>> hermmann6
                           String eventId = eventData.events[index].id;
                           print(eventId);
                           Navigator.push(

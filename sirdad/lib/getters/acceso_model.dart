@@ -6,25 +6,11 @@ import 'package:sirdad/models/volunteer.dart';
 class UserProvider with ChangeNotifier {
   final List<Volunteer> _users = [
     Volunteer(
-<<<<<<< HEAD
       namev: 'voluntario1',
       password: 'password',
       hasAccess: true,
       isAdmid: true,
     )
-=======
-            namev: 'admin',
-            password: 'password',
-            hasAccess: true,
-            isAdmid: true),
-            Volunteer(
-              namev: 'user',
-              password: '123456',
-              hasAccess: true,
-              isAdmid: false,
-            )
-    
->>>>>>> hermmann6
   ];
   List<Volunteer> get users => _users;
   final List<Volunteer> _usersf = [];
