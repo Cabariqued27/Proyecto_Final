@@ -1,12 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
+import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
 FamilyData FamilyModel = FamilyData();
@@ -102,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _generatePDF(List<Family> familys) async {
+  Future<void> _generatePDF(List<Family> familys) async { //este Family es del CRUD de models
     final pdf = pw.Document();
 
     // Generate the content of the PDF from the list of familys
@@ -131,18 +133,24 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     // Get the document directory on the device
-    final output = await getApplicationDocumentsDirectory();
+     final status = await Permission.storage.status;
+    if (status.isGranted) {
+      final directory = await getExternalStorageDirectory();
+      final pdfFilePath = '${directory!.path}/Download/miembros.pdf';
 
-    // Create the PDF file in the document directory
-    final pdfFile = File("${output.path}/familys.pdf");
+      if (!await Directory('${directory.path}/Download').exists()) {
+        await Directory('${directory.path}/Download').create(recursive: true);
+      }
 
-    // Write the content of the PDF to the file
-    await pdfFile.writeAsBytes(await pdf.save());
+      await File(pdfFilePath).writeAsBytes(await pdf.save());
 
-    // Show a success message
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('PDF generated successfully at ${pdfFile.path}'),
-    ));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('PDF generado con éxito en $pdfFilePath'),
+      ));
+    } else {
+      await Permission.storage.request();
+      _generatePDF(familys);
+    }
   }
 
 @override
@@ -157,6 +165,17 @@ Widget build(BuildContext context) {
     child: Scaffold(
       appBar: AppBar(
         title: Text('Gestión de Familias'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Navegar a FamilyWidget y pasar el ID del evento
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyApp(),
+                )); // Esto llevará de regreso a EventWidget
+          },
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -280,6 +299,11 @@ Widget build(BuildContext context) {
                   ),
                   ElevatedButton(
                     onPressed: () {
+<<<<<<< HEAD
+=======
+                      // Get the list of familys from the context
+                      // y sí está imprimiento en PDF los families 
+>>>>>>> hermmann6
                       List<Family> familys = context.read<FamilyData>().familys;
                       _generatePDF(familys);
                     },

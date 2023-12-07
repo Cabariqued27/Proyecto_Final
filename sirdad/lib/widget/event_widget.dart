@@ -49,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Establecer la fecha actual como valor por defecto
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     _getEventsFromCache();
+    print('Datos obtenidos correctamente.');
   }
 
   Future<void> _getEventsFromCache() async {
@@ -264,12 +265,17 @@ Widget build(BuildContext context) {
                           ],
                         ),
                         onTap: () {
+<<<<<<< HEAD
+=======
+                          // Obtener el ID (key) del evento pulsado
+>>>>>>> hermmann6
                           String eventId = eventData.events[index].id;
                           print(eventId);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FamilyWidget(eventIdf: eventId),
+                              builder: (context) =>
+                                  FamilyWidget(eventIdf: eventId),
                             ),
                           );
                         },

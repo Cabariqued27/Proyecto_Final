@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/acceso_model.dart';
+import 'package:sirdad/models/volunteer.dart';
 import 'package:sirdad/widget/acceso_widget.dart';
+
+import '../getters/event_model.dart';
+import '../models/event.dart';
 import 'event_widget.dart';
 
 class User {
@@ -42,6 +46,21 @@ class _LoginPageState extends State<LoginPage> {
   String username = '';
   String password = '';
 
+  // Define a list of allowed users
+  // final List<User> allowedUsers = [
+  //   User(username: 'admin', password: 'password', isAdmin: true),
+  //   User(username: 'user', password: '123456', isAdmin: false),
+  // ];
+
+  // Verify if the user is allowed to proceed
+  // User? verifyAdmin() {
+  //   for (final user in allowedUsers) {
+  //     if (user.username == username && user.password == password) {
+  //       return user;
+  //     }
+  //   }
+  //   return null;
+  // }
 
   verifyUser(String username, String password) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -53,6 +72,28 @@ class _LoginPageState extends State<LoginPage> {
     }
     return null;
   }
+
+  // void _login(String username, String password) {
+  //   final verifiedUser = verifyUser(username, password);
+  //   if (verifiedUser != null) {
+  //     if (verifiedUser.isAdmin) {
+  //       // Navigate to the admin panel or authenticated area
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => AccesoScreen()),
+  //       );
+  //     } else {
+  //       // Navigate to the regular user panel or authenticated area
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => MyApp()),
+  //       );
+  //     }
+  //   } else {
+  //     // Handle invalid login or show an error message
+  //     print('Invalid login');
+  //   }
+  // }
 
   _login(String username, String password) {
     final verifiedUser = verifyUser(username, password);
@@ -163,11 +204,11 @@ Widget build(BuildContext context) {
           ),
         ),
       ),
-    ),
-  );
+    ));
+  }
 }
 
 
 
 
-}
+

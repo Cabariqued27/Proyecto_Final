@@ -148,6 +148,7 @@ class _AddUserDialogState extends State<AddUserDialog> {
               _buildOrangeBorderedTextField(
                 controller: _idController,
                 labelText: 'Cédula',
+                keyboardType: TextInputType.number,
               ),
               _buildOrangeBorderedTextField(
                 controller: _phoneController,

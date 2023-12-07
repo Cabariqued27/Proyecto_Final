@@ -1,13 +1,22 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:sirdad/models/family.dart';
 import 'package:sirdad/models/member.dart';
 
 class MemberData extends ChangeNotifier {
   List<Member> _members = [];
   List<Member> get members => _members;
+  List<Family> _familys = []; // Este list no estaba antes
+  List<Family> get familys => _familys;
 
   Future<void> addMember(Member member) async {
     _members.add(member);
+    notifyListeners();
+  }
+
+  Future<void> addFamily(Family family) async {
+    _familys.add(family);
     notifyListeners();
   }
 
@@ -54,6 +63,41 @@ class MemberData extends ChangeNotifier {
             );
             addMember(newMember);
           }
+        });
+      } else {
+        print('No data available.');
+      }
+    });
+  }
+
+  Future<void> getfamily(String familyIdm) async {
+    FirebaseDatabase.instance.ref().keepSynced(true);
+    final ref = FirebaseDatabase.instance.ref().child('familys');
+    ref.onValue.listen((family) {
+      _familys.clear();
+      if (family.snapshot.exists) {
+        final Map<dynamic, dynamic> data =
+            family.snapshot.value as Map<dynamic, dynamic>;
+
+        data.forEach((key, value) {
+          String barrio = value['barrio'] ?? "";
+          String address = value['address'] ?? "";
+          int phone = value['phone'] ?? "";
+          String date = value['date'] ?? "";
+          String jefe = value['jefe'] ?? "";
+          String familyEventId = value['eventId'] ?? "";
+          if (key == familyIdm) {
+            Family newFamily = Family(
+              idf: key,
+              barrio: barrio,
+              address: address,
+              phone: phone,
+              date: date,
+              jefe: jefe,
+              eventId: familyEventId,
+            );
+            addFamily(newFamily);
+          } else {}
         });
       } else {
         print('No data available.');
