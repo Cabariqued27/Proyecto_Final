@@ -13,8 +13,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // text editing controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   // sign user in method
   void signUserIn() async {
@@ -31,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
     // try sign in
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
       );
       // pop the loading circle
       Navigator.pop(context);
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               Colors.deepOrange, // Set background color to deep orange
           title: Center(
             child: Text(
-              'Incorrect Email',
+              'Correo electrónico incorrecto',
               style: TextStyle(color: Colors.white), // Set text color to white
             ),
           ),
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
               Colors.deepOrange, // Set background color to deep orange
           title: Center(
             child: Text(
-              'Incorrect Password',
+              'Contraseña incorrecta',
               style: TextStyle(color: Colors.white), // Set text color to white
             ),
           ),
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // welcome back, you've been missed!
                 const Text(
-                  'Welcome back you\'ve been missed!',
+                  'Bienvenido',
                   style: TextStyle(
                     color: Colors.white, // Set text color to white
                     fontSize: 16,
@@ -128,8 +128,8 @@ class _LoginPageState extends State<LoginPage> {
 
                 // email textfield
                 MyTextField(
-                  controller: emailController,
-                  hintText: 'Email',
+                  controller: _emailController,
+                  hintText: 'Correo electrónico',
                   obscureText: false,
                 ),
 
@@ -137,8 +137,8 @@ class _LoginPageState extends State<LoginPage> {
 
                 // password textfield
                 MyTextField(
-                  controller: passwordController,
-                  hintText: 'Password',
+                  controller: _passwordController,
+                  hintText: 'Contraseña',
                   obscureText: true,
                 ),
 
@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Forgot Password?',
+                        '¿Ha olvidado su contraseña?',
                         style: TextStyle(
                             color: Colors.white), // Set text color to white
                       ),
@@ -182,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         child: Text(
-                          'Or continue with',
+                          'O continuar con',
                           style: TextStyle(
                               color: Colors.white), // Set text color to white
                         ),
@@ -215,13 +215,13 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a member?',
+                      '¿No está afiliado?',
                       style: TextStyle(
                           color: Colors.white), // Set text color to white
                     ),
                     SizedBox(width: 4),
                     Text(
-                      'Register now',
+                      'Regístrese ahora',
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
