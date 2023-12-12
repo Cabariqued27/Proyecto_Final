@@ -73,102 +73,67 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 50),
                 // welcome back, you've been missed!
                 const Text(
-                  'Bienvenido',
+                  'Registro de Voluntarios',
                   style: TextStyle(
                     color: Colors.white, // Set text color to white
                     fontSize: 16,
                   ),
                 ),
-
                 const SizedBox(height: 25),
-
                 // email textfield
                 MyTextField(
                   controller: _emailController,
                   hintText: 'Correo electrónico',
                   obscureText: false,
                 ),
-
                 const SizedBox(height: 10),
-
                 // password textfield
                 MyTextField(
                   controller: _passwordController,
                   hintText: 'Contraseña',
                   obscureText: true,
                 ),
-
                 const SizedBox(height: 10),
-
-                // forgot password?
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        '¿Ha olvidado su contraseña?',
-                        style: TextStyle(
-                            color: Colors.white), // Set text color to white
-                      ),
-                    ],
-                  ),
+                MyTextField(
+                  controller: _confirmpasswordController,
+                  hintText: 'Confirmar Contraseña',
+                  obscureText: true,
                 ),
-
-                const SizedBox(height: 25),
-
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: _nameController,
+                  hintText: 'Nombre',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: _phoneController,
+                  hintText: 'Teléfono',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: _ongController,
+                  hintText: 'ONG',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: _signController,
+                  hintText: 'Sign',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: _newsController,
+                  hintText: 'News',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
                 // sign in button
                 //MyButton(
                 // onTap: //signUserIn,
                 //),
-
-                const SizedBox(height: 50),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.white, // Set divider color to white
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'O continuar con',
-                          style: TextStyle(
-                              color: Colors.white), // Set text color to white
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.white, // Set divider color to white
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 50),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '¿No está afiliado?',
-                      style: TextStyle(
-                          color: Colors.white), // Set text color to white
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      'Regístrese ahora',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           ),
