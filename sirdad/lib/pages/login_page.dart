@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sirdad/components/my_button.dart';
 import 'package:sirdad/components/my_textfield.dart';
 import 'package:sirdad/components/square_tile.dart';
+import 'package:sirdad/pages/auth_page.dart';
+import 'package:sirdad/pages/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -16,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // sign user in method
   void signUserIn() async {
     // show loading circle
     showDialog(
@@ -36,6 +37,12 @@ class _LoginPageState extends State<LoginPage> {
       );
       // pop the loading circle
       Navigator.pop(context);
+
+      // Navigate to AuthPage after successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => AuthPage()),
+      );
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
       Navigator.pop(context);
@@ -44,7 +51,6 @@ class _LoginPageState extends State<LoginPage> {
         // show error to user
         wrongEmailMessage();
       }
-
       // WRONG PASSWORD
       else if (e.code == 'wrong-password') {
         // show error to user
@@ -59,12 +65,14 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          backgroundColor:
-              Colors.deepOrange, // Set background color to deep orange
+          backgroundColor: Color.fromARGB(
+              255, 223, 218, 217), // Set background color to deep orange
           title: Center(
             child: Text(
               'Correo electrónico incorrecto',
-              style: TextStyle(color: Colors.white), // Set text color to white
+              style: TextStyle(
+                  color: Color.fromARGB(
+                      255, 109, 53, 53)), // Set text color to white
             ),
           ),
         );
@@ -78,12 +86,14 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          backgroundColor:
-              Colors.deepOrange, // Set background color to deep orange
+          backgroundColor: Color.fromARGB(
+              255, 197, 197, 197), // Set background color to deep orange
           title: Center(
             child: Text(
               'Contraseña incorrecta',
-              style: TextStyle(color: Colors.white), // Set text color to white
+              style: TextStyle(
+                  color: Color.fromARGB(
+                      255, 65, 23, 23)), // Set text color to white
             ),
           ),
         );
@@ -211,20 +221,36 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
 
                 // not a member? register now
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       '¿No está afiliado?',
                       style: TextStyle(
-                          color: Colors.white), // Set text color to white
+                        color: Colors.white,
+                      ),
                     ),
                     SizedBox(width: 4),
-                    Text(
-                      'Regístrese ahora',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () {
+                        // Navegar hacia la página de registro cuando se haga clic en el texto
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(
+                              showLoginPage: () {
+                                // Esto es opcional, puedes realizar alguna acción si es necesaria al mostrar la página de inicio de sesión
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Regístrese ahora',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
