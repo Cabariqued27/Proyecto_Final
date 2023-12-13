@@ -6,34 +6,50 @@ import 'package:sirdad/getters/member_model.dart';
 import 'package:sirdad/models/member.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
+
+
 class MembersListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Miembros Registrados'),
+        title: Text('Miembros Registrados'),
       ),
       body: Consumer<MemberData>(
         builder: (context, memberData, child) {
           return ListView.builder(
             itemCount: memberData.members.length,
             itemBuilder: (context, index) {
-              // Build the UI for each member item
-              // You can customize this based on your requirements
               Member person = memberData.members[index];
-              return ListTile(
-                title: Text('Nombre: ${person.name} ${person.surname}'),
-                subtitle: Text('Tipo de documento: ${person.kid}'),
-                // Add more details as needed
+              return GestureDetector(
+                
+                child: Card(
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  child: ListTile(
+                    title: Text('Nombre: ${person.name} ${person.surname}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Tipo de documento: ${person.kid}'),
+                        Text('Número de documento: ${person.nid}'),
+                        Text('Parentesco: ${person.rela}'),
+                        Text('Género: ${person.gen}'),
+                        Text('Edad: ${person.age}'),
+                        Text('Etnia: ${person.et}'),
+                        Text('Estado de salud: ${person.heal}'),
+                        Text('Afiliación al régimen: ${person.aheal}'),
+                        Text('Estado del inmueble: ${person.sh}'),
+                      ],
+                    ),
+                  ),
+                ),
               );
-             
             },
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigate to another screen when the "+" button is pressed
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => MiembroWidget(familyIdm: '',)),

@@ -295,6 +295,10 @@ Widget build(BuildContext context) {
                   ElevatedButton(
                     onPressed: () {
                       _addFamily(context.read<FamilyData>());
+                      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FamilyListScreen()),
+    );
                     },
                     child: Text('Agregar Familia'),
                   ),

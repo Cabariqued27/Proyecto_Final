@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sirdad/widget/event_list_screen.dart';
 import 'package:sirdad/widget/family_list_screen.dart';
 import 'package:sirdad/widget/family_widget.dart';
 import 'dart:io';
@@ -230,15 +231,21 @@ Widget build(BuildContext context) {
                   ElevatedButton(
                     onPressed: () {
                       _addEvent(context.read<EventData>());
+                      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EventListScreen()),
+    );
                     },
                     child: Text('Agregar Evento'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      List<Event> events = context.read<EventData>().events;
-                      _generatePDF(events);
+                      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EventListScreen()),
+    );
                     },
-                    child: Text('Generar PDF de Eventos'),
+                    child: Text('Ver lista de evento'),
                   ),
                 ],
               ),
