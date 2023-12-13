@@ -5,6 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sirdad/models/family.dart';
+import 'package:sirdad/widget/MembersListScreen.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'dart:io';
 import '../pdf/member_pdf.dart';
@@ -139,6 +140,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  void _navigateToMembersListScreen() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => MembersListScreen()),
+  );
+}
+
 
 
 
@@ -559,12 +568,18 @@ Widget build(BuildContext context) {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                        Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => MembersListScreen()),
+  );
                       _addPerson(context.read<MemberData>());
                     },
                     child: Text('Agregar Persona'),
                   ),
                   ElevatedButton(
                     onPressed: () {
+
+
                       /*Sí imprime los member, pero no imprime O al menos no muestra la familys
                         pero en el widget de family, sí, tendrá que ver con con el context?
                       */
@@ -573,48 +588,21 @@ Widget build(BuildContext context) {
                       List<Family> familys = context.read<MemberData>().familys;
 
                       generatePDF(members, familys, showMessage);
+                       
                     },
                     child: Text('Generar PDF de Personas'),
                   ),
+                  ElevatedButton(
+  onPressed: _navigateToMembersListScreen,
+  child: Text('Mostrar Lista de Miembros'),
+),
+
                 ],
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              'Personas Registradas:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Consumer<MemberData>(
-              builder: (context, memberData, child) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: memberData.members.length,
-                  itemBuilder: (context, index) {
-                    Member person = memberData.members[index];
-                    return Card(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        title: Text('Nombre: ${person.name} ${person.surname}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Tipo de documento: ${person.kid}'),
-                            Text('Número de documento: ${person.nid}'),
-                            Text('Parentesco: ${person.rela}'),
-                            Text('Género: ${person.gen}'),
-                            Text('Edad: ${person.age}'),
-                            Text('Etnia: ${person.et}'),
-                            Text('Estado de salud: ${person.heal}'),
-                            Text('Afiliación al régimen: ${person.aheal}'),
-                            Text('Estado del inmueble: ${person.sh}'),
-                   ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+            
+            
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sirdad/widget/family_list_screen.dart';
 import 'package:sirdad/widget/family_widget.dart';
 import 'dart:io';
 import '../getters/event_model.dart';
@@ -271,7 +272,7 @@ Widget build(BuildContext context) {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  FamilyWidget(eventIdf: eventId),
+                                  FamilyListScreen(),
                             ),
                           );
                         },
