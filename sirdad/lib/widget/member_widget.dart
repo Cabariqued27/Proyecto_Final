@@ -5,6 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sirdad/models/family.dart';
+import 'package:sirdad/widget/MembersListScreen.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'dart:io';
 import '../pdf/member_pdf.dart';
@@ -100,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         familyId: familyIdm,
       );
 
-      memberData.addMember(newMember);
+      //memberData.addMember(newMember);
 
       _nameController.clear();
       _surnameController.clear();
@@ -109,18 +110,18 @@ class _MyHomePageState extends State<MyHomePage> {
       _ageController.clear();
 
       dbRef.push().set({
-        'name': name,
-        'surname': surname,
-        'kid': kid,
-        'nid': nid,
-        'rela': rela,
-        'gen': gen,
-        'age': age,
-        'et': et,
-        'heal': heal,
-        'aheal': aheal,
-        'sh': sh,
-        'familyId': familyIdm,
+        'name': newMember.name,
+        'surname': newMember.surname,
+        'kid': newMember.kid,
+        'nid': newMember.nid,
+        'rela': newMember.rela,
+        'gen': newMember.gen,
+        'age': newMember.age,
+        'et': newMember.et,
+        'heal': newMember.heal,
+        'aheal': newMember.aheal,
+        'sh': newMember.sh,
+        'familyId': newMember.familyId,
       });
       print(memberData.getMembersFromCache(familyIdm));
     }
@@ -140,9 +141,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  void _navigateToMembersListScreen() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => MembersListScreen()),
+  );
+}
+
+
+
+
+
+
+@override
+Widget build(BuildContext context) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: Colors.orange,
+        width: 10.0,
+      ),
+    ),
+    child: Scaffold(
       appBar: AppBar(
         title: Text('Gestión de Personas'),
         leading: IconButton(
@@ -166,284 +186,400 @@ class _MyHomePageState extends State<MyHomePage> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(labelText: 'Nombre'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un nombre.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(labelText: 'Nombre'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa un nombre.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _surnameController,
-                    decoration: InputDecoration(labelText: 'Apellido'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un apellido.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _surnameController,
+                      decoration: InputDecoration(labelText: 'Apellido'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa un apellido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: _selectedDocumento,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedDocumento = value;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: '1',
-                        child: Text('Registro Civil'),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
                       ),
-                      DropdownMenuItem(
-                        value: '2',
-                        child: Text('Tarjeta de Identidad'),
-                      ),
-                      DropdownMenuItem(
-                        value: '3',
-                        child: Text('Cédula de Ciudadanía'),
-                      ),
-                      DropdownMenuItem(
-                        value: '4',
-                        child: Text('Cédula de Extranjería'),
-                      ),
-                      DropdownMenuItem(
-                        value: '5',
-                        child: Text('Indocumentado'),
-                      ),
-                      DropdownMenuItem(
-                        value: '6',
-                        child: Text('No Sabe/No Responde'),
-                      ),
-                    ],
-                    decoration: InputDecoration(labelText: 'Tipo de documento'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, selecciona un valor válido.';
-                      }
-                      return null;
-                    },
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedDocumento,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedDocumento = value;
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          value: '1',
+                          child: Text('Registro Civil'),
+                        ),
+                        DropdownMenuItem(
+                          value: '2',
+                          child: Text('Tarjeta de Identidad'),
+                        ),
+                        DropdownMenuItem(
+                          value: '3',
+                          child: Text('Cédula de Ciudadanía'),
+                        ),
+                        DropdownMenuItem(
+                          value: '4',
+                          child: Text('Cédula de Extranjería'),
+                        ),
+                        DropdownMenuItem(
+                          value: '5',
+                          child: Text('Indocumentado'),
+                        ),
+                        DropdownMenuItem(
+                          value: '6',
+                          child: Text('No Sabe/No Responde'),
+                        ),
+                      ],
+                      decoration: InputDecoration(labelText: 'Tipo de documento'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, selecciona un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _nidController,
-                    decoration:
-                        InputDecoration(labelText: 'numero de documento'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _nidController,
+                      decoration:
+                          InputDecoration(labelText: 'Número de documento'),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: _selectedParentesco,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedParentesco = value;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: '1',
-                        child: Text('Jefe de Hogar'),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 1.0,
                       ),
-                      DropdownMenuItem(
-                        value: '2',
-                        child: Text('Esposo(a)'),
-                      ),
-                      DropdownMenuItem(
-                        value: '3',
-                        child: Text('Hijo(a)'),
-                      ),
-                      DropdownMenuItem(
-                        value: '4',
-                        child: Text('Primo(a)'),
-                      ),
-                      DropdownMenuItem(
-                        value: '5',
-                        child: Text('Tío(a)'),
-                      ),
-                      DropdownMenuItem(
-                        value: '6',
-                        child: Text('Nieto(a)'),
-                      ),
-                      DropdownMenuItem(
-                        value: '7',
-                        child: Text('Suegro(a)'),
-                      ),
-                      DropdownMenuItem(
-                        value: '8',
-                        child: Text('Yerno/Nuera'),
-                      ),
-                    ],
-                    decoration: InputDecoration(
-                        labelText: 'Parentesco con el jefe de hogar'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, selecciona un valor válido.';
-                      }
-                      return null;
-                    },
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedParentesco,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedParentesco = value;
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          value: '1',
+                          child: Text('Jefe de Hogar'),
+                        ),
+                        DropdownMenuItem(
+                          value: '2',
+                          child: Text('Esposo(a)'),
+                        ),
+                        DropdownMenuItem(
+                          value: '3',
+                          child: Text('Hijo(a)'),
+                        ),
+                        DropdownMenuItem(
+                          value: '4',
+                          child: Text('Primo(a)'),
+                        ),
+                        DropdownMenuItem(
+                          value: '5',
+                          child: Text('Tío(a)'),
+                        ),
+                        DropdownMenuItem(
+                          value: '6',
+                          child: Text('Nieto(a)'),
+                        ),
+                        DropdownMenuItem(
+                          value: '7',
+                          child: Text('Suegro(a)'),
+                        ),
+                        DropdownMenuItem(
+                          value: '8',
+                          child: Text('Yerno/Nuera'),
+                        ),
+                      ],
+                      decoration: InputDecoration(
+                          labelText: 'Parentesco con el jefe de hogar'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, selecciona un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _genController,
-                    decoration: InputDecoration(labelText: 'Genero'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa un valor válido.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _genController,
+                      decoration: InputDecoration(labelText: 'Género'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _ageController,
-                    decoration: InputDecoration(labelText: 'Edad'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa una edad válida.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _ageController,
+                      decoration: InputDecoration(labelText: 'Edad'),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa una edad válida.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: _selectedEtnia,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedEtnia = value;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: '1',
-                        child: Text('Afrocolombiano'),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 1.0,
                       ),
-                      DropdownMenuItem(
-                        value: '2',
-                        child: Text('Indígena'),
-                      ),
-                      DropdownMenuItem(
-                        value: '3',
-                        child: Text('Gitano'),
-                      ),
-                      DropdownMenuItem(
-                        value: '4',
-                        child: Text('Racial'),
-                      ),
-                      DropdownMenuItem(
-                        value: '5',
-                        child: Text('Otro'),
-                      ),
-                      DropdownMenuItem(
-                        value: '6',
-                        child: Text('Sin información'),
-                      ),
-                    ],
-                    decoration: InputDecoration(labelText: 'Etnia'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, selecciona un valor válido.';
-                      }
-                      return null;
-                    },
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedEtnia,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedEtnia = value;
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          value: '1',
+                          child: Text('Afrocolombiano'),
+                        ),
+                        DropdownMenuItem(
+                          value: '2',
+                          child: Text('Indígena'),
+                        ),
+                        DropdownMenuItem(
+                          value: '3',
+                          child: Text('Gitano'),
+                        ),
+                        DropdownMenuItem(
+                          value: '4',
+                          child: Text('Racial'),
+                        ),
+                        DropdownMenuItem(
+                          value: '5',
+                          child: Text('Otro'),
+                        ),
+                        DropdownMenuItem(
+                          value: '6',
+                          child: Text('Sin información'),
+                        ),
+                      ],
+                      decoration: InputDecoration(labelText: 'Etnia'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, selecciona un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: _selectedEstadoSalud,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedEstadoSalud = value;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: '1',
-                        child: Text('Requiere asistencia'),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
                       ),
-                      DropdownMenuItem(
-                        value: '2',
-                        child: Text('No requiere asistencia médica'),
-                      ),
-                    ],
-                    decoration: InputDecoration(labelText: 'Estado de salud'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, selecciona un valor válido.';
-                      }
-                      return null;
-                    },
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedEstadoSalud,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedEstadoSalud = value;
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          value: '1',
+                          child: Text('Requiere asistencia'),
+                        ),
+                        DropdownMenuItem(
+                          value: '2',
+                          child: Text('No requiere asistencia médica'),
+                        ),
+                      ],
+                      decoration: InputDecoration(labelText: 'Estado de salud'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, selecciona un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: _selectedAfiliacionSalud,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedAfiliacionSalud = value;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: '1',
-                        child: Text('Contributivo'),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
                       ),
-                      DropdownMenuItem(
-                        value: '2',
-                        child: Text('Subsidio'),
-                      ),
-                      DropdownMenuItem(
-                        value: '3',
-                        child: Text('Sin afiliación'),
-                      ),
-                    ],
-                    decoration: InputDecoration(
-                        labelText: 'Afiliación al régimen de salud'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, selecciona un valor válido.';
-                      }
-                      return null;
-                    },
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedAfiliacionSalud,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedAfiliacionSalud = value;
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          value: '1',
+                          child: Text('Contributivo'),
+                        ),
+                        DropdownMenuItem(
+                          value: '2',
+                          child: Text('Subsidio'),
+                        ),
+                        DropdownMenuItem(
+                          value: '3',
+                          child: Text('Sin afiliación'),
+                        ),
+                      ],
+                      decoration: InputDecoration(
+                          labelText: 'Afiliación al régimen de salud'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, selecciona un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: _selectedEstadoInmueble,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedEstadoInmueble = value;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: '1',
-                        child: Text('Habitable'),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
                       ),
-                      DropdownMenuItem(
-                        value: '2',
-                        child: Text('No habitable'),
-                      ),
-                      DropdownMenuItem(
-                        value: '3',
-                        child: Text('Destruida'),
-                      ),
-                    ],
-                    decoration:
-                        InputDecoration(labelText: 'Estado del inmueble'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, selecciona un valor válido.';
-                      }
-                      return null;
-                    },
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedEstadoInmueble,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedEstadoInmueble = value;
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          value: '1',
+                          child: Text('Habitable'),
+                        ),
+                        DropdownMenuItem(
+                          value: '2',
+                          child: Text('No habitable'),
+                        ),
+                        DropdownMenuItem(
+                          value: '3',
+                          child: Text('Destruida'),
+                        ),
+                      ],
+                      decoration:
+                          InputDecoration(labelText: 'Estado del inmueble'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, selecciona un valor válido.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
+                        Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => MembersListScreen()),
+  );
                       _addPerson(context.read<MemberData>());
                     },
                     child: Text('Agregar Persona'),
                   ),
                   ElevatedButton(
                     onPressed: () {
+
+
                       /*Sí imprime los member, pero no imprime O al menos no muestra la familys
                         pero en el widget de family, sí, tendrá que ver con con el context?
                       */
@@ -452,51 +588,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       List<Family> familys = context.read<MemberData>().familys;
 
                       generatePDF(members, familys, showMessage);
+                       
                     },
                     child: Text('Generar PDF de Personas'),
                   ),
+                  ElevatedButton(
+  onPressed: _navigateToMembersListScreen,
+  child: Text('Mostrar Lista de Miembros'),
+),
+
                 ],
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              'Personas Registradas:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Consumer<MemberData>(
-              builder: (context, memberData, child) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: memberData.members.length,
-                  itemBuilder: (context, index) {
-                    Member person = memberData.members[index];
-                    return Card(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        title: Text('Nombre: ${person.name} ${person.surname}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Tipo de documento: ${person.kid}'),
-                            Text('Numero de documento: ${person.nid}'),
-                            Text('parentesco: ${person.rela}'),
-                            Text('Genero: ${person.gen}'),
-                            Text('Edad: ${person.age}'),
-                            Text('Etnia: ${person.et}'),
-                            Text('Estado de salud: ${person.heal}'),
-                            Text('Afiliacion al regimen: ${person.aheal}'),
-                            Text('Estado del inmueble: ${person.sh}'),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+            
+            
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

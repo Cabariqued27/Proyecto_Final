@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/event_widget.dart';
+import 'package:sirdad/widget/family_list_screen.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
 FamilyData FamilyModel = FamilyData();
@@ -85,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
         eventId: eventIdf,
       );
 
-      familyData.addFamily(newFamily);
+      //familyData.addFamily(newFamily);
 
       _barrioController.clear();
       _addressController.clear();
@@ -94,12 +95,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // Save the family in Firebase Realtime Database
       dbRef.push().set({
-        'barrio': familyBarrio,
-        'address': familyAddress,
-        'phone': familyPhone,
-        'date': familyDate,
-        'jefe': familyHead,
-        'eventId': eventIdf,
+        'barrio': newFamily.barrio,
+        'address': newFamily.address,
+        'phone': newFamily.phone,
+        'date': newFamily.date,
+        'jefe': newFamily.jefe,
+        'eventId': newFamily.eventId,
       });
     }
   }
@@ -153,9 +154,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+@override
+Widget build(BuildContext context) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: Colors.orange,
+        width: 10.0,
+      ),
+    ),
+    child: Scaffold(
       appBar: AppBar(
         title: Text('Gestión de Familias'),
         leading: IconButton(
@@ -179,126 +187,143 @@ class _MyHomePageState extends State<MyHomePage> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  TextFormField(
-                    controller: _barrioController,
-                    decoration: InputDecoration(labelText: 'Barrio'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa el barrio.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _barrioController,
+                      decoration: InputDecoration(labelText: 'Barrio'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa el barrio.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _addressController,
-                    decoration: InputDecoration(labelText: 'Dirección'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa la dirección.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _addressController,
+                      decoration: InputDecoration(labelText: 'Dirección'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa la dirección.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(labelText: 'Teléfono'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa el teléfono.';
-                      }
-                      if (int.tryParse(value) == null) {
-                        return 'El teléfono debe ser un número.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _phoneController,
+                      decoration: InputDecoration(labelText: 'Teléfono'),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa el teléfono.';
+                        }
+                        if (int.tryParse(value) == null) {
+                          return 'El teléfono debe ser un número.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    controller: _dateController,
-                    decoration: InputDecoration(labelText: 'Fecha'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa la fecha.';
-                      }
-                      return null;
-                    },
-                    readOnly: true,
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _dateController,
+                      decoration: InputDecoration(labelText: 'Fecha'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa la fecha.';
+                        }
+                        return null;
+                      },
+                      readOnly: true,
+                    ),
                   ),
-                  TextFormField(
-                    controller: _headOfFamilyController,
-                    decoration: InputDecoration(labelText: 'Jefe de familia'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Por favor, ingresa el jefe de familia.';
-                      }
-                      return null;
-                    },
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextFormField(
+                      controller: _headOfFamilyController,
+                      decoration: InputDecoration(labelText: 'Jefe de familia'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Por favor, ingresa el jefe de familia.';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       _addFamily(context.read<FamilyData>());
+                      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FamilyListScreen()),
+    );
                     },
                     child: Text('Agregar Familia'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // Get the list of familys from the context
-                      // y sí está imprimiento en PDF los families 
-                      List<Family> familys = context.read<FamilyData>().familys;
-                      _generatePDF(familys);
-                    },
-                    child: Text('Generar PDF de Familias'),
-                  ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FamilyListScreen()),
+    );
+  },
+  child: Text('Ver Familias Registradas'),
+),
+
                 ],
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              'Familias Registradas:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Consumer<FamilyData>(
-              builder: (context, familyData, child) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: familyData.familys.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        title:
-                            Text('Barrio: ${familyData.familys[index].barrio}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                'Dirección: ${familyData.familys[index].address}'),
-                            Text(
-                                'Teléfono: ${familyData.familys[index].phone.toString()}'),
-                            Text('Fecha: ${familyData.familys[index].date}'),
-                            Text(
-                                'Jefe de familia: ${familyData.familys[index].jefe}'),
-                          ],
-                        ),
-                        onTap: () {
-                          String familyId = familyData.familys[index].idf;
-                          print(familyId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    MiembroWidget(familyIdm: familyId)),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+            
+            
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+
 }
