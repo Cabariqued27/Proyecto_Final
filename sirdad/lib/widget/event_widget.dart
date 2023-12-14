@@ -12,7 +12,7 @@ import 'dart:io';
 import '../getters/event_model.dart';
 import '../models/event.dart';
 
-EventData EventModel = EventData();
+EventData eventData = EventData();
 
 void main() {
   runApp(MyApp());
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getEventsFromCache() async {
     // Llamar a la función getEventsFromCache de tu modelo de datos
-    await EventModel.getEventsFromCache();
+    await eventData.getEventsFromCache();
   }
 
   Future<void> _addEvent(EventData eventData) async {

@@ -37,7 +37,7 @@ class EventData extends ChangeNotifier {
           print('Description: $description');
           print('Name: $name');
           Event newEvent = Event(
-            id:key,
+            id: key,
             name: name,
             description: description,
             date: date,
@@ -49,4 +49,14 @@ class EventData extends ChangeNotifier {
       }
     });
   }
+
+  //save data 
+  /*final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+  void addEventf(String name, String description, String date) {
+    databaseReference.child("events").push().set({
+      'name': name,
+      'description': description,
+      'date': date,
+    });
+  }*/
 }
