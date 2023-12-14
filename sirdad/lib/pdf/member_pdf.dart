@@ -17,17 +17,25 @@ Future<void> generatePDF(List<Member> members, List<Family> familys,
   // Crear una lista de filas para la tabla
   List<List<String>> data = [
     [
-      'Nombres',
-      'Apellidos',
-      'Tipo de documento',
-      'Número de documento',
-      'Parentesco con el jefe de hogar',
-      'Género',
-      'Edad',
-      'Etnia',
-      'Estado de Salud',
-      'Afiliación al Regimen de salud'
+      'NOMBRES',
+      'APELLIDOS',
+      'TIPO DE DOCUMENTO',
+      'NÚMERO DE DOCUMENTO',
+      'PARENTESCO CON EL JEFE DE HOGAR',
+      'GÉNERO',
+      'EDAD',
+      'ETNIA',
+      'ESTADO DE SALUD',
+      'AFILIACIÓN AL REGIMEN DE SALUD',
+      'UBICACIÓN DEL INMUEBLE',
+      'PROPIEDAD DEL INMUEBLE',
+      'ESTADO DEL INMUEBLE',
+      'AHE ALIM.',
+      'AHE NO ALM',
+      'MAT REHAB',
+      'SUB ARRIEN',
     ],
+
     [
       'Dato 1',
       'Dato 2',
@@ -38,22 +46,56 @@ Future<void> generatePDF(List<Member> members, List<Family> familys,
       'Dato 7',
       'Dato 8',
       'Dato 9',
-      'Dato 10'
-    ],
-    [
+      'Dato 10',
       'Dato 11',
       'Dato 12',
       'Dato 13',
       'Dato 14',
       'Dato 15',
       'Dato 16',
+    ],
+    [
       'Dato 17',
       'Dato 18',
       'Dato 19',
-      'Dato 20'
+      'Dato 20',
+      'Dato 21',
+      'Dato 22',
+      'Dato 23',
+      'Dato 24',
+      'Dato 25',
+      'Dato 26',
+      'Dato 27',
+      'Dato 28',
+      'Dato 29',
+      'Dato 30',
+      'Dato 31',
+      'Dato 32',
     ],
     // Puedes agregar más filas según sea necesario
   ];
+
+    // Agregar filas con los datos de los miembros
+  for (var member in members) {
+    data.add([
+      member.name ?? '',
+      member.surname ?? '',
+      member.kid?.toString() ?? '',
+      member.nid?.toString() ?? '',
+      member.rela?.toString() ?? '',
+      member.gen ?? '',
+      member.age?.toString() ?? '',
+      member.et?.toString() ?? '',
+      member.heal?.toString() ?? '',
+      member.aheal?.toString() ?? '',
+      '', // Ubicación del inmueble
+      '', // Propiedad del inmueble
+      '', // AHE ALIM.
+      '', // AHE NO ALM
+      '', // MAT REHAB
+      '', // SUB ARRIEN
+    ]);
+  }
 
   // Crear la tabla con los datos estáticos
   final table = pw.Table(

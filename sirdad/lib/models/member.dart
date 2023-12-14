@@ -3,18 +3,18 @@ import '../services/crud.dart';
 //Importa la clase member
 
 class Member extends Crud {
-  int idm;
-  String name;
-  String surname;
-  int kid;
-  int nid;
-  int rela;
-  String gen;
+  int idm; 
+  String name; 
+  String surname;//chatgpt esto es apellidos
+  int kid; //chatgpt esto es tipo de documento
+  int nid;//Chatgpt esto es para el número de documento
+  int rela;//Chatgpt esto es para el PARENTESCO CON EL JEFE DEL HOGAR
+  String gen;//CHATGPT esto es para el GÉNERO
   int age;
-  int et;
-  int heal;
-  int aheal;
-  int sh;
+  int et;//esto es para la etnia
+  int heal;// esto es para el estado de salud
+  int aheal; // chatgpt esto es para la AFILIACIÓN AL REGIMEN DE SALUD
+  int sh;// chatgpt esto es para el ESTADO DEL INMUEBLE
   String familyId;
 
   Member({
