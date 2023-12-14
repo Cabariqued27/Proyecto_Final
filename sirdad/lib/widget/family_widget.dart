@@ -11,7 +11,7 @@ import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
-FamilyData FamilyModel = FamilyData();
+FamilyData familyData = FamilyData();
 
 void main() {
   runApp(FamilyWidget(eventIdf: ''));
@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getFamilysFromCache() async {
     // Llamar a la función getFamilysFromCache de tu modelo de datos
-    await FamilyModel.getFamilysByEventId(eventIdf);
+    await familyData.getFamilysByEventId(eventIdf);
   }
 
   Future<void> _addFamily(FamilyData familyData) async {
