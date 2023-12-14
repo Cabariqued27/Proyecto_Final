@@ -4,8 +4,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/firebase_options.dart';
-import 'package:sirdad/getters/acceso_model.dart';
+import 'package:sirdad/getters/volunteer_model.dart';
 import 'package:sirdad/pages/login_page.dart';
+import 'package:sirdad/widget/admin_widget.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_widget.dart';
 import 'package:sirdad/widget/member_widget.dart';
@@ -34,10 +35,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        //ChangeNotifierProvider(create: (_) => miembroModel),
-        ChangeNotifierProvider(create: (_) => FamilyModel),
+        ChangeNotifierProvider(create: (_) => volunteerData),
+        ChangeNotifierProvider(create: (_) => familyData),
         ChangeNotifierProvider(create: (_) => memberData),
-        ChangeNotifierProvider(create: (_) => EventModel),
+        ChangeNotifierProvider(create: (_) => eventData),
         //ChangeNotifierProvider(create: (_) => userProvider),
         // ChangeNotifierProvider(create: (_) => )
 
