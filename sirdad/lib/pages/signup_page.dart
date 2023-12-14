@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:sirdad/components/my_button.dart';
 import 'package:sirdad/components/my_textfield.dart';
+import 'package:sirdad/models/volunteer.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -26,6 +29,25 @@ class _RegisterPageState extends State<RegisterPage> {
   final _newsController = TextEditingController();
   final _hasAccessController = TextEditingController();
   final _isAdminController = TextEditingController();
+  late DatabaseReference dbRef;
+
+  @override
+  void initState() {
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('volunteers');
+    // Set default values for each controller
+    _emailController.text = 'default@gmail.com';
+    _passwordController.text = '123456';
+    _confirmpasswordController.text = '123456';
+    _nameController.text = 'Default Name';
+    _idvController.text = 'Default IDV';
+    _phoneController.text = '311';
+    _ongController.text = 'Onu';
+    _signController.text = 'Default Sign';
+    _newsController.text = 'Default News';
+    _hasAccessController.text = 'false';
+    _isAdminController.text = 'false';
+  }
 
   @override
   void dispose() {
@@ -45,25 +67,58 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future signUp() async {
     if (passwordConfirmed()) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      try {
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
+          password: _passwordController.text.trim(),
+        );
+
+        // Get the UID from the UserCredential
+        final String uid = credential.user!.uid;
+
+        Volunteer newVolunteer = Volunteer(
+          namev: _nameController.text.trim(),
+          phonev: int.parse(_phoneController.text),
+          ong: _ongController.text.trim(),
+          sign: _signController.text.trim(),
+          news: _newsController.text.trim(),
+          hasAccess: false,
+          isAdmid: false,
+        );
+
+        // Save the user details with UID as ID in the database
+        dbRef.child(uid).set({
+          'Name': newVolunteer.namev,
+          'Phone': newVolunteer.phonev,
+          'Ong': newVolunteer.ong,
+          'Sign': newVolunteer.sign,
+          'News': newVolunteer.news,
+          'HasAcces': newVolunteer.hasAccess,
+          'isAdmin': newVolunteer.isAdmid,
+          // Add other fields as needed
+        });
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
   bool passwordConfirmed() {
-    if (_passwordController.text.trim() ==
-        _confirmpasswordController.text.trim()) {
-      return true;
-    } else {
-      return false;
-    }
+    return _passwordController.text.trim() ==
+        _confirmpasswordController.text.trim();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange, // Set background color to orange
+      backgroundColor: Colors.orange,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -71,23 +126,20 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
-                // welcome back, you've been missed!
                 const Text(
                   'Registro de Voluntarios',
                   style: TextStyle(
-                    color: Colors.white, // Set text color to white
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 25),
-                // email textfield
                 MyTextField(
                   controller: _emailController,
                   hintText: 'Correo electrónico',
                   obscureText: false,
                 ),
                 const SizedBox(height: 10),
-                // password textfield
                 MyTextField(
                   controller: _passwordController,
                   hintText: 'Contraseña',
@@ -130,10 +182,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: false,
                 ),
                 const SizedBox(height: 10),
-                // sign in button
-                //MyButton(
-                // onTap: //signUserIn,
-                //),
+                MyButton(
+                  onTap: signUp,
+                  buttonText: 'Sing Up',
+                ),
               ],
             ),
           ),

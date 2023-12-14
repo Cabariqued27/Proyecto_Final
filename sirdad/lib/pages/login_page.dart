@@ -173,53 +173,10 @@ class _LoginPageState extends State<LoginPage> {
 
                 // sign in button
                 MyButton(
-                  onTap: signUserIn,
+                  onTap: signUserIn, buttonText: 'Sign In',
                 ),
 
                 const SizedBox(height: 50),
-
-                // or continue with
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.white, // Set divider color to white
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'O continuar con',
-                          style: TextStyle(
-                              color: Colors.white), // Set text color to white
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.white, // Set divider color to white
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 50),
-
-                // google sign in button
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // google button
-                    SquareTile(imagePath: 'lib/assets/google.png'),
-                  ],
-                ),
-
-                const SizedBox(height: 50),
-
                 // not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
