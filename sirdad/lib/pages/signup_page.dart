@@ -108,6 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
         print(e);
       }
     }
+    Navigator.pop(context);
   }
 
   bool passwordConfirmed() {
@@ -185,6 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 MyButton(
                   onTap: signUp,
                   buttonText: 'Sing Up',
+          
                 ),
               ],
             ),
