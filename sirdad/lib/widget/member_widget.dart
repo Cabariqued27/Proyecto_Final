@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         familyId: familyIdm,
       );
 
-      memberData.addMember(newMember);
+      //memberData.addMember(newMember);
 
       _nameController.clear();
       _surnameController.clear();
@@ -110,18 +110,18 @@ class _MyHomePageState extends State<MyHomePage> {
       _ageController.clear();
 
       dbRef.push().set({
-        'name': name,
-        'surname': surname,
-        'kid': kid,
-        'nid': nid,
-        'rela': rela,
-        'gen': gen,
-        'age': age,
-        'et': et,
-        'heal': heal,
-        'aheal': aheal,
-        'sh': sh,
-        'familyId': familyIdm,
+        'name': newMember.name,
+        'surname': newMember.surname,
+        'kid': newMember.kid,
+        'nid': newMember.nid,
+        'rela': newMember.rela,
+        'gen': newMember.gen,
+        'age': newMember.age,
+        'et': newMember.et,
+        'heal': newMember.heal,
+        'aheal': newMember.aheal,
+        'sh': newMember.sh,
+        'familyId': newMember.familyId,
       });
       print(memberData.getMembersFromCache(familyIdm));
     }

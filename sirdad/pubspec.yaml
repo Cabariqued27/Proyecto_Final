@@ -47,7 +47,7 @@ dependencies:
   provider: ^6.0.5
   firebase_database: ^10.3.2
   intl: ^0.18.1
-
+  firebase_auth: ^4.15.0
   
   
   
@@ -75,6 +75,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - lib/assets/google.png
+    - lib/assets/logo.png
+    
+    
 
   # To add assets to your application, add an assets section, like this:
   # assets:
