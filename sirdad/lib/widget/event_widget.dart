@@ -251,44 +251,7 @@ Widget build(BuildContext context) {
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              'Eventos Registrados:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Consumer<EventData>(
-              builder: (context, eventData, child) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: eventData.events.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        title: Text('Nombre del Evento: ${eventData.events[index].name}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Descripción: ${eventData.events[index].description}'),
-                            Text('Fecha: ${eventData.events[index].date}'),
-                          ],
-                        ),
-                        onTap: () {
-                          String eventId = eventData.events[index].id;
-                          print(eventId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  FamilyListScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+            
           ],
         ),
       ),
