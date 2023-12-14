@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/event_widget.dart';
+import 'package:sirdad/widget/family_list_screen.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
 FamilyData familyData = FamilyData();
@@ -294,63 +295,29 @@ Widget build(BuildContext context) {
                   ElevatedButton(
                     onPressed: () {
                       _addFamily(context.read<FamilyData>());
+                      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FamilyListScreen()),
+    );
                     },
                     child: Text('Agregar Familia'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      List<Family> familys = context.read<FamilyData>().familys;
-                      _generatePDF(familys);
-                    },
-                    child: Text('Generar PDF de Familias'),
-                  ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FamilyListScreen()),
+    );
+  },
+  child: Text('Ver Familias Registradas'),
+),
+
                 ],
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              'Familias Registradas:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Consumer<FamilyData>(
-              builder: (context, familyData, child) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: familyData.familys.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        title:
-                            Text('Barrio: ${familyData.familys[index].barrio}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                'Dirección: ${familyData.familys[index].address}'),
-                            Text(
-                                'Teléfono: ${familyData.familys[index].phone.toString()}'),
-                            Text('Fecha: ${familyData.familys[index].date}'),
-                            Text(
-                                'Jefe de familia: ${familyData.familys[index].jefe}'),
-                          ],
-                        ),
-                        onTap: () {
-                          String familyId = familyData.familys[index].idf;
-                          print(familyId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    MiembroWidget(familyIdm: familyId)),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+            
+            
           ],
         ),
       ),
