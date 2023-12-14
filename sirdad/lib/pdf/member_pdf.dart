@@ -75,28 +75,6 @@ Future<void> generatePDF(List<Member> members, List<Family> familys,
     // Puedes agregar más filas según sea necesario
   ];
 
-    // Agregar filas con los datos de los miembros
-  for (var member in members) {
-    data.add([
-      member.name ?? '',
-      member.surname ?? '',
-      member.kid?.toString() ?? '',
-      member.nid?.toString() ?? '',
-      member.rela?.toString() ?? '',
-      member.gen ?? '',
-      member.age?.toString() ?? '',
-      member.et?.toString() ?? '',
-      member.heal?.toString() ?? '',
-      member.aheal?.toString() ?? '',
-      '', // Ubicación del inmueble
-      '', // Propiedad del inmueble
-      '', // AHE ALIM.
-      '', // AHE NO ALM
-      '', // MAT REHAB
-      '', // SUB ARRIEN
-    ]);
-  }
-
   // Crear la tabla con los datos estáticos
   final table = pw.Table(
     columnWidths: {
