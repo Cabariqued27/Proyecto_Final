@@ -62,11 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
       String eventName = _eventNameController.text;
       String eventDescription = _descriptionController.text;
       String eventDate = _dateController.text;
-      /*Event newEvent = Event(
+      Event newEvent = Event(
         name: eventName,
         description: eventDescription,
-        date: now,
-      );*/
+        date: eventDate,
+      );
 
       //eventData.addEvent(newEvent);
 
@@ -75,9 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // Guardar el evento en Firebase Realtime Database
       dbRef.push().set({
-        'name': eventName,
-        'description': eventDescription,
-        'date': eventDate,
+        'name': newEvent.name,
+        'description': newEvent.description,
+        'date': newEvent.date,
       });
 
       // Llamar a la función geteventsfb para actualizar la lista de eventos

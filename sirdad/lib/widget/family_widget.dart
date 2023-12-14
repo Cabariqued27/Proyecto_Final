@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         eventId: eventIdf,
       );
 
-      familyData.addFamily(newFamily);
+      //familyData.addFamily(newFamily);
 
       _barrioController.clear();
       _addressController.clear();
@@ -94,12 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // Save the family in Firebase Realtime Database
       dbRef.push().set({
-        'barrio': familyBarrio,
-        'address': familyAddress,
-        'phone': familyPhone,
-        'date': familyDate,
-        'jefe': familyHead,
-        'eventId': eventIdf,
+        'barrio': newFamily.barrio,
+        'address': newFamily.address,
+        'phone': newFamily.phone,
+        'date': newFamily.date,
+        'jefe': newFamily.jefe,
+        'eventId': newFamily.eventId,
       });
     }
   }

@@ -1,13 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/firebase_options.dart';
 import 'package:sirdad/getters/acceso_model.dart';
-import 'package:sirdad/widget/acceso_widget.dart';
+import 'package:sirdad/pages/login_page.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_widget.dart';
-import 'package:sirdad/widget/login_widget.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
 Future<void> main() async {
@@ -38,7 +38,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FamilyModel),
         ChangeNotifierProvider(create: (_) => memberData),
         ChangeNotifierProvider(create: (_) => EventModel),
-        ChangeNotifierProvider(create: (_) => userProvider),
+        //ChangeNotifierProvider(create: (_) => userProvider),
         // ChangeNotifierProvider(create: (_) => )
 
         //Colocar aquí todos los ChangeNotifierProvider de los modelos que se van a usar
