@@ -8,7 +8,6 @@ import 'package:sirdad/getters/acceso_model.dart';
 import 'package:sirdad/pages/login_page.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_widget.dart';
-import 'package:sirdad/widget/login_widget.dart';
 import 'package:sirdad/widget/member_widget.dart';
 
 Future<void> main() async {
