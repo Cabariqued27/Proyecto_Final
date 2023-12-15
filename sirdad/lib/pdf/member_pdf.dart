@@ -22,7 +22,7 @@ Future<void> generatePDF(List<Member> members, List<Family> familys,
       'TIPO DE DOCUMENTO',
       'NÚMERO DE DOCUMENTO',
       'PARENTESCO CON EL JEFE DE HOGAR',
-      'GÉNERO',
+      //'GÉNERO',
       'EDAD',
       'ETNIA',
       'ESTADO DE SALUD',
@@ -75,25 +75,68 @@ Future<void> generatePDF(List<Member> members, List<Family> familys,
     // Puedes agregar más filas según sea necesario
   ];
 
-  // Crear la tabla con los datos estáticos
-  final table = pw.Table(
-    columnWidths: {
-      for (var i = 0; i < data[0].length; i++) i: pw.FixedColumnWidth(120),
-    },
-    border: pw.TableBorder.all(),
-    children: <pw.TableRow>[
-      for (var row in data)
-        pw.TableRow(
-          children: <pw.Widget>[
-            for (var cell in row)
-              pw.Container(
+  // Encabezados horizontales y verticales
+  List<String> horizontalHeaders = [
+    'NOMBRES',
+    'APELLIDOS',
+    'TIPO DE DOCUMENTO',
+    // ... otros encabezados horizontales
+  ];
+
+  List<String> verticalHeaders = [
+    'GENERO',
+    'UBICACIÓN DEL INMUEBLE',
+    // ... otros encabezados verticales
+  ];
+
+  // Agregar encabezados horizontales a la tabla
+  final tableRows = <pw.TableRow>[
+    pw.TableRow(
+      children: horizontalHeaders
+          .map((header) => pw.Container(
+                alignment: pw.Alignment.center,
+                padding: const pw.EdgeInsets.all(5),
+                child: pw.Text(header),
+              ))
+          .toList(),
+    ),
+  ];
+
+  // Crear celdas para los encabezados verticales
+  final rotatedHeaderRow = pw.TableRow(
+    children: verticalHeaders
+        .map((header) => pw.Transform.rotate(
+              angle: 90 * 3.1415926535 / 180,
+              child: pw.Container(
+                alignment: pw.Alignment.center,
+                padding: const pw.EdgeInsets.all(30),
+                child: pw.Text(header),
+              ),
+            ))
+        .toList(),
+  );
+
+  // Agregar celdas a las filas de la tabla
+  tableRows.add(rotatedHeaderRow);
+
+  // Agregar datos existentes a la tabla
+  for (var row in data) {
+    final tableRow = pw.TableRow(
+      children: row
+          .map((cell) => pw.Container(
                 alignment: pw.Alignment.center,
                 padding: const pw.EdgeInsets.all(5),
                 child: pw.Text(cell),
-              ),
-          ],
-        ),
-    ],
+              ))
+          .toList(),
+    );
+    tableRows.add(tableRow);
+  }
+
+  // Construir la tabla final
+  final table = pw.Table(
+    border: pw.TableBorder.all(),
+    children: tableRows,
   );
 
   // Envolver la tabla en un FittedBox para ocupar todo el espacio disponible
