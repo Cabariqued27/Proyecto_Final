@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: signUserOut,
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
       ),
@@ -30,20 +30,20 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "LOGGED IN AS: " + user.email!,
-              style: TextStyle(fontSize: 20),
+              "LOGGED IN AS: ${user.email!}",
+              style: const TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EventListScreen(),
+                    builder: (context) => const EventListScreenw(),
                   ),
                 );
               },
-              child: Text("Ir a la lista de eventos"),
+              child: const Text("Ir a la lista de eventos"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               },
-              child: Text("Ir al Panel de Administración"),
+              child: const Text("Ir al Panel de Administración"),
             ),
           ],
         ),

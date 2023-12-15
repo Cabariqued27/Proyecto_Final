@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +14,12 @@ import '../models/event.dart';
 EventData eventData = EventData();
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,21 +27,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _eventNameController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _dateController = TextEditingController();
+  final TextEditingController _eventNameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   late DatabaseReference dbRef;
 
   @override
@@ -49,7 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // Establecer la fecha actual como valor por defecto
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     _getEventsFromCache();
-    print('Datos obtenidos correctamente.');
+    if (kDebugMode) {
+      print('Datos obtenidos correctamente.');
+    }
   }
 
   Future<void> _getEventsFromCache() async {
@@ -128,12 +135,12 @@ class _MyHomePageState extends State<MyHomePage> {
           content: Text('PDF generado con éxito en $pdfFilePath'),
         ));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('No se pudo acceder al almacenamiento externo.'),
         ));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
             'Se requieren permisos de almacenamiento para guardar el PDF.'),
       ));
@@ -151,10 +158,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Gestión de Eventos'),
+          title: const Text('Gestión de Eventos'),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -163,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -174,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: TextFormField(
                         controller: _eventNameController,
                         decoration:
-                            InputDecoration(labelText: 'Nombre del Evento'),
+                            const InputDecoration(labelText: 'Nombre del Evento'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa un nombre para el evento.';
@@ -184,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -194,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _descriptionController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Descripción del Evento'),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -205,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -216,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: TextFormField(
                         controller: _dateController,
                         decoration:
-                            InputDecoration(labelText: 'Fecha del Evento'),
+                            const InputDecoration(labelText: 'Fecha del Evento'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa una fecha para el evento.';
@@ -232,15 +239,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EventListScreen()),
+                              builder: (context) => const EventListScreenw()),
                         );
                       },
-                      child: Text('Agregar Evento'),
+                      child: const Text('Agregar Evento'),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),

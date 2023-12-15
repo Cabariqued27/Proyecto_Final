@@ -4,7 +4,37 @@ import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_list_screen.dart';
 import '../getters/event_model.dart';
 
-class EventListScreen extends StatelessWidget {
+
+
+EventData eventData = EventData();
+
+void main() {
+  runApp(const MyEventListScreen());
+}
+
+class MyEventListScreen extends StatelessWidget {
+  const MyEventListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Listado de Eventos',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: const EventListScreenw(),
+    );
+  }
+}
+
+class EventListScreenw extends StatefulWidget {
+  const EventListScreenw({super.key});
+
+  @override
+  _EventListScreen createState() => _EventListScreen();
+}
+
+class _EventListScreen extends State <EventListScreenw> {
   
   @override
   Widget build(BuildContext context) {

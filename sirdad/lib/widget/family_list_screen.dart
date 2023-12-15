@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/family_model.dart';
@@ -5,11 +6,13 @@ import 'package:sirdad/widget/MembersListScreen.dart';
 import 'package:sirdad/widget/family_widget.dart';
 
 class FamilyListScreen extends StatelessWidget {
+  const FamilyListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Familias Registradas'),
+        title: const Text('Familias Registradas'),
       ),
       body: Consumer<FamilyData>(
         builder: (context, familyData, child) {
@@ -17,7 +20,7 @@ class FamilyListScreen extends StatelessWidget {
             itemCount: familyData.familys.length,
             itemBuilder: (context, index) {
               return Card(
-                margin: EdgeInsets.symmetric(vertical: 5),
+                margin: const EdgeInsets.symmetric(vertical: 5),
                 child: ListTile(
                   title: Text('Barrio: ${familyData.familys[index].barrio}'),
                   subtitle: Column(
@@ -38,7 +41,9 @@ class FamilyListScreen extends StatelessWidget {
                           builder: (context) => MembersListScreen()),
                     );
                     String familyId = familyData.familys[index].idf;
-                    print(familyId);
+                    if (kDebugMode) {
+                      print(familyId);
+                    }
                     // Puedes agregar aquí la lógica de navegación si es necesario
                   },
                 ),
@@ -57,7 +62,7 @@ class FamilyListScreen extends StatelessWidget {
                     )),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
