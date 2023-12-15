@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/firebase_options.dart';
@@ -18,9 +19,13 @@ Future<void> main() async {
   database.setPersistenceCacheSizeBytes(10000000);
   try {
     final app = Firebase.app();
-    print("Firebase se ha inicializado correctamente: ${app.name}");
+    if (kDebugMode) {
+      print("Firebase se ha inicializado correctamente: ${app.name}");
+    }
   } catch (e) {
-    print("Error al inicializar Firebase: $e");
+    if (kDebugMode) {
+      print("Error al inicializar Firebase: $e");
+    }
   }
 
   runApp(const MainApp());
@@ -45,7 +50,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-          home: LoginPage()
+          home: const LoginPage()
           //const FormatWidget()
           // ChangeNotifierProvider(
           //   create: (context) => familyModel,

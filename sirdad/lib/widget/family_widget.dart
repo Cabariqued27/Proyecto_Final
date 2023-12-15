@@ -14,13 +14,13 @@ import 'package:sirdad/widget/family_list_screen.dart';
 FamilyData familyData = FamilyData();
 
 void main() {
-  runApp(FamilyWidget(eventIdf: ''));
+  runApp(const FamilyWidget(eventIdf: ''));
 }
 
 class FamilyWidget extends StatelessWidget {
   final String eventIdf;
 
-  FamilyWidget({required this.eventIdf});
+  const FamilyWidget({super.key, required this.eventIdf});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class FamilyWidget extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final String eventIdf;
-  MyHomePage({required this.eventIdf});
+  const MyHomePage({super.key, required this.eventIdf});
 
   @override
   _MyHomePageState createState() => _MyHomePageState(eventIdf);
@@ -44,11 +44,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _barrioController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _headOfFamilyController = TextEditingController();
+  final TextEditingController _barrioController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _headOfFamilyController = TextEditingController();
   late DatabaseReference dbRef;
   final String eventIdf;
 
@@ -165,21 +165,21 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Gestión de Familias'),
+          title: const Text('Gestión de Familias'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               // Navegar a FamilyWidget y pasar el ID del evento
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyApp(),
+                    builder: (context) => const MyApp(),
                   )); // Esto llevará de regreso a EventWidget
             },
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -188,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _barrioController,
-                        decoration: InputDecoration(labelText: 'Barrio'),
+                        decoration: const InputDecoration(labelText: 'Barrio'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa el barrio.';
@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -218,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _addressController,
-                        decoration: InputDecoration(labelText: 'Dirección'),
+                        decoration: const InputDecoration(labelText: 'Dirección'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa la dirección.';
@@ -228,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -238,7 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _phoneController,
-                        decoration: InputDecoration(labelText: 'Teléfono'),
+                        decoration: const InputDecoration(labelText: 'Teléfono'),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -252,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -262,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _dateController,
-                        decoration: InputDecoration(labelText: 'Fecha'),
+                        decoration: const InputDecoration(labelText: 'Fecha'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa la fecha.';
@@ -273,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -284,7 +284,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: TextFormField(
                         controller: _headOfFamilyController,
                         decoration:
-                            InputDecoration(labelText: 'Jefe de familia'),
+                            const InputDecoration(labelText: 'Jefe de familia'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa el jefe de familia.';
@@ -299,15 +299,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FamilyListScreen()),
+                              builder: (context) => const FamilyListScreen()),
                         );
                       },
-                      child: Text('Agregar Familia'),
+                      child: const Text('Agregar Familia'),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -64,10 +64,12 @@ class FamilyData extends ChangeNotifier {
 }
 
 void main() {
-  runApp(FormatWidget());
+  runApp(const FormatWidget());
 }
 
 class FormatWidget extends StatelessWidget {
+  const FormatWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -75,29 +77,31 @@ class FormatWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _barrioController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _headOfFamilyController = TextEditingController();
+  final TextEditingController _barrioController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _headOfFamilyController = TextEditingController();
   late DatabaseReference dbRef;
 
   @override
   void initState() {
     super.initState();
-    dbRef = FirebaseDatabase.instance.reference().child('families');
+    dbRef = FirebaseDatabase.instance.ref().child('families');
   }
 
   Future<void> _addFamily(FamilyData familyData) async {
@@ -195,10 +199,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gestión de Familias'),
+        title: const Text('Gestión de Familias'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -208,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   TextFormField(
                     controller: _barrioController,
-                    decoration: InputDecoration(labelText: 'Barrio'),
+                    decoration: const InputDecoration(labelText: 'Barrio'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor, ingresa el barrio.';
@@ -218,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _addressController,
-                    decoration: InputDecoration(labelText: 'Dirección'),
+                    decoration: const InputDecoration(labelText: 'Dirección'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor, ingresa la dirección.';
@@ -228,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _phoneController,
-                    decoration: InputDecoration(labelText: 'Teléfono'),
+                    decoration: const InputDecoration(labelText: 'Teléfono'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -242,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _dateController,
-                    decoration: InputDecoration(labelText: 'Fecha'),
+                    decoration: const InputDecoration(labelText: 'Fecha'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor, ingresa la fecha.';
@@ -252,7 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextFormField(
                     controller: _headOfFamilyController,
-                    decoration: InputDecoration(labelText: 'Jefe de familia'),
+                    decoration: const InputDecoration(labelText: 'Jefe de familia'),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor, ingresa el jefe de familia.';
@@ -264,20 +268,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       _addFamily(context.read<FamilyData>());
                     },
-                    child: Text('Agregar Familia'),
+                    child: const Text('Agregar Familia'),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       List<Family> families = context.read<FamilyData>().families;
                       _generatePDF(families);
                     },
-                    child: Text('Generar PDF de Familias'),
+                    child: const Text('Generar PDF de Familias'),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Familias Registradas:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -288,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemCount: familyData.families.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       child: ListTile(
                         title: Text('Barrio: ${familyData.families[index].barrio}'),
                         subtitle: Column(
@@ -315,7 +319,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               accessToHealthcare: 1,
                             ));
                           },
-                          child: Text('Add Member'),
+                          child: const Text('Add Member'),
                         ),
                       ),
                     );

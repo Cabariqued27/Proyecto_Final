@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/widget/event_widget.dart';
@@ -40,7 +41,7 @@ class _EventListScreen extends State <EventListScreenw> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Eventos Registrados'),
+        title: const Text('Eventos Registrados'),
       ),
       body: Consumer<EventData>(
         builder: (context, eventData, child) {
@@ -49,7 +50,7 @@ class _EventListScreen extends State <EventListScreenw> {
             itemCount: eventData.events.length,
             itemBuilder: (context, index) {
               return Card(
-                margin: EdgeInsets.symmetric(vertical: 5),
+                margin: const EdgeInsets.symmetric(vertical: 5),
                 child: ListTile(
                   title: Text(
                       'Nombre del Evento: ${eventData.events[index].name}'),
@@ -63,11 +64,13 @@ class _EventListScreen extends State <EventListScreenw> {
                   ),
                   onTap: () {
                     String eventId = eventData.events[index].id;
-                    print(eventId);
+                    if (kDebugMode) {
+                      print(eventId);
+                    }
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FamilyListScreen(),
+                        builder: (context) => const FamilyListScreen(),
                       ),
                     );
                   },
@@ -81,10 +84,10 @@ class _EventListScreen extends State <EventListScreenw> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MyApp()),
+            MaterialPageRoute(builder: (context) => const MyApp()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

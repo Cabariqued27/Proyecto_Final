@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../getters/volunteer_model.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,8 @@ import 'package:provider/provider.dart';
 final VolunteerData volunteerData = VolunteerData();
 
 class AdminPanel extends StatelessWidget {
+  const AdminPanel({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -17,13 +20,15 @@ class AdminPanel extends StatelessWidget {
           hintColor: Colors.deepOrangeAccent,
           fontFamily: 'Roboto',
         ),
-        home: VolunteerListScreen(),
+        home: const VolunteerListScreen(),
       ),
     );
   }
 }
 
 class VolunteerListScreen extends StatefulWidget {
+  const VolunteerListScreen({super.key});
+
   @override
   _VolunteerListScreen createState() => _VolunteerListScreen();
 }
@@ -36,7 +41,9 @@ class _VolunteerListScreen extends State<VolunteerListScreen> {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('volunteers');
     _getVolunteersFromCache();
-    print('miembros.');
+    if (kDebugMode) {
+      print('miembros.');
+    }
   }
 
   Future<void> _getVolunteersFromCache() async {
@@ -49,10 +56,10 @@ class _VolunteerListScreen extends State<VolunteerListScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Usuarios con Acceso'),
+        title: const Text('Usuarios con Acceso'),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
         ),
         child: Consumer<VolunteerData>(
           builder: (context, volunteerProvider, child) {
@@ -64,7 +71,7 @@ class _VolunteerListScreen extends State<VolunteerListScreen> {
                 final user = volunteers[index];
 
                 return Container(
-                  margin: EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: const Color.fromARGB(255, 82, 81, 79), width: 2.0),
                     borderRadius: BorderRadius.circular(8.0),
@@ -72,7 +79,7 @@ class _VolunteerListScreen extends State<VolunteerListScreen> {
                   child: ListTile(
                     title: Text(
                       '${user.namev} (${user.idv})',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),

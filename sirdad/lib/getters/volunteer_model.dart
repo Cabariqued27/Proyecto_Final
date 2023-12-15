@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sirdad/models/volunteer.dart';
 
 class VolunteerData with ChangeNotifier {
@@ -8,7 +7,9 @@ class VolunteerData with ChangeNotifier {
   List<Volunteer> get volunteers => _volunteers;
 
   Future<void> addVolunteer(Volunteer volunteer) async {
-    print('entré');
+    if (kDebugMode) {
+      print('entré');
+    }
     _volunteers.add(volunteer);
     notifyListeners();
   }
@@ -38,13 +39,15 @@ class VolunteerData with ChangeNotifier {
           String news = value['news'] ?? "";
           bool isAdmin = value['isAdmin'] ?? false;
 
-          print('namev: $namev');
-          print('hasAccess: $hasAccess');
-          print('phonev: $phonev');
-          print('ong: $ong');
-          print('sign: $sign');
-          print('news: $news');
-          print('isAdmin: $isAdmin');
+          if (kDebugMode) {
+            print('namev: $namev');
+            print('hasAccess: $hasAccess');
+            print('phonev: $phonev');
+            print('ong: $ong');
+            print('sign: $sign');
+            print('news: $news');
+            print('isAdmin: $isAdmin');
+          }
 
           Volunteer newVolunteer = Volunteer(
               idv: key,
@@ -54,14 +57,17 @@ class VolunteerData with ChangeNotifier {
               ong: ong,
               sign: sign,
               news: news,
-              isAdmid: isAdmin
-              );
-          print('entré');
+              isAdmid: isAdmin);
+          if (kDebugMode) {
+            print('entré');
+            print(newVolunteer);
+          }
           addVolunteer(newVolunteer);
-          print(newVolunteer);
         });
       } else {
-        print('No data available.');
+        if (kDebugMode) {
+          print('No data available.');
+        }
       }
     });
   }

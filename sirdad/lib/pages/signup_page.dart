@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sirdad/components/my_button.dart';
 import 'package:sirdad/components/my_textfield.dart';
@@ -100,12 +101,18 @@ class _RegisterPageState extends State<RegisterPage> {
         });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
-          print('The password provided is too weak.');
+          if (kDebugMode) {
+            print('The password provided is too weak.');
+          }
         } else if (e.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
+          if (kDebugMode) {
+            print('The account already exists for that email.');
+          }
         }
       } catch (e) {
-        print(e);
+        if (kDebugMode) {
+          print(e);
+        }
       }
     }
   }

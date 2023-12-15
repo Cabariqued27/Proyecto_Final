@@ -1,10 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sirdad/models/family.dart';
 
 class FamilyData extends ChangeNotifier {
-  List<Family> _familys = [];
+  final List<Family> _familys = [];
   List<Family> get familys => _familys;
 
   Future<void> addFamily(Family family) async {
@@ -45,7 +44,9 @@ class FamilyData extends ChangeNotifier {
         }
       });
     } else {
-      print('No data available.');
+      if (kDebugMode) {
+        print('No data available.');
+      }
     }
   });
 }

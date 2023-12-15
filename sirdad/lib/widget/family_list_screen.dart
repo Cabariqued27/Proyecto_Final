@@ -38,7 +38,7 @@ class FamilyListScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MembersListScreen()),
+                          builder: (context) => const MembersListScreen()),
                     );
                     String familyId = familyData.familys[index].idf;
                     if (kDebugMode) {
@@ -57,7 +57,7 @@ class FamilyListScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => FamilyWidget(
+                builder: (context) => const FamilyWidget(
                       eventIdf: '',
                     )),
           );

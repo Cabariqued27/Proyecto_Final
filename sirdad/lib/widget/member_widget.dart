@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/models/family.dart';
@@ -11,13 +12,13 @@ import '../models/member.dart';
 MemberData memberData = MemberData();
 
 void main() {
-  runApp(MiembroWidget(familyIdm: ''));
+  runApp(const MiembroWidget(familyIdm: ''));
 }
 
 class MiembroWidget extends StatelessWidget {
   final String familyIdm;
 
-  MiembroWidget({required this.familyIdm});
+  const MiembroWidget({super.key, required this.familyIdm});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +33,7 @@ class MiembroWidget extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   final String familyIdm;
-  MyHomePage({required this.familyIdm});
+  const MyHomePage({super.key, required this.familyIdm});
   @override
   _MyHomePageState createState() => _MyHomePageState(familyIdm);
 }
@@ -40,13 +41,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
   String? _selectedDocumento;
-  TextEditingController _nidController = TextEditingController();
+  final TextEditingController _nidController = TextEditingController();
   String? _selectedParentesco;
-  TextEditingController _genController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
+  final TextEditingController _genController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
   String? _selectedEtnia;
   String? _selectedEstadoSalud;
   String? _selectedAfiliacionSalud;
@@ -118,7 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
         'sh': newMember.sh,
         'familyId': newMember.familyId,
       });
-      print(memberData.getMembersFromCache(familyIdm));
+      if (kDebugMode) {
+        print(memberData.getMembersFromCache(familyIdm));
+      }
     }
   }
 
@@ -131,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
     scaffoldMessenger.showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 3), // Duración del mensaje
+        duration: const Duration(seconds: 3), // Duración del mensaje
       ),
     );
   }
@@ -154,21 +157,21 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Gestión de Personas'),
+          title: const Text('Gestión de Personas'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               // Navegar a FamilyWidget y pasar el ID del evento
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          MyApp())); // Esto llevará de regreso a EventWidget
+                          const MyApp())); // Esto llevará de regreso a EventWidget
             },
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -177,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -187,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _nameController,
-                        decoration: InputDecoration(labelText: 'Nombre'),
+                        decoration: const InputDecoration(labelText: 'Nombre'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa un nombre.';
@@ -197,7 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -207,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _surnameController,
-                        decoration: InputDecoration(labelText: 'Apellido'),
+                        decoration: const InputDecoration(labelText: 'Apellido'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa un apellido.';
@@ -217,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -232,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             _selectedDocumento = value;
                           });
                         },
-                        items: [
+                        items: const [
                           DropdownMenuItem(
                             value: '1',
                             child: Text('Registro Civil'),
@@ -259,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ],
                         decoration:
-                            InputDecoration(labelText: 'Tipo de documento'),
+                            const InputDecoration(labelText: 'Tipo de documento'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor, selecciona un valor válido.';
@@ -269,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -280,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: TextFormField(
                         controller: _nidController,
                         decoration:
-                            InputDecoration(labelText: 'Número de documento'),
+                            const InputDecoration(labelText: 'Número de documento'),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -291,7 +294,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -306,7 +309,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             _selectedParentesco = value;
                           });
                         },
-                        items: [
+                        items: const [
                           DropdownMenuItem(
                             value: '1',
                             child: Text('Jefe de Hogar'),
@@ -340,7 +343,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: Text('Yerno/Nuera'),
                           ),
                         ],
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Parentesco con el jefe de hogar'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -351,7 +354,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -361,7 +364,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _genController,
-                        decoration: InputDecoration(labelText: 'Género'),
+                        decoration: const InputDecoration(labelText: 'Género'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Por favor, ingresa un valor válido.';
@@ -371,7 +374,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -381,7 +384,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: TextFormField(
                         controller: _ageController,
-                        decoration: InputDecoration(labelText: 'Edad'),
+                        decoration: const InputDecoration(labelText: 'Edad'),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -392,7 +395,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -407,7 +410,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             _selectedEtnia = value;
                           });
                         },
-                        items: [
+                        items: const [
                           DropdownMenuItem(
                             value: '1',
                             child: Text('Afrocolombiano'),
@@ -433,7 +436,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: Text('Sin información'),
                           ),
                         ],
-                        decoration: InputDecoration(labelText: 'Etnia'),
+                        decoration: const InputDecoration(labelText: 'Etnia'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor, selecciona un valor válido.';
@@ -443,7 +446,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -458,7 +461,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             _selectedEstadoSalud = value;
                           });
                         },
-                        items: [
+                        items: const [
                           DropdownMenuItem(
                             value: '1',
                             child: Text('Requiere asistencia'),
@@ -469,7 +472,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ],
                         decoration:
-                            InputDecoration(labelText: 'Estado de salud'),
+                            const InputDecoration(labelText: 'Estado de salud'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor, selecciona un valor válido.';
@@ -479,7 +482,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -494,7 +497,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             _selectedAfiliacionSalud = value;
                           });
                         },
-                        items: [
+                        items: const [
                           DropdownMenuItem(
                             value: '1',
                             child: Text('Contributivo'),
@@ -508,7 +511,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: Text('Sin afiliación'),
                           ),
                         ],
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Afiliación al régimen de salud'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -519,7 +522,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.orange,
@@ -534,7 +537,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             _selectedEstadoInmueble = value;
                           });
                         },
-                        items: [
+                        items: const [
                           DropdownMenuItem(
                             value: '1',
                             child: Text('Habitable'),
@@ -549,7 +552,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ],
                         decoration:
-                            InputDecoration(labelText: 'Estado del inmueble'),
+                            const InputDecoration(labelText: 'Estado del inmueble'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Por favor, selecciona un valor válido.';
@@ -567,7 +570,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                         _addPerson(context.read<MemberData>());
                       },
-                      child: Text('Agregar Persona'),
+                      child: const Text('Agregar Persona'),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -582,12 +585,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         generatePDF(members, familys, showMessage);
                       },
-                      child: Text('Generar PDF de Personas'),
+                      child: const Text('Generar PDF de Personas'),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -1,16 +1,17 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import '../models/event.dart';
 
 class EventData extends ChangeNotifier {
-  List<Event> _events = [];
+  final List<Event> _events = [];
   List<Event> get events => _events;
 
   Future<void> addEvent(Event event) async {
     _events.add(event);
     //await event.save();
-    print(event.id);
+    if (kDebugMode) {
+      print(event.id);
+    }
     notifyListeners();
   }
 
@@ -32,10 +33,13 @@ class EventData extends ChangeNotifier {
           String description = value['description'] ?? '';
           String name = value['name'] ?? '';
 
-          print('Event ID: $key');
-          print('Date: $date');
-          print('Description: $description');
-          print('Name: $name');
+          if (kDebugMode) {
+            print('Event ID: $key');
+            print('Date: $date');
+            print('Description: $description');
+            print('Name: $name');
+          }
+
           Event newEvent = Event(
             id: key,
             name: name,
@@ -45,12 +49,14 @@ class EventData extends ChangeNotifier {
           addEvent(newEvent);
         });
       } else {
-        print('No data available.');
+        if (kDebugMode) {
+          print('No data available.');
+        }
       }
     });
   }
 
-  //save data 
+  //save data
   /*final DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
   void addEventf(String name, String description, String date) {
     databaseReference.child("events").push().set({

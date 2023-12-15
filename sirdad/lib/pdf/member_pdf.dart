@@ -20,8 +20,8 @@ Future<void> generatePDF(List<Member> members, List<Family> familys,
             children: [
               pw.Container(
                 width: double.infinity,
-                padding: pw.EdgeInsets.all(10),
-                margin: pw.EdgeInsets.only(bottom: 10),
+                padding: const pw.EdgeInsets.all(10),
+                margin: const pw.EdgeInsets.only(bottom: 10),
                 decoration: pw.BoxDecoration(
                   border: pw.Border.all(),
                 ),
@@ -169,20 +169,20 @@ pw.Widget _buildTable(List<Member> members) {
     child: pw.Table(
       border: pw.TableBorder.all(),
       columnWidths: {
-        0: pw.FixedColumnWidth(200), // Ancho para la columna 'Nombre'
-        1: pw.FixedColumnWidth(
+        0: const pw.FixedColumnWidth(200), // Ancho para la columna 'Nombre'
+        1: const pw.FixedColumnWidth(
             200), // Ancho para la columna 'Tipo de documento'
-        2: pw.FixedColumnWidth(
+        2: const pw.FixedColumnWidth(
             200), // Ancho para la columna 'Numero de documento'
-        3: pw.FixedColumnWidth(
+        3: const pw.FixedColumnWidth(
             200), // Ancho para la columna 'Parentesco con el jefe de Hogar'
-        4: pw.FixedColumnWidth(200), // Ancho para la columna 'Genero'
-        5: pw.FixedColumnWidth(200), // Ancho para la columna 'Edad'
-        6: pw.FixedColumnWidth(200), // Ancho para la columna 'Etnia'
-        7: pw.FixedColumnWidth(200), // Ancho para la columna 'Estado de salud'
-        8: pw.FixedColumnWidth(
+        4: const pw.FixedColumnWidth(200), // Ancho para la columna 'Genero'
+        5: const pw.FixedColumnWidth(200), // Ancho para la columna 'Edad'
+        6: const pw.FixedColumnWidth(200), // Ancho para la columna 'Etnia'
+        7: const pw.FixedColumnWidth(200), // Ancho para la columna 'Estado de salud'
+        8: const pw.FixedColumnWidth(
             200), // Ancho para la columna 'Afiliacion al regimen de salud'
-        9: pw.FixedColumnWidth(
+        9: const pw.FixedColumnWidth(
             200), // Ancho para la columna 'Estado del Inmueble'
       },
       children: [

@@ -1,13 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/models/member.dart';
 
 class MemberData extends ChangeNotifier {
-  List<Member> _members = [];
+  final List<Member> _members = [];
   List<Member> get members => _members;
-  List<Family> _familys = []; // Este list no estaba antes
+  final List<Family> _familys = []; // Este list no estaba antes
   List<Family> get familys => _familys;
 
   Future<void> addMember(Member member) async {
@@ -65,7 +64,9 @@ class MemberData extends ChangeNotifier {
           }
         });
       } else {
-        print('No data available.');
+        if (kDebugMode) {
+          print('No data available.');
+        }
       }
     });
   }
@@ -100,7 +101,9 @@ class MemberData extends ChangeNotifier {
           } else {}
         });
       } else {
-        print('No data available.');
+        if (kDebugMode) {
+          print('No data available.');
+        }
       }
     });
   }
