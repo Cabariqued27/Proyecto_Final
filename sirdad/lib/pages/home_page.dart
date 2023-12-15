@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sirdad/widget/admin_widget.dart';
+import 'package:sirdad/widget/event_list_screen.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   final user = FirebaseAuth.instance.currentUser!;
 
-  // sign user out method
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
@@ -25,10 +26,39 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Center(
-          child: Text(
-        "LOGGED IN AS: " + user.email!,
-        style: TextStyle(fontSize: 20),
-      )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "LOGGED IN AS: " + user.email!,
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EventListScreen(),
+                  ),
+                );
+              },
+              child: Text("Ir a la lista de eventos"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AdminPanel(),
+                  ),
+                );
+              },
+              child: Text("Ir al Panel de Administración"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

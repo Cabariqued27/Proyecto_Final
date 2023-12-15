@@ -10,7 +10,6 @@ import 'package:sirdad/getters/family_model.dart';
 import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/event_widget.dart';
 import 'package:sirdad/widget/family_list_screen.dart';
-import 'package:sirdad/widget/member_widget.dart';
 
 FamilyData familyData = FamilyData();
 
@@ -105,7 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> _generatePDF(List<Family> familys) async { //este Family es del CRUD de models
+  Future<void> _generatePDF(List<Family> familys) async {
+    //este Family es del CRUD de models
     final pdf = pw.Document();
 
     // Generate the content of the PDF from the list of familys
@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     // Get the document directory on the device
-     final status = await Permission.storage.status;
+    final status = await Permission.storage.status;
     if (status.isGranted) {
       final directory = await getExternalStorageDirectory();
       final pdfFilePath = '${directory!.path}/Download/miembros.pdf';
@@ -154,176 +154,164 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  return Container(
-    decoration: BoxDecoration(
-      border: Border.all(
-        color: Colors.orange,
-        width: 10.0,
-      ),
-    ),
-    child: Scaffold(
-      appBar: AppBar(
-        title: Text('Gestión de Familias'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Navegar a FamilyWidget y pasar el ID del evento
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyApp(),
-                )); // Esto llevará de regreso a EventWidget
-          },
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.orange,
+          width: 10.0,
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.orange,
-                        width: 2.0,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Gestión de Familias'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              // Navegar a FamilyWidget y pasar el ID del evento
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyApp(),
+                  )); // Esto llevará de regreso a EventWidget
+            },
+          ),
+        ),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.orange,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: TextFormField(
-                      controller: _barrioController,
-                      decoration: InputDecoration(labelText: 'Barrio'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Por favor, ingresa el barrio.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.orange,
-                        width: 2.0,
+                      child: TextFormField(
+                        controller: _barrioController,
+                        decoration: InputDecoration(labelText: 'Barrio'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Por favor, ingresa el barrio.';
+                          }
+                          return null;
+                        },
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: TextFormField(
-                      controller: _addressController,
-                      decoration: InputDecoration(labelText: 'Dirección'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Por favor, ingresa la dirección.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.orange,
-                        width: 2.0,
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.orange,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: TextFormField(
-                      controller: _phoneController,
-                      decoration: InputDecoration(labelText: 'Teléfono'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Por favor, ingresa el teléfono.';
-                        }
-                        if (int.tryParse(value) == null) {
-                          return 'El teléfono debe ser un número.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.orange,
-                        width: 2.0,
+                      child: TextFormField(
+                        controller: _addressController,
+                        decoration: InputDecoration(labelText: 'Dirección'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Por favor, ingresa la dirección.';
+                          }
+                          return null;
+                        },
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: TextFormField(
-                      controller: _dateController,
-                      decoration: InputDecoration(labelText: 'Fecha'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Por favor, ingresa la fecha.';
-                        }
-                        return null;
-                      },
-                      readOnly: true,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.orange,
-                        width: 2.0,
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.orange,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      child: TextFormField(
+                        controller: _phoneController,
+                        decoration: InputDecoration(labelText: 'Teléfono'),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Por favor, ingresa el teléfono.';
+                          }
+                          if (int.tryParse(value) == null) {
+                            return 'El teléfono debe ser un número.';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    child: TextFormField(
-                      controller: _headOfFamilyController,
-                      decoration: InputDecoration(labelText: 'Jefe de familia'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Por favor, ingresa el jefe de familia.';
-                        }
-                        return null;
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.orange,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: TextFormField(
+                        controller: _dateController,
+                        decoration: InputDecoration(labelText: 'Fecha'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Por favor, ingresa la fecha.';
+                          }
+                          return null;
+                        },
+                        readOnly: true,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.orange,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: TextFormField(
+                        controller: _headOfFamilyController,
+                        decoration:
+                            InputDecoration(labelText: 'Jefe de familia'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Por favor, ingresa el jefe de familia.';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _addFamily(context.read<FamilyData>());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FamilyListScreen()),
+                        );
                       },
+                      child: Text('Agregar Familia'),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _addFamily(context.read<FamilyData>());
-                      Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => FamilyListScreen()),
-    );
-                    },
-                    child: Text('Agregar Familia'),
-                  ),
-                  ElevatedButton(
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => FamilyListScreen()),
-    );
-  },
-  child: Text('Ver Familias Registradas'),
-),
-
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            
-            
-          ],
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
-
+    );
+  }
 }

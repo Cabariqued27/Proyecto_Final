@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/family_model.dart';
-import 'package:sirdad/models/family.dart';
 import 'package:sirdad/widget/MembersListScreen.dart';
 import 'package:sirdad/widget/family_widget.dart';
-import 'package:sirdad/widget/member_widget.dart';
 
 class FamilyListScreen extends StatelessWidget {
   @override
@@ -29,14 +27,16 @@ class FamilyListScreen extends StatelessWidget {
                       Text(
                           'Teléfono: ${familyData.familys[index].phone.toString()}'),
                       Text('Fecha: ${familyData.familys[index].date}'),
-                      Text('Jefe de familia: ${familyData.familys[index].jefe}'),
+                      Text(
+                          'Jefe de familia: ${familyData.familys[index].jefe}'),
                     ],
                   ),
                   onTap: () {
                     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MembersListScreen()),
-    );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MembersListScreen()),
+                    );
                     String familyId = familyData.familys[index].idf;
                     print(familyId);
                     // Puedes agregar aquí la lógica de navegación si es necesario
@@ -51,7 +51,10 @@ class FamilyListScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => FamilyWidget(eventIdf: '',)),
+            MaterialPageRoute(
+                builder: (context) => FamilyWidget(
+                      eventIdf: '',
+                    )),
           );
         },
         child: Icon(Icons.add),
