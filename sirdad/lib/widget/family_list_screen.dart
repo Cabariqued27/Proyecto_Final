@@ -1,3 +1,5 @@
+// FamilyListScreen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sirdad/getters/family_model.dart';
@@ -10,42 +12,70 @@ class FamilyListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Familias Registradas'),
-      ),
-      body: Consumer<FamilyData>(
-        builder: (context, familyData, child) {
-          return ListView.builder(
-            itemCount: familyData.familys.length,
-            itemBuilder: (context, index) {
-              return Card(
-                margin: EdgeInsets.symmetric(vertical: 5),
-                child: ListTile(
-                  title: Text('Barrio: ${familyData.familys[index].barrio}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Dirección: ${familyData.familys[index].address}'),
-                      Text(
-                          'Teléfono: ${familyData.familys[index].phone.toString()}'),
-                      Text('Fecha: ${familyData.familys[index].date}'),
-                      Text('Jefe de familia: ${familyData.familys[index].jefe}'),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MembersListScreen()),
-    );
-                    String familyId = familyData.familys[index].idf;
-                    print(familyId);
-                    // Puedes agregar aquí la lógica de navegación si es necesario
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: EdgeInsets.all(16),
+            color: Colors.orange,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
                 ),
-              );
-            },
-          );
-        },
+                SizedBox(width: 16),
+                Text(
+                  'Familias Registradas',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Consumer<FamilyData>(
+              builder: (context, familyData, child) {
+                return ListView.builder(
+                  itemCount: familyData.familys.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      color: Colors.orange,
+                      child: Card(
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        child: ListTile(
+                          title: Text('Barrio: ${familyData.familys[index].barrio}'),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Dirección: ${familyData.familys[index].address}'),
+                              Text(
+                                  'Teléfono: ${familyData.familys[index].phone.toString()}'),
+                              Text('Fecha: ${familyData.familys[index].date}'),
+                              Text('Jefe de familia: ${familyData.familys[index].jefe}'),
+                            ],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => MembersListScreen()),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
